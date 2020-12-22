@@ -2,12 +2,14 @@ import { connect } from 'react-redux';
 import { NextPage, NextPageContext } from 'next';
 import Test from '../components/test';
 import { setTick } from '../store/reducers/test';
+import Presentations from '../components/presentations';
 
 const indexPage: NextPage = () => {
     return (
         <>
             <div>Hello World Next - Typescript - Express</div>
             <Test />
+            <Presentations.NavigationItem action={() => {}} />
         </>
     );
 };
