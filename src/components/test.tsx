@@ -1,6 +1,6 @@
 import { FC, ReactElement } from 'react';
 import { connect } from 'react-redux';
-import { State } from '../store';
+import { reducersState } from '../store';
 
 interface IProps {
     tick: string,
@@ -10,9 +10,9 @@ const Test: FC<IProps> = ({ tick }) : ReactElement => (
     <p>{ tick }</p>
 );
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: reducersState) => {
     return {
-        tick: state.tick,
+        tick: state.test.tick,
     }
 };
 
