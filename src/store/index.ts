@@ -21,4 +21,4 @@ const TEST: Reducer<reducersState, AnyAction> =
     action.type === HYDRATE ? { ...state, ...action.payload } : reducers(state, action);
 
 const makeStore: MakeStore<reducersState> = (context: Context) => createStore(TEST);
-export const wrapper = createWrapper<reducersState>(makeStore, {debug: true});
+export const wrapper = createWrapper<reducersState>(makeStore, { debug: true });
