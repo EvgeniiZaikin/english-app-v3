@@ -1,0 +1,39 @@
+.layout__container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.layout__container-light {
+    background-color: white;
+}
+
+.layout__container-dark {
+    background-color: black;
+    color: white;
+}
+
+.layout__content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer {
+    transition: all .3s ease;
+}
+
+.layout__footer {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+.layout__footer-hide {
+    margin-bottom: -62px;
+}
+
+.layout__footer-show {
+    margin-bottom: 0px;
+}

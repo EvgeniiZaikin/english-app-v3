@@ -3,14 +3,15 @@ import { NextPage, NextPageContext } from 'next';
 import Test from '../components/test';
 import { setTick } from '../store/reducers/test';
 import Presentations from '../components/presentations';
+import Containers from '../components/containers';
 
 const indexPage: NextPage = () => {
     return (
-        <>
+        <Containers.MainLayout>
             <div>Hello World Next - Typescript - Express</div>
             <Test />
             <Presentations.NavigationItem action={() => {}} />
-        </>
+        </Containers.MainLayout>
     );
 };
 
