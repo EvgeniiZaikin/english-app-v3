@@ -8,3 +8,12 @@ export default combineReducers({
     navigation,
     theme,
 });
+
+interface IAction<P> {
+    type: string,
+    payload?: P,
+};
+
+export function action<P>(type: string, payload: P): IAction<P> {
+    return { type, payload };
+}

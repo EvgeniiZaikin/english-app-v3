@@ -1,17 +1,7 @@
 import { Reducer, AnyAction } from 'redux';
+import { action } from '../reducers';
 
 export const SET_APP_THEME = 'SET_APP_THEME';
-
-interface IAction<P> {
-    type: string,
-    payload?: P,
-};
-
-export function action<P>(type: string, payload: P): IAction<P> {
-    return { type, payload };
-}
-
-export const setAppTheme = (theme: string) => action<string>(SET_APP_THEME, theme);
 
 interface IState {
     theme: string,
@@ -31,3 +21,5 @@ const theme: Reducer<IState, AnyAction> = (state = initialState, action) : IStat
 };
 
 export default theme;
+
+export const setAppTheme = (theme: string) => action<string>(SET_APP_THEME, theme);

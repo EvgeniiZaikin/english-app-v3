@@ -1,17 +1,7 @@
 import { Reducer, AnyAction } from 'redux';
+import { action } from '../reducers';
 
 export const TOGGLE_NAVIGATION_FULLSIZE = 'TOGGLE_NAVIGATION_FULLSIZE';
-
-interface IAction<P> {
-    type: string,
-    payload?: P,
-};
-
-export function action<P>(type: string, payload: P): IAction<P> {
-    return { type, payload };
-}
-
-export const toggleNavigationFullsize = (fullsize: boolean) => action<boolean>(TOGGLE_NAVIGATION_FULLSIZE, fullsize);
 
 interface IState {
     fullsize: boolean,
@@ -31,3 +21,5 @@ const navigation: Reducer<IState, AnyAction> = (state = initialState, action) : 
 };
 
 export default navigation;
+
+export const toggleNavigationFullsize = (fullsize: boolean) => action<boolean>(TOGGLE_NAVIGATION_FULLSIZE, fullsize);
