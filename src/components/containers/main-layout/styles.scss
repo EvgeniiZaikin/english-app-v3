@@ -1,3 +1,5 @@
+@import '../../../assets/styles/default.scss';
+
 .layout__container {
     display: flex;
     flex-direction: column;
@@ -5,12 +7,13 @@
 }
 
 .layout__container-light {
-    background-color: white;
+    background-color: $light-theme-background;
+    color: $light-theme-color;
 }
 
 .layout__container-dark {
-    background-color: black;
-    color: white;
+    background-color: $dark-theme-background;
+    color: $dark-theme-color;
 }
 
 .layout__content {
