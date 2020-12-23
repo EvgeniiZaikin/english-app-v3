@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { NextPage, NextPageContext } from 'next';
 import Test from '../components/test';
 import { setTick } from '../store/reducers/test';
-import Presentations from '../components/presentations';
-import Containers from '../components/containers';
+import Presentations from '@presentations';
+import Containers from '@containers';
 
 const indexPage: NextPage = () => {
     return (

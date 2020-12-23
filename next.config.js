@@ -20,10 +20,11 @@ module.exports = withTypescript(withSass({
 
       /* config.resolve.alias['@creators'] = path.join(__dirname, 'src/client/store/creators');
       config.resolve.alias['@creators/sync'] = path.join(__dirname, 'src/client/store/creators/sync');
-      config.resolve.alias['@creators/async'] = path.join(__dirname, 'src/client/store/creators/async');
-      config.resolve.alias['@presentations'] = path.join(__dirname, 'src/client/components/presentations');
-      config.resolve.alias['@containers'] = path.join(__dirname, 'src/client/components/containers');
-      config.resolve.alias['@defaultStyles'] = path.join(__dirname, 'src/client/assets/styles/default.scss');
+      config.resolve.alias['@creators/async'] = path.join(__dirname, 'src/client/store/creators/async'); */
+      config.resolve.alias['@presentations'] = path.join(__dirname, 'src/components/presentations');
+      config.resolve.alias['@containers'] = path.join(__dirname, 'src/components/containers');
+      config.resolve.alias['@store'] = path.join(__dirname, 'src/store');
+      /* config.resolve.alias['@defaultStyles'] = path.join(__dirname, 'src/client/assets/styles/default.scss');
       config.resolve.alias['@actions'] = path.join(__dirname, 'src/client/store/actions'); */
 
       return config;
