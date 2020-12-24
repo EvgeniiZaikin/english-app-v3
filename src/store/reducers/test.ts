@@ -1,4 +1,5 @@
 import { AnyAction, Reducer } from 'redux';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const TICK: string = 'TICK';
 
@@ -24,10 +25,13 @@ const initialState: State = {
 // create your reducer
 const reducer: Reducer<State, AnyAction> = (state: State = initialState, action: AnyAction) => {
     switch (action.type) {
+        case HYDRATE:
+            const hydrateState = action.payload.test;
+            return {...hydrateState};
         case TICK:
             return {...state, tick: action.payload};
         default:
-            return state;
+            return {...state};
     }
 };
 

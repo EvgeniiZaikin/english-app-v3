@@ -1,5 +1,5 @@
-import {createStore, AnyAction, Reducer} from 'redux';
-import {MakeStore, createWrapper, Context, HYDRATE} from 'next-redux-wrapper';
+import {createStore} from 'redux';
+import {MakeStore, createWrapper, Context} from 'next-redux-wrapper';
 import reducers from './reducers';
 
 export type reducersState = ReturnType<typeof reducers>;
@@ -16,9 +16,11 @@ export type reducersState = ReturnType<typeof reducers>;
     }
   }*/
 
-const TEST: Reducer<reducersState, AnyAction> = 
-    (state: reducersState, action: AnyAction) => 
-    action.type === HYDRATE ? { ...state, ...action.payload } : reducers(state, action);
+// const x = { [$CombinedState]: undefined };
 
-const makeStore: MakeStore<reducersState> = (context: Context) => createStore(TEST);
+/* const TEST = 
+    (state: reducersState, action: AnyAction) : Reducer<reducersState, AnyAction> => 
+    action.type === HYDRATE ? { ...x, ...state, ...action.payload } : reducers(state, action); */
+
+export const makeStore: MakeStore<reducersState> = (context: Context) => createStore(reducers);
 export const wrapper = createWrapper<reducersState>(makeStore, { debug: true });

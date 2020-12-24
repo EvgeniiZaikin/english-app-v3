@@ -19,12 +19,15 @@ type LayoutProps = React.PropsWithChildren<{
 }>;
 
 const Layout: FunctionComponent<LayoutProps> = ({ children, router, fullNavigation, openNavigation, hideNavigation, appTheme, toggleAppTheme }) : ReactElement => {
+    const footerStyle = styles[ fullNavigation ?  `layout__footer-show` : `layout__footer-hide` ];
+    const containerStyle = styles[ appTheme === `light` ? `layout__container-light` : `layout__container-dark` ];
+    
     return (
-        <div className={ `${ layout__container } ${ styles[`layout__container-${appTheme}`] }` }>
+        <div className={ `${ layout__container } ${ containerStyle }` }>
             <div className={ layout__content }>
                 { children }
             </div>
-            <footer className={ `${ footer } ${ styles[ `layout__footer-${fullNavigation ? `show` : `hide`}`] }` }>
+            <footer className={ `${ footer } ${ footerStyle }` }>
                 <div className={ layout__footer }>
                     <Presentations.NavigationItem action={ () => router.push('/') } />
                     <Presentations.NavigationItem type={`repeat`} action={ () => router.push('/repeat') }/>
