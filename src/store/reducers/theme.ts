@@ -16,7 +16,7 @@ const theme: Reducer<IState, AnyAction> = (state = initialState, action) : IStat
     switch (action.type) {
         case HYDRATE:
             const hydrateState = action.payload.theme;
-            return {...hydrateState};
+            return { ...hydrateState };
         case SET_APP_THEME:
             return { ...state, theme: action.payload };
         default:

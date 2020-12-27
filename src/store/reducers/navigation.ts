@@ -16,7 +16,7 @@ const navigation: Reducer<IState, AnyAction> = (state = initialState, action) : 
     switch (action.type) {
         case HYDRATE:
             const hydrateState = action.payload.navigation;
-            return {...hydrateState};
+            return { ...hydrateState };
         case TOGGLE_NAVIGATION_FULLSIZE:
             return { ...state, fullsize: action.payload };
         default:
