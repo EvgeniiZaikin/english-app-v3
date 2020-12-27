@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import next from 'next';
+import mysql from 'mysql2';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -10,6 +11,18 @@ const port = process.env.PORT || 3000;
     try {
         await app.prepare();
         const server = express();
+
+        try {
+            mysql.createConnection({
+                'host': 'localhost',
+                'user': 'root',
+                'password' : 'UndeadKarsak26071993',
+                'database': 'english-app',
+            });
+            console.log(`Create connection with database successfully init`);
+        } catch (error: any) {
+            console.log(`Error with create connection to database: ${ error }`);
+        }
 
         server.get('*', (req: Request, res: Response) => {
             return handle(req, res);
