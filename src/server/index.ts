@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import next from 'next';
 import mysql from 'mysql2';
+import routing from '../routing';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -23,6 +24,8 @@ const port = process.env.PORT || 3000;
         } catch (error: any) {
             console.log(`Error with create connection to database: ${ error }`);
         }
+
+        server.use('/api/words', routing.words);
 
         server.get('*', (req: Request, res: Response) => {
             return handle(req, res);
