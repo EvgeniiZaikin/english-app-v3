@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import next from 'next';
 import mysql from 'mysql2';
+import bodyParser from 'body-parser';
+
 import routing from '../routing';
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -24,6 +26,9 @@ const port = process.env.PORT || 3000;
         } catch (error: any) {
             console.log(`Error with create connection to database: ${ error }`);
         }
+
+        server.use(bodyParser.urlencoded({ extended: false }));
+        server.use(bodyParser.json());
 
         server.use('/api/words', routing.words);
 
