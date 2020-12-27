@@ -6,12 +6,12 @@
     min-height: 100vh;
 }
 
-.layout__container-light {
+.layout__container_light {
     background-color: $light-theme-background;
     color: $light-theme-color;
 }
 
-.layout__container-dark {
+.layout__container_dark {
     background-color: $dark-theme-background;
     color: $dark-theme-color;
 }
@@ -33,10 +33,10 @@
     padding: 10px 0;
 }
 
-.layout__footer-hide {
+.layout__footer_hide {
     margin-bottom: -62px;
 }
 
-.layout__footer-show {
+.layout__footer_show {
     margin-bottom: 0px;
 }

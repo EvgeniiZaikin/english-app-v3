@@ -19,8 +19,8 @@ type LayoutProps = React.PropsWithChildren<{
 }>;
 
 const Layout: FunctionComponent<LayoutProps> = ({ children, router, fullNavigation, openNavigation, hideNavigation, appTheme, toggleAppTheme }) : ReactElement => {
-    const footerStyle = styles[ fullNavigation ?  `layout__footer-show` : `layout__footer-hide` ];
-    const containerStyle = styles[ appTheme === `light` ? `layout__container-light` : `layout__container-dark` ];
+    const footerStyle = styles[ fullNavigation ?  `layout__footer_show` : `layout__footer_hide` ];
+    const containerStyle = styles[ appTheme === `light` ? `layout__container_light` : `layout__container_dark` ];
     
     return (
         <div className={ `${ layout__container } ${ containerStyle }` }>
