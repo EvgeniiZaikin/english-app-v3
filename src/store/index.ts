@@ -1,5 +1,6 @@
-import {createStore} from 'redux';
-import {MakeStore, createWrapper, Context} from 'next-redux-wrapper';
+import { createStore, applyMiddleware } from 'redux';
+import { MakeStore, createWrapper, Context } from 'next-redux-wrapper';
+import thunk from 'redux-thunk';
 import reducers from './reducers';
 
 export type reducersState = ReturnType<typeof reducers>;
@@ -22,5 +23,5 @@ export type reducersState = ReturnType<typeof reducers>;
     (state: reducersState, action: AnyAction) : Reducer<reducersState, AnyAction> => 
     action.type === HYDRATE ? { ...x, ...state, ...action.payload } : reducers(state, action); */
 
-export const makeStore: MakeStore<reducersState> = (context: Context) => createStore(reducers);
+export const makeStore: MakeStore<reducersState> = (context: Context) => createStore(reducers, applyMiddleware(thunk));
 export const wrapper = createWrapper<reducersState>(makeStore, { debug: true });
