@@ -5,9 +5,11 @@ import { action } from '../reducers';
 const SHOW_GLOBAL_ALERT: string = 'SHOW_GLOBAL_ALERT';
 const HIDE_GLOBAL_ALERT: string = 'HIDE_GLOBAL_ALERT';
 
-enum AlertTypes {
-    'info',
-    'error',
+export enum AlertTypes {
+    SUCCESS = 'success',
+    INFO = 'info',
+    WARNING = 'warning',
+    ERROR = 'error',
 };
 
 interface IState {
@@ -19,7 +21,7 @@ interface IState {
 const initialState: IState = {
     show: false,
     text: '',
-    type: AlertTypes.info,
+    type: AlertTypes.INFO,
 };
 
 const globalAlert: Reducer<IState, AnyAction> = (state = initialState, action) => {

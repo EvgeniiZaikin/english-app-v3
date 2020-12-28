@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import App, { AppInitialProps, AppContext } from 'next/app';
 import { wrapper } from '@store';
+import Containers from '@containers';
 import '../assets/styles/reset.scss';
 import '../assets/styles/global.scss';
 
@@ -29,7 +30,10 @@ class MyApp extends App<AppInitialProps> {
                         } 
                     />
                 </Head>
+
                 <Component {...pageProps} />
+
+                <Containers.GlobalAlert />
             </>
         );
     }
