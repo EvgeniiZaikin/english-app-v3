@@ -19,6 +19,7 @@ const port = process.env.PORT || 3000;
         server.use(bodyParser.json());
 
         server.use('/api/words', routing.words);
+        server.use('/api/categories', routing.categories);
 
         server.get('*', (req: Request, res: Response) => {
             return handle(req, res);

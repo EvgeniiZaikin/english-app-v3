@@ -1,12 +1,14 @@
 import words from './words';
 import categories from './categories';
-import { ResultSetHeader, OkPacket, RowDataPacket } from 'mysql2';
+import { ResultSetHeader, OkPacket, RowDataPacket, FieldPacket } from 'mysql2';
+
 
 export default {
     words,
     categories,
 };
 
+export type queryResultType = [RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader, FieldPacket[]];
 export type rowsType = RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader | Array<object>;
 export type resultType = rowsType | string | null;
 
