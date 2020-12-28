@@ -9,7 +9,7 @@ interface IProps {
     placeholder: string,
 };
 
-const TextInput: React.FunctionComponent<IProps> = ({ 
+const input: React.FunctionComponent<IProps> = ({ 
     change, defaultValue, errorCondition, label, placeholder 
 }) : ReactElement => (
     <TextField
@@ -23,4 +23,4 @@ const TextInput: React.FunctionComponent<IProps> = ({
     />
 );
 
-export default TextInput;
+export default input;
