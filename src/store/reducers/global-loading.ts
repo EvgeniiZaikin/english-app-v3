@@ -29,5 +29,5 @@ const globalLoading: Reducer<IState, AnyAction> = (state = initialState, action)
 
 export default globalLoading;
 
-export const showGlobalLoading = () => action<boolean>(SHOW_GLOBAL_LOADING, true);
-export const hideGlobalLoading = () => action<boolean>(HIDE_GLOBAL_LOADING, false);
+export const showGlobalLoading = () => action(SHOW_GLOBAL_LOADING);
+export const hideGlobalLoading = () => action(HIDE_GLOBAL_LOADING);
