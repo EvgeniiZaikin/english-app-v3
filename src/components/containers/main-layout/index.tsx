@@ -31,7 +31,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children, router, fullNavigati
                 <div className={ layout__footer }>
                     <Presentations.NavigationItem action={ () => router.push('/') } />
                     <Presentations.NavigationItem type={`repeat`} action={ () => router.push('/repeat') }/>
-                    <Presentations.NavigationItem type={`add`} action={ () => router.push('/add') } />
+                    <Presentations.NavigationItem type={`create`} action={ () => router.push('/create') } />
                     <Presentations.NavigationItem type={`more`} action={ openNavigation } />
                 </div>
                 <div className={ layout__footer }>

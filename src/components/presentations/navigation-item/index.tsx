@@ -25,9 +25,9 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }) : ReactElem
             elem = <SchoolIcon />;
             text = `Повторять`;
             break;
-        case 'add':
+        case 'create':
             elem = <AddIcon />;
-            text = `Добавить`;
+            text = `Создать`;
             break;
         case 'more':
             elem = <MoreHorizIcon />;
