@@ -1,8 +1,10 @@
 import words from './words';
+import categories from './categories';
 import { ResultSetHeader, OkPacket, RowDataPacket } from 'mysql2';
 
 export default {
     words,
+    categories,
 };
 
 export type rowsType = RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader | Array<object>;
