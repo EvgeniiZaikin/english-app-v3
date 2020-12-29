@@ -42,3 +42,8 @@ export default globalAlert;
 
 export const showGlobalAlert = (type: AlertTypes, text: string) => action<object>(SHOW_GLOBAL_ALERT, { type, text });
 export const hideGlobalAlert = () => action(HIDE_GLOBAL_ALERT);
+export const delayHideGlobalAlert = (dispatch: Function, delay: number) => {
+    setTimeout(() => {
+        dispatch(hideGlobalAlert());  
+    }, delay);
+};
