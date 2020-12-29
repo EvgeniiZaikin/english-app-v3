@@ -4,6 +4,8 @@ import GlobalLoading from './global-loading';
 import RuValueInput from './ru-value-input';
 import EnValueInput from './en-value-unput';
 import CategorySelect from './category-select';
+import TypeRadioButtons from './type-radio-buttons';
+import SaveButton from './save-button';
 
 export default {
     MainLayout,
@@ -12,4 +14,6 @@ export default {
     RuValueInput,
     EnValueInput,
     CategorySelect,
+    TypeRadioButtons,
+    SaveButton,
 };
