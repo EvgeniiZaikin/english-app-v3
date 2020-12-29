@@ -15,4 +15,13 @@ router.get(`/categories`, async (_: Request, res: Response) => {
     }
 });
 
+router.post(`/category`, async (req: Request, res: Response) => {
+    try {
+        const result: queryResultType = await connection.promise().query(queries.categories.createCategory(req.body.label));
+        return res.send(successResponse());
+    } catch (error: any) {
+        return res.send(badResponse(error));
+    }
+});
+
 export default router;
