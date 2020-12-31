@@ -24,9 +24,14 @@ const createPage: NextPage = () : ReactElement => (
 );
 
 createPage.getInitialProps = async ({ req, store } : NextPageContext) => {
-    const host: string = process.browser ? window.location.origin : `http://${ req!.headers.host }`;
-
     try {
+        let host: string = '';
+        if (process.browser) host = window.location.origin;
+        else if (req) host = `http://${ req.headers.host }`;
+        else {
+            throw new Error(`Can not get request object!`);
+        }
+
         const { data }: { data: IResponse } = await axios.get(`${ host }/api/categories/categories`);
         const categories: Array<string> = data.result.map((item: ICategory) => item.category_label);
         store.dispatch(setEnabledCategories(categories));
