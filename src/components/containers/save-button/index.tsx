@@ -4,7 +4,9 @@ import SaveIcon from '@material-ui/icons/Save';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
-import { Dispatch } from 'redux';
+import { AnyAction } from 'redux';
+import { createWordOrCategory } from '../../../store/reducers/create';
+import { ThunkDispatch } from 'redux-thunk';
 
 const theme = createMuiTheme({
     palette: {
@@ -20,10 +22,11 @@ interface IProps {
     ruValue: string | null,
     category: string,
     enValue: string | null,
+    create: Function,
 };
 
 const saveButton: FC<IProps> = ({ 
-    type, ruValue, category, enValue,
+    type, ruValue, category, enValue, create,
 }) : ReactElement => {
     const disabled: boolean = 
         type === `word` ? !ruValue || !category || !enValue :
@@ -32,7 +35,11 @@ const saveButton: FC<IProps> = ({
     const save = () => {
         /*type === `word` ? createNewWord({ ruValue, enValue, category }) :
         type === `category` ? createNewCategory({ label: ruValue }) :*/
-        alert(`Wrong type for save action!`);
+        try {
+            create(type, { ruValue, category_label: ruValue, enValue, category });
+        } catch (error) {
+            alert('Something was wrong!');
+        }
     };
 
     return (
@@ -52,8 +59,9 @@ const mapStateToProps = (state: reducersState) => {
     return { type, ruValue, enValue, category };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {};
+const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+    const create = (type: string, params: object) => dispatch(createWordOrCategory(type, params));
+    return { create };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(saveButton);
