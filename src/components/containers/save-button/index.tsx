@@ -19,9 +19,9 @@ const theme = createMuiTheme({
 
 interface IProps {
     type: string,
-    ruValue: string | null,
+    ruValue: string,
     category: string,
-    enValue: string | null,
+    enValue: string,
     create: Function,
 };
 

@@ -55,28 +55,29 @@ export default create;
 export const setType = (type: string) => action<string>(SET_TYPE, type);
 export const setRuValue = (value: string) => action<string>(SET_RU_VALUE, value);
 export const setEnValue = (value: string) => action<string>(SET_EN_VALUE, value);
-export const setCategory = (category: string) => action<string>(SET_RU_VALUE, category);
+export const setCategory = (category: string) => action<string>(SET_CATEGORY, category);
 export const setEnabledCategories = (categories: Array<string>) => action<Array<string>>(SET_ENABLE_CATEGORIES, categories);
 
 export const createWordOrCategory = (type: string, params: object) => async (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
     dispatch(showGlobalLoading());
 
     try {
-        const url: string = type === 'word' ? `/api/word` : `/api/category`;
+        const url: string = type === 'word' ? `/api/words/word` : `/api/categories/category`;
         const { data: { status, error } }: { data: IResponse } = await axios.post(url, params);
 
         if (status) {
-            dispatch(showGlobalAlert(AlertTypes.SUCCESS, `${ type } successfully save!`));
+            dispatch(showGlobalAlert(AlertTypes.SUCCESS, `${ type.charAt(0).toUpperCase() + type.slice(1) } successfully save!`));
         } else {
             const { message } = error;
     
-            let label = `${ type } did not save!`;
+            let label = `${ type.charAt(0).toUpperCase() + type.slice(1) } did not save!`;
             message.includes(`Duplicate entry`) && (label += ` This ${ type } already exists!`);
 
             dispatch(showGlobalAlert(AlertTypes.ERROR, label));
             console.log(error);
         }
 
+        delayHideGlobalAlert(dispatch, 1500);
     } catch (error: any) {
         dispatch(showGlobalAlert(AlertTypes.ERROR, `Error with save ${ type }!`));
         console.log(error);

@@ -20,7 +20,7 @@ const globalLoading: Reducer<IState, AnyAction> = (state = initialState, action)
             return { ...hydrateState };
         case SHOW_GLOBAL_LOADING:
             return { ...state, show: true };
-        case SHOW_GLOBAL_LOADING:
+        case HIDE_GLOBAL_LOADING:
             return { ...state, show: false };
         default:
             return { ...state };
