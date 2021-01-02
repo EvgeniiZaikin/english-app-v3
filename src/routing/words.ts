@@ -12,10 +12,29 @@ interface IWord {
     word_count_success_guesses: number,
 };
 
+interface IFoundedWord {
+    word_ru_value: string,
+    word_en_value: string,
+    category_label: string,
+};
+
 const router: Router = express.Router();
 
-router.get(`/word`, (_: Request, res: Response) => {
-    res.send(successResponse(`Ok!`));
+router.get(`/word`, async (req: Request, res: Response) => {
+    try {
+        const query: string = queries.words.getWordByValue(req.query.ruValue as string, req.query.enValue as string);
+        const [ rows ]: queryResultType = await connection.promise().query(query);
+        const { word_ru_value, word_en_value, category_label } = (rows as [IFoundedWord])[0];
+
+        const result: Array<object> = [{
+            ruValue: word_ru_value,
+            enValue: word_en_value,
+            category: category_label,
+        }];
+        return res.send(successResponse(result));
+    } catch (error: any) {
+        return res.send(badResponse(error));
+    }
 });
 
 router.post(`/word`, async (req: Request, res: Response) => {
