@@ -5,6 +5,7 @@ import theme from './theme';
 import create from './create';
 import globalLoading from './global-loading';
 import globalAlert from './global-alert';
+import search from './search';
 
 export default combineReducers({
     test,
@@ -13,6 +14,7 @@ export default combineReducers({
     create,
     globalLoading,
     globalAlert,
+    search,
 });
 
 interface IAction<P> {
