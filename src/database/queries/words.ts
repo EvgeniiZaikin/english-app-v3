@@ -29,4 +29,20 @@ export default {
             w.word_ru_value = '${ ruValue }'
             OR w.word_en_value = '${ enValue }';
     `,
+
+    getGuessWord: () : string => `
+        SELECT 
+            w.word_id AS "wordId",
+            w.word_ru_value AS "ruValue",
+            w.word_en_value AS "enValue",
+            cat.category_label AS "category"
+        FROM 
+            words AS w
+            LEFT JOIN categories_words_bunch AS cwb ON w.word_id = cwb.bunch_word_id
+            LEFT JOIN categories AS cat ON cwb.bunch_category_id = cat.category_id
+        ORDER BY 
+            w.word_count_views, 
+            w.word_count_success_guesses 
+        LIMIT 4;
+    `,
 };

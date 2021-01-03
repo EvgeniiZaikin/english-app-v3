@@ -18,6 +18,13 @@ interface IFoundedWord {
     category_label: string,
 };
 
+interface IGuessWord {
+    wordId: number,
+    ruValue: string,
+    enValue: string,
+    category: string | null,
+};
+
 const router: Router = express.Router();
 
 router.get(`/word`, async (req: Request, res: Response) => {
@@ -31,6 +38,31 @@ router.get(`/word`, async (req: Request, res: Response) => {
             enValue: word_en_value,
             category: category_label,
         }];
+
+        return res.send(successResponse(result));
+    } catch (error: any) {
+        return res.send(badResponse(error));
+    }
+});
+
+router.get(`/guess-word`, async (req: Request, res: Response) => {
+    try {
+        const [ rows ]: queryResultType = await connection.promise().query(queries.words.getGuessWord());
+
+        const { ruValue, wordId, category, enValue } = (rows as [IGuessWord])[0];
+        const enValues: Array<string> = 
+            (rows as [IGuessWord])
+            .map((item: IGuessWord) => item.enValue)
+            .sort(() => 0.5 - Math.random());
+
+        const result: Array<object> = [{
+            word: ruValue,
+            wordId,
+            category: category || `Без категории`,
+            rightEnValue: enValue,
+            enValues,
+        }];
+
         return res.send(successResponse(result));
     } catch (error: any) {
         return res.send(badResponse(error));
