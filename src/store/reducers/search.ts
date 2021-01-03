@@ -50,7 +50,7 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
                 enValue: '',
                 category: '',
             }));
-            throw new Error(`Status search word is false! Error: ${error}`);
+            throw new Error(`Status search word is false! Error: ${ error.toString() }`);
         }
     } catch (exception: any) {
         dispatch(showGlobalAlert(AlertTypes.ERROR, 'Can not search word!'));

@@ -4,6 +4,7 @@ import Input from './input';
 import RadioButtons from './radio-buttons';
 import Select from './select';
 import WordCard from './word-card';
+import SearchPageWrapper from './search-page-wrapper';
 
 export default {
     NavigationItem,
@@ -12,4 +13,5 @@ export default {
     RadioButtons,
     Select,
     WordCard,
+    SearchPageWrapper,
 };
