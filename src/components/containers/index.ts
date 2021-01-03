@@ -7,6 +7,8 @@ import CategorySelect from './category-select';
 import TypeRadioButtons from './type-radio-buttons';
 import SaveButton from './save-button';
 import CreatePageWrapper from './create-page-wrapper';
+import SearchInfo from './search-info';
+import SearchInput from './search-input';
 
 export default {
     MainLayout,
@@ -18,4 +20,6 @@ export default {
     TypeRadioButtons,
     SaveButton,
     CreatePageWrapper,
+    SearchInfo,
+    SearchInput,
 };
