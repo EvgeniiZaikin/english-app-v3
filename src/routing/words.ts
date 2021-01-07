@@ -45,7 +45,7 @@ router.get(`/word`, async (req: Request, res: Response) => {
     }
 });
 
-router.get(`/guess-word`, async (req: Request, res: Response) => {
+router.get(`/guess-word`, async (_: Request, res: Response) => {
     try {
         const [ rows ]: queryResultType = await connection.promise().query(queries.words.getGuessWord());
 
