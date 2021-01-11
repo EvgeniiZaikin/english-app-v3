@@ -1,3 +1,7 @@
-export const wordCard__category: string;
-export const wordCard__container: string;
-export const wordCard__word: string;
+declare const styles: {
+  readonly "wordCard__category": string;
+  readonly "wordCard__container": string;
+  readonly "wordCard__word": string;
+};
+export = styles;
+

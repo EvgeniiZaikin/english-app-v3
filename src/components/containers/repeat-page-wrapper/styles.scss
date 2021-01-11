@@ -1,0 +1,16 @@
+@import '../../../assets/styles/default.scss';
+
+.repeatPage_container {
+    width: $default-width;
+    box-sizing: border-box;
+}
+
+.repeatPage__wordCard {
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.repeatPage__nextButton {
+    margin-top: 50px;
+}

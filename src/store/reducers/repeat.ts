@@ -83,7 +83,7 @@ export const setRepeatWordData = () => async (dispatch: ThunkDispatch<reducersSt
 
 export const updateWord = (params: object) => async (dispatch: Dispatch) => {
     try {
-        const { data } : { data: IResponse } = await axios.put(`/api/word`, params);
+        const { data } : { data: IResponse } = await axios.put(`/api/words/word`, params);
         const { status, error } = data;
 
         if (!status || error) {

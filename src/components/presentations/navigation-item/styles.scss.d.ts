@@ -1,2 +1,6 @@
-export const navitem__container: string;
-export const navitem__label: string;
+declare const styles: {
+  readonly "navitem__container": string;
+  readonly "navitem__label": string;
+};
+export = styles;
+

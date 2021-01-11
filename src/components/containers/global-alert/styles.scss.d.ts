@@ -1,1 +1,5 @@
-export const alert__container: string;
+declare const styles: {
+  readonly "alert__container": string;
+};
+export = styles;
+

@@ -1,1 +1,5 @@
-export const searchWordInfo__container: string;
+declare const styles: {
+  readonly "searchWordInfo__container": string;
+};
+export = styles;
+

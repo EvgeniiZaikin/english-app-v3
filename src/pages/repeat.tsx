@@ -22,7 +22,7 @@ interface IResponse {
 const repeatPage: NextPage = () : ReactElement => {
     return (
         <Containers.MainLayout>
-            
+            <Containers.RepeatPageWrapper />
         </Containers.MainLayout>
     );
 };
@@ -36,7 +36,7 @@ repeatPage.getInitialProps = async ({ req, store } : NextPageContext) => {
             throw new Error(`Can not get request object!`);
         }
 
-        const { data }: { data: IResponse } = await axios.get(`${ host }/api/words/guess-words`);
+        const { data }: { data: IResponse } = await axios.get(`${ host }/api/words/guess-word`);
         const { status, result, error } = data;
         if (status && !error) {
             const [ words ] = result;
