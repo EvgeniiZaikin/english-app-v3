@@ -1,5 +1,1 @@
-declare const styles: {
-  readonly "wrapper__container": string;
-};
-export = styles;
-
+export const wrapper__container: string;

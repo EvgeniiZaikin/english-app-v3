@@ -9,6 +9,8 @@ import SaveButton from './save-button';
 import CreatePageWrapper from './create-page-wrapper';
 import SearchInfo from './search-info';
 import SearchInput from './search-input';
+import NextButton from './next-button';
+import TranslateVariant from './translate-variant';
 
 export default {
     MainLayout,
@@ -22,4 +24,6 @@ export default {
     CreatePageWrapper,
     SearchInfo,
     SearchInput,
+    NextButton,
+    TranslateVariant,
 };

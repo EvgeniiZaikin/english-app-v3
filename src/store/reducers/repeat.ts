@@ -1,4 +1,4 @@
-import { Reducer, AnyAction } from 'redux';
+import { Reducer, AnyAction, Dispatch } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 import { action } from '../reducers';
 import { ThunkDispatch } from 'redux-thunk';
@@ -79,4 +79,22 @@ export const setRepeatWordData = () => async (dispatch: ThunkDispatch<reducersSt
     }
 
     dispatch(hideGlobalLoading());
+};
+
+export const updateWord = (params: object) => async (dispatch: Dispatch) => {
+    try {
+        const { data } : { data: IResponse } = await axios.put(`/api/word`, params);
+        const { status, error } = data;
+
+        if (!status || error) {
+            dispatch(showGlobalAlert(AlertTypes.ERROR, 'Word did not update!'));
+            console.log(error);
+            delayHideGlobalAlert(dispatch, 1500);
+        }
+    } catch (exception: any) {
+        dispatch(showGlobalAlert(AlertTypes.ERROR, 'Word did not update!'));
+        console.log(exception);
+        
+        delayHideGlobalAlert(dispatch, 1500);
+    }
 };

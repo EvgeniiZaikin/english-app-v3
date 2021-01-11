@@ -1,5 +1,1 @@
-declare const styles: {
-  readonly "searchWordInfo__container": string;
-};
-export = styles;
-
+export const searchWordInfo__container: string;

@@ -1,5 +1,1 @@
-declare const styles: {
-  readonly "backdrop__container": string;
-};
-export = styles;
-
+export const backdrop__container: string;

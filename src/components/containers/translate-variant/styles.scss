@@ -1,0 +1,32 @@
+.translateVariant__button {
+    border: none;
+    padding: 15px 0;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, .3);
+    transition: all .2s ease;
+}
+
+.translateVariant__button:hover {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.translateVariant__button:disabled {
+    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.translateVariant__button_neutral {
+    background: transparent;
+    color: black;
+}
+
+.translateVariant__button_success {
+    background: green !important;
+    color: #e2e2e2;
+}
+
+.translateVariant__button_error {
+    background: darkred !important;
+    color: #e2e2e2;
+}
