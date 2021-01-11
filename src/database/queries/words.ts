@@ -45,4 +45,21 @@ export default {
             w.word_count_success_guesses 
         LIMIT 4;
     `,
+
+    updateWord: (id: number, ruValue: string, enValue: string, incrementViews: boolean, success: boolean) : string => {
+        const count_success_guesses : string = success ? 'word_count_success_guesses + 1' : 'word_count_success_guesses';
+        const count_views : string = incrementViews ? 'word_count_views + 1' : 'word_count_views';
+
+        return `
+            UPDATE 
+                words
+            SET
+                word_ru_value = '${ ruValue }',
+                word_en_value = '${ enValue }',
+                word_count_views = ${ count_views },
+                word_count_success_guesses = ${ count_success_guesses }
+            WHERE
+                word_id = ${ id }
+        `;
+    },
 };

@@ -84,4 +84,14 @@ router.post(`/word`, async (req: Request, res: Response) => {
     }
 });
 
+router.put(`/word`, async (req: Request, res: Response) => {
+    try {
+        const { id, ruValue, enValue, incrementViews, success } = req.body;
+        await connection.promise().query(queries.words.updateWord(id, ruValue, enValue, incrementViews, success));
+        return res.send(successResponse());
+    } catch (error: any) {
+        return res.send(badResponse(error));
+    }
+});
+
 export default router;
