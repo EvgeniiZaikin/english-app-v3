@@ -1,25 +1,22 @@
-import { connect } from 'react-redux';
-import { NextPage, NextPageContext } from 'next';
-import Test from '../components/test';
-import { setTick } from '../store/reducers/test';
-import Presentations from '@presentations';
-import Containers from '@containers';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { NextPage } from 'next';
 
-const indexPage: NextPage = () => {
+import Containers from '@containers';
+import Presentations from '@presentations';
+
+const indexPage: NextPage = () : ReactElement => {
+    const [ hide, toggleHide ] = useState(true);
+
+    useEffect(() => {
+        let interval = setInterval(() => toggleHide(!hide), 1750);
+        return () => clearInterval(interval);
+    }, [ hide ]);
+
     return (
         <Containers.MainLayout>
-            <div>Hello World Next - Typescript - Express</div>
-            <Test />
-            <Presentations.NavigationItem action={() => {}} />
+            <Presentations.LettersTable hide={ hide } />
         </Containers.MainLayout>
     );
 };
 
-indexPage.getInitialProps = ({ store, pathname } : NextPageContext) => {
-    console.log('2. Page.getInitialProps uses the store to dispatch things');
-    // store.dispatch({ type: 'TICK', payload: 'GET INITIAL PROPS SUKA was set in error page ' + pathname });
-    store.dispatch(setTick('GET INITIAL PROPS SUKA was set in error page ' + pathname));
-    return {};
-};
-
-export default connect(state => state)(indexPage);
+export default indexPage;
