@@ -1,5 +1,8 @@
 import { ReactElement, FC, useState } from 'react';
-import styles, { translateVariant__button } from './styles.scss';
+import { 
+    translateVariant__button, translateVariant__button_neutral, 
+    translateVariant__button_success, translateVariant__button_error,
+} from './styles.scss';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { AnyAction } from 'redux';
@@ -17,21 +20,22 @@ interface IProps {
     updateGuessedWord: Function,
 };
 
-const click: Function = (currentValue: string, rightValue: string, handler: Function, openNextButton: Function, setGuessedWordStatus: Function, update: Function) : void => {
-    const status: string = currentValue === rightValue ? `success` : `error`;
-    handler(status);
-    openNextButton();
-    setGuessedWordStatus(currentValue === rightValue);
-    update(currentValue === rightValue);
-};
+const translateVariant: FC<IProps> = ({ 
+    value, rightEnValue, wordId, wordRuValue, openNextButton, setGuessedWordStatus, finished, updateGuessedWord 
+}) : ReactElement => {
+    const [ style, setStyle ] = useState(translateVariant__button_neutral);
 
-const translateVariant: FC<IProps> = ({ value, rightEnValue, wordId, wordRuValue, openNextButton, setGuessedWordStatus, finished, updateGuessedWord }) : ReactElement => {
-    const [ status, setStatus ] = useState('neutral');
+    const classes: string = `${ translateVariant__button } ${ style }`;
 
-    const buttonClass = `translateVariant__button_${status}`;
-    const classes: string = `${translateVariant__button} ${buttonClass}`;
-    const update: Function = (guessed: boolean) => {
-        return updateGuessedWord({
+    const click = () => {
+        const guessed: boolean = value === rightEnValue;
+
+        const style: string = guessed ? translateVariant__button_success : translateVariant__button_error;
+        setStyle(style);
+
+        openNextButton();
+        setGuessedWordStatus(guessed);
+        updateGuessedWord({
             id: wordId,
             ruValue: wordRuValue,
             enValue: rightEnValue,
@@ -41,7 +45,7 @@ const translateVariant: FC<IProps> = ({ value, rightEnValue, wordId, wordRuValue
     };
 
     return (
-        <button disabled={ finished } className={ classes } onClick={ () => click(value, rightEnValue, setStatus, openNextButton, setGuessedWordStatus, update) }>
+        <button disabled={ finished } className={ classes } onClick={ click }>
             { value }
         </button>
     );
