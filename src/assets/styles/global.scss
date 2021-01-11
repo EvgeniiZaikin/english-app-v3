@@ -1,9 +1,3 @@
 body {
     overflow: hidden;
 }
-
-@media (orientation: landscape) {
-    body {
-      transform: rotate(-90deg);
-    }
-}
