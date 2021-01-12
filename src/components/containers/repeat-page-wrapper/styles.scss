@@ -11,6 +11,28 @@
     align-items: center;
 }
 
+.repeatPage__variants {
+    display: block;
+}
+
 .repeatPage__nextButton {
     margin-top: 50px;
+}
+
+@media screen and (max-height: 415px) {
+    .repeatPage_container {
+        width: 80vw;
+    }
+
+    .repeatPage__wordCard {
+        margin-bottom: 25px;
+    }
+
+    .repeatPage__variants {
+        display: flex;
+    }
+
+    .repeatPage__nextButton {
+        margin-top: 25px;
+    }
 }

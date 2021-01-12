@@ -3,7 +3,7 @@
     padding: 15px 0;
     cursor: pointer;
     width: 100%;
-    box-shadow: 0 5px 5px -5px rgba(0, 0, 0, .3);
+    box-shadow: 5px 5px 5px -7px rgba(0, 0, 0, .3), -5px 5px 5px -7px rgba(0, 0, 0, .3);
     transition: all .2s ease;
 }
 
@@ -29,4 +29,11 @@
 .translateVariant__button_error {
     background: darkred !important;
     color: #e2e2e2;
+}
+
+@media screen and (max-height: 415px) {
+    .translateVariant__button {
+        padding: 15px 5px;
+        margin: 0 5px;
+    }
 }

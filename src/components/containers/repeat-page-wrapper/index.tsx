@@ -1,5 +1,5 @@
 import { ReactElement, FC, Fragment } from 'react';
-import { repeatPage_container, repeatPage__wordCard, repeatPage__nextButton } from './styles.scss';
+import { repeatPage_container, repeatPage__wordCard, repeatPage__nextButton, repeatPage__variants } from './styles.scss';
 import { connect } from 'react-redux';
 import Presentations from '@presentations';
 import Containers from '@containers';
@@ -17,7 +17,7 @@ const repeatPageWrapper: FC<IProps> = ({ word, category, enValues }) : ReactElem
             <div className={ repeatPage__wordCard }>
                 <Presentations.WordCard word={ word } category={ category } />
             </div>
-            <div>
+            <div className={ repeatPage__variants }>
                 {
                     enValues.map((variant: string, index: number) => {
                         return (
