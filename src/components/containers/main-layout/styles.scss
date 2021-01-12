@@ -25,6 +25,10 @@
 
 .footer {
     transition: all .3s ease;
+    position: absolute;
+    width: 100vw;
+    background-color: lightgray;
+    padding-top: 4px;
 }
 
 .layout__footer {
@@ -34,9 +38,9 @@
 }
 
 .layout__footer_hide {
-    margin-bottom: -62px;
+    bottom: -62px;
 }
 
 .layout__footer_show {
-    margin-bottom: 0px;
+    bottom: 0px;
 }
