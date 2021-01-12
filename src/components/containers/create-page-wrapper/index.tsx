@@ -1,7 +1,9 @@
 import React, { FC, ReactElement } from 'react';
 import Containers from '@containers';
-import { layout__container, layout__wrap, layout__save } from './styles.scss';
-import { Divider } from '@material-ui/core';
+import { 
+    layout__container, layout__wrap, layout__save, 
+    layout__values, layout__divider, layout__top
+} from './styles.scss';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
 
@@ -13,11 +15,15 @@ const createPageWrapper: FC<IProps> = ({ type }) : ReactElement => {
     return (
         <div className={ layout__container }>
             <div className={ layout__wrap }>
-                <Containers.TypeRadioButtons />
-                <Divider />
-                { type === `word` && <Containers.CategorySelect /> }
-                <Containers.RuValueInput />
-                { type === `word` && <Containers.EnValueInput /> }
+                <div className={ layout__top }>
+                    <Containers.TypeRadioButtons />
+                    <hr className={ layout__divider } />
+                    { type === `word` && <Containers.CategorySelect /> }
+                </div>
+                <div className={ layout__values }>
+                    <Containers.RuValueInput />
+                    { type === `word` && <Containers.EnValueInput /> }
+                </div>
                 <div className={ layout__save }>
                     <Containers.SaveButton />
                 </div>

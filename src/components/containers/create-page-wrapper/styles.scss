@@ -8,10 +8,49 @@
     justify-content: center;
 }
 
+.layout__top {
+    display: block;
+}
+
+.layout__divider {
+    border: none;
+    height: 1px;
+    margin: 0;
+    flex-shrink: 0;
+    background-color: rgba(0, 0, 0, 0.12);
+    margin-bottom: 25px;
+}
+
 .layout__wrap {
     width: $default-width;
 }
 
+.layout__values {
+    display: block;
+}
+
 .layout__save {
     margin-top: 50px;
+}
+
+@media screen and (max-height: 415px) {
+    .layout__wrap {
+        width: 80vw;
+    }
+
+    .layout__top {
+        display: flex;
+    }    
+
+    .layout__divider {
+        display: none;
+    }
+
+    .layout__values {
+        display: flex;
+    }
+
+    .layout__save {
+        margin-top: 25px;
+    }
 }
