@@ -47,11 +47,32 @@ router.get(`/word`, async (req: Request, res: Response) => {
 
 router.get(`/guess-word`, async (_: Request, res: Response) => {
     try {
-        const [ rows ]: queryResultType = await connection.promise().query(queries.words.getGuessWord());
+        const [ rows ]: queryResultType = await connection.promise().query(queries.words.getGuessWords(4));
+        const basicWords = (rows as [IGuessWord]);
 
         const { ruValue, wordId, category, enValue } = (rows as [IGuessWord])[0];
-        const enValues: Array<string> = 
-            (rows as [IGuessWord])
+
+        let isRepeatValue: boolean = false;
+        let countRepeatValues: number = 0;
+        let guessWords: Array<IGuessWord> = [basicWords[0]];
+        for (let i = 1; i < basicWords.length; i ++) {
+            if (basicWords[i].ruValue === ruValue) {
+                isRepeatValue = true;
+                countRepeatValues++;
+            } else {
+                guessWords.push(basicWords[i]);
+            }
+        }
+
+        if (isRepeatValue) {
+            const values: Array<string> = basicWords.map((item: IGuessWord) => item.ruValue);
+            const [ rows ]: queryResultType = 
+                await connection.promise().query(queries.words.getGuessWords(countRepeatValues, values));
+                
+            guessWords.push(...(rows as [IGuessWord]));
+        }
+
+        const enValues: Array<string> = guessWords
             .map((item: IGuessWord) => item.enValue)
             .sort(() => 0.5 - Math.random());
 
