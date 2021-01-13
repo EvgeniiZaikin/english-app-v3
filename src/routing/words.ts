@@ -1,6 +1,6 @@
 
 import express, { Router, Request, Response } from 'express';
-import { badResponse, queryResultType, successResponse, dbRequest } from './index';
+import { badResponse, queryResultType, successResponse, dbRequest, endpoint } from './index';
 import queries from '../database/queries';
 
 interface IWord {
@@ -27,10 +27,10 @@ interface IGuessWord {
 const router: Router = express.Router();
 
 router.get(`/word`, async (req: Request, res: Response) => {
-    try {
+    const logic = async () : Promise<object[]> => {
         const query: string = queries.words.getWordByValue(req.query.ruValue as string, req.query.enValue as string);
         const [ rows ]: queryResultType = await dbRequest(query);
-        const { word_ru_value, word_en_value, category_label } = (rows as [IFoundedWord])[0];
+        const { word_ru_value, word_en_value, category_label } = (rows as [ IFoundedWord ])[0];
 
         const result: Array<object> = [{
             ruValue: word_ru_value,
@@ -38,18 +38,18 @@ router.get(`/word`, async (req: Request, res: Response) => {
             category: category_label,
         }];
 
-        return res.send(successResponse(result));
-    } catch (error: any) {
-        return res.send(badResponse(error));
-    }
+        return result;
+    };
+
+    await endpoint(res, logic);
 });
 
 router.get(`/guess-word`, async (_: Request, res: Response) => {
-    try {
+    const logic = async () : Promise<object[]> => {
         const [ rows ]: queryResultType = await dbRequest(queries.words.getGuessWords(4));
-        const basicWords = (rows as [IGuessWord]);
+        const basicWords = (rows as [ IGuessWord ]);
 
-        const { ruValue, wordId, category, enValue } = (rows as [IGuessWord])[0];
+        const { ruValue, wordId, category, enValue } = basicWords[0];
 
         let isRepeatValue: boolean = false;
         let countRepeatValues: number = 0;
@@ -81,35 +81,32 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
             enValues,
         }];
 
-        return res.send(successResponse(result));
-    } catch (error: any) {
-        return res.send(badResponse(error));
-    }
+        return result;
+    };
+
+    await endpoint(res, logic);
 });
 
 router.post(`/word`, async (req: Request, res: Response) => {
-    try {
+    const logic = async () : Promise<void> => {
         await dbRequest(queries.words.createWord(req.body.ruValue, req.body.enValue));
 
         const [ rows ]: queryResultType = await dbRequest(queries.words.getLastAddedWord()); 
         
         const wordId: number = (rows as [IWord])[0].word_id;
         await dbRequest(queries.categoriesWordsBunch.post(wordId, req.body.category));
+    };
 
-        return res.send(successResponse());
-    } catch (error: any) {
-        return res.send(badResponse(error));
-    }
+    await endpoint(res, logic);
 });
 
 router.put(`/word`, async (req: Request, res: Response) => {
-    try {
+    const logic = async () : Promise<void> => {
         const { id, ruValue, enValue, incrementViews, success } = req.body;
         await dbRequest(queries.words.updateWord(id, ruValue, enValue, incrementViews, success));
-        return res.send(successResponse());
-    } catch (error: any) {
-        return res.send(badResponse(error));
-    }
+    };
+
+    await endpoint(res, logic);
 });
 
 export default router;

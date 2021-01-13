@@ -2,6 +2,7 @@ import words from './words';
 import categories from './categories';
 import { ResultSetHeader, OkPacket, RowDataPacket, FieldPacket } from 'mysql2';
 import connection from '../database';
+import { Response } from 'express';
 
 export default {
     words,
@@ -37,4 +38,13 @@ export const badResponse = (error: any) : IResponse => {
         result: null,
         error,
     };
+};
+
+export const endpoint = async (res: Response, logic: Function) : Promise<Response<any>> => {
+    try {
+        const data: resultType = await logic();
+        return res.send(successResponse(data));
+    } catch (error: any) {
+        return res.send(badResponse(error.toString()));
+    }
 };
