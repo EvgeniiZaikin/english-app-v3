@@ -1,6 +1,6 @@
 import { Reducer, AnyAction, Dispatch } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { action } from '../reducers';
+import { action } from '@rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { reducersState } from '@store';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';

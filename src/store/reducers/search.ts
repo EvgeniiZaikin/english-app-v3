@@ -1,6 +1,6 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { action } from '../reducers';
+import { action } from '@rootReducer';
 import axios from 'axios';
 import { showGlobalAlert, AlertTypes, delayHideGlobalAlert } from './global-alert';
 import { AsyncDispatch } from '@utils/types';

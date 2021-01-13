@@ -1,6 +1,6 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { action } from '../reducers';
+import { action } from '@rootReducer';
 
 const SHOW_GLOBAL_ALERT: string = 'SHOW_GLOBAL_ALERT';
 const HIDE_GLOBAL_ALERT: string = 'HIDE_GLOBAL_ALERT';

@@ -1,6 +1,6 @@
 import { Reducer, AnyAction } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { action } from '../reducers';
+import { action } from '@rootReducer';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
 import { showGlobalAlert, delayHideGlobalAlert, AlertTypes } from './global-alert';
 import { IResponse } from '@utils/interfaces';

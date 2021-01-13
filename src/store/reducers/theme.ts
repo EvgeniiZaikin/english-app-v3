@@ -1,6 +1,6 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { action } from '../reducers';
+import { action } from '@rootReducer';
 
 export const SET_APP_THEME = 'SET_APP_THEME';
 

@@ -1,6 +1,6 @@
 import { Reducer, AnyAction } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { action } from '../reducers';
+import { action } from '@rootReducer';
 
 const SHOW_GLOBAL_LOADING: string = 'SHOW_GLOBAL_LOADING';
 const HIDE_GLOBAL_LOADING: string = 'HIDE_GLOBAL_LOADING';
