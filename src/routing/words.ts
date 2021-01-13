@@ -1,8 +1,7 @@
 
 import express, { Router, Request, Response } from 'express';
-import { badResponse, queryResultType, successResponse } from './index';
+import { badResponse, queryResultType, successResponse, dbRequest } from './index';
 import queries from '../database/queries';
-import connection from '../database';
 
 interface IWord {
     word_id: number,
@@ -30,7 +29,7 @@ const router: Router = express.Router();
 router.get(`/word`, async (req: Request, res: Response) => {
     try {
         const query: string = queries.words.getWordByValue(req.query.ruValue as string, req.query.enValue as string);
-        const [ rows ]: queryResultType = await connection.promise().query(query);
+        const [ rows ]: queryResultType = await dbRequest(query);
         const { word_ru_value, word_en_value, category_label } = (rows as [IFoundedWord])[0];
 
         const result: Array<object> = [{
@@ -47,7 +46,7 @@ router.get(`/word`, async (req: Request, res: Response) => {
 
 router.get(`/guess-word`, async (_: Request, res: Response) => {
     try {
-        const [ rows ]: queryResultType = await connection.promise().query(queries.words.getGuessWords(4));
+        const [ rows ]: queryResultType = await dbRequest(queries.words.getGuessWords(4));
         const basicWords = (rows as [IGuessWord]);
 
         const { ruValue, wordId, category, enValue } = (rows as [IGuessWord])[0];
@@ -66,9 +65,7 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
 
         if (isRepeatValue) {
             const values: Array<string> = basicWords.map((item: IGuessWord) => item.ruValue);
-            const [ rows ]: queryResultType = 
-                await connection.promise().query(queries.words.getGuessWords(countRepeatValues, values));
-                
+            const [ rows ]: queryResultType = await dbRequest(queries.words.getGuessWords(countRepeatValues, values));
             guessWords.push(...(rows as [IGuessWord]));
         }
 
@@ -92,12 +89,12 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
 
 router.post(`/word`, async (req: Request, res: Response) => {
     try {
-        await connection.promise().query(queries.words.createWord(req.body.ruValue, req.body.enValue));
+        await dbRequest(queries.words.createWord(req.body.ruValue, req.body.enValue));
 
-        const [ rows ]: queryResultType = await connection.promise().query(queries.words.getLastAddedWord()); 
+        const [ rows ]: queryResultType = await dbRequest(queries.words.getLastAddedWord()); 
         
         const wordId: number = (rows as [IWord])[0].word_id;
-        await connection.promise().query(queries.categoriesWordsBunch.post(wordId, req.body.category));
+        await dbRequest(queries.categoriesWordsBunch.post(wordId, req.body.category));
 
         return res.send(successResponse());
     } catch (error: any) {
@@ -108,7 +105,7 @@ router.post(`/word`, async (req: Request, res: Response) => {
 router.put(`/word`, async (req: Request, res: Response) => {
     try {
         const { id, ruValue, enValue, incrementViews, success } = req.body;
-        await connection.promise().query(queries.words.updateWord(id, ruValue, enValue, incrementViews, success));
+        await dbRequest(queries.words.updateWord(id, ruValue, enValue, incrementViews, success));
         return res.send(successResponse());
     } catch (error: any) {
         return res.send(badResponse(error));
