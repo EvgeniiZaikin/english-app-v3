@@ -4,7 +4,7 @@ import { alert__container } from './styles.scss';
 import { connect } from 'react-redux';
 import Collapse from '@material-ui/core/Collapse';
 import { reducersState } from '@store';
-import { AlertTypes } from '../../../store/reducers/global-alert';
+import { AlertTypes } from '@reducers/global-alert';
 
 interface IProps {
     show: boolean,

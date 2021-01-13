@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
 import Containers from '@containers';
-import { setRepeatWordInfo } from '../store/reducers/repeat';
+import { setRepeatWordInfo } from '@reducers/repeat';
 
 interface IRepeatWord {
     word: string,

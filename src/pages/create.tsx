@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { NextPage, NextPageContext } from 'next';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setEnabledCategories } from '../store/reducers/create';
+import { setEnabledCategories } from '@reducers/create';
 
 interface ICategory {
     category_id: number,

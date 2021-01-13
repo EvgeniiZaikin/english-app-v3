@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { finishRepeatWord, setRepeatWordStatus, updateWord } from '../../../store/reducers/repeat';
+import { finishRepeatWord, setRepeatWordStatus, updateWord } from '@reducers/repeat';
 
 interface IProps {
     value: string,

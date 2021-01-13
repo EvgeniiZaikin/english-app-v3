@@ -3,8 +3,8 @@ import Presentations from '@presentations';
 import { NextRouter, withRouter } from 'next/router';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
-import { toggleNavigationFullsize } from '../../../store/reducers/navigation';
-import { setAppTheme } from '../../../store/reducers/theme';
+import { toggleNavigationFullsize } from '@reducers/navigation';
+import { setAppTheme } from '@reducers/theme';
 import { Dispatch } from 'redux';
 
 import styles, { footer, layout__container, layout__content, layout__footer } from './styles.scss';

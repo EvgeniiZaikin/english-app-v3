@@ -24,6 +24,7 @@ module.exports = withTypescript(withSass({
       config.resolve.alias['@presentations'] = path.join(__dirname, 'src/components/presentations');
       config.resolve.alias['@containers'] = path.join(__dirname, 'src/components/containers');
       config.resolve.alias['@store'] = path.join(__dirname, 'src/store');
+      config.resolve.alias['@reducers/*'] = path.join(__dirname, 'src/store/reducers/*');
       /* config.resolve.alias['@defaultStyles'] = path.join(__dirname, 'src/client/assets/styles/default.scss');
       config.resolve.alias['@actions'] = path.join(__dirname, 'src/client/store/actions'); */
 

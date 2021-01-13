@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { searchInput__container } from './styles.scss';
 import { reducersState } from '@store';
 import { AnyAction } from 'redux';
-import { setSearchData } from '../../../store/reducers/search';
+import { setSearchData } from '@reducers/search';
 import { ThunkDispatch } from 'redux-thunk';
 
 type ChangeInput = ChangeEvent<HTMLInputElement>;

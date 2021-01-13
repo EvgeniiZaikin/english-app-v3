@@ -3,7 +3,7 @@ import Presentations from '@presentations';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { Dispatch } from 'redux';
-import { setRuValue } from '../../../store/reducers/create';
+import { setRuValue } from '@reducers/create';
 
 interface IProps {
     ruValue: string,

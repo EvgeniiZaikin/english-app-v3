@@ -5,7 +5,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { AnyAction } from 'redux';
-import { createWordOrCategory } from '../../../store/reducers/create';
+import { createWordOrCategory } from '@reducers/create';
 import { ThunkDispatch } from 'redux-thunk';
 
 const theme = createMuiTheme({

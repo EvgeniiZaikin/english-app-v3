@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
-import { setRepeatWordData } from '../../../store/reducers/repeat';
+import { setRepeatWordData } from '@reducers/repeat';
 
 const theme = createMuiTheme({
     palette: {

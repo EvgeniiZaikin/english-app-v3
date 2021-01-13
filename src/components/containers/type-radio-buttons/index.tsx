@@ -3,7 +3,7 @@ import Presentations from '@presentations';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { Dispatch } from 'redux';
-import { setType } from '../../../store/reducers/create';
+import { setType } from '@reducers/create';
 
 type IProps = {
     type: string,

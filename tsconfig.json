@@ -22,6 +22,7 @@
       "@containers": ["src/components/containers"],
       "@presentations": ["src/components/presentations"],
       "@store": ["src/store"],
+      "@reducers/*": ["src/store/reducers/*"],
     }
   },
   "include": [
@@ -31,6 +32,7 @@
     "src/components/containers",
     "src/components/presentations",
     "src/store",
+    "src/store/reducers/*",
   ],
   "exclude": [
     "node_modules"
