@@ -1,10 +1,9 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
 import { action } from '../reducers';
-import { reducersState } from '@store';
 import axios from 'axios';
 import { showGlobalAlert, AlertTypes, delayHideGlobalAlert } from './global-alert';
+import { AsyncDispatch } from '@utils/types';
 
 export const SET_SEARCH_INFO: string = 'SET_SEARCH_INFO';
 
@@ -36,7 +35,7 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
 export default search;
 
 export const setSearchInfo = (info: IState) => action<IState>(SET_SEARCH_INFO, info);
-export const setSearchData = (ruValue: string, enValue: string) => async (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+export const setSearchData = (ruValue: string, enValue: string) => async (dispatch: AsyncDispatch) => {
     try {
         const { data } = await axios.get(`/api/words/word`, { params: { ruValue, enValue } });
         const { status, result, error } = data;

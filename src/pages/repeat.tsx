@@ -4,6 +4,7 @@ import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
 import Containers from '@containers';
 import { setRepeatWordInfo } from '@reducers/repeat';
+import { IResponse } from '@utils/interfaces';
 
 interface IRepeatWord {
     word: string,
@@ -11,12 +12,6 @@ interface IRepeatWord {
     category: string,
     rightEnValue: string,
     enValues: Array<string>,
-};
-
-interface IResponse {
-    status: boolean,
-    result: Array<IRepeatWord>,
-    error: any,
 };
 
 const repeatPage: NextPage = () : ReactElement => {

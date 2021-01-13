@@ -4,17 +4,12 @@ import { NextPage, NextPageContext } from 'next';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { setEnabledCategories } from '@reducers/create';
+import { IResponse } from '@utils/interfaces';
 
 interface ICategory {
     category_id: number,
     category_label: string,
     categoru_count_views: number,
-};
-
-interface IResponse {
-    status: boolean,
-    result: Array<ICategory>,
-    error: any,
 };
 
 const createPage: NextPage = () : ReactElement => (

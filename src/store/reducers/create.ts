@@ -3,10 +3,9 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { action } from '../reducers';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
 import { showGlobalAlert, delayHideGlobalAlert, AlertTypes } from './global-alert';
-import { IResponse } from '../../routing';
+import { IResponse } from '@utils/interfaces';
 import axios from 'axios';
-import {ThunkDispatch} from 'redux-thunk';
-import {reducersState} from '../../store';
+import { AsyncDispatch } from '@utils/types';
 
 const SET_TYPE: string = 'SET_TYPE';
 const SET_RU_VALUE: string = 'SET_RU_VALUE';
@@ -58,7 +57,7 @@ export const setEnValue = (value: string) => action<string>(SET_EN_VALUE, value)
 export const setCategory = (category: string) => action<string>(SET_CATEGORY, category);
 export const setEnabledCategories = (categories: Array<string>) => action<Array<string>>(SET_ENABLE_CATEGORIES, categories);
 
-export const createWordOrCategory = (type: string, params: object) => async (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+export const createWordOrCategory = (type: string, params: object) => async (dispatch: AsyncDispatch) => {
     dispatch(showGlobalLoading());
 
     try {

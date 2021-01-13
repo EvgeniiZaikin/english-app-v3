@@ -6,7 +6,7 @@ import { reducersState } from '@store';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
 import { showGlobalAlert, delayHideGlobalAlert, AlertTypes } from './global-alert';
 import axios from 'axios';
-import { IResponse } from '../../routing';
+import { IResponse } from '@utils/interfaces';
 
 const SET_REPEAT_WORD_INFO: string = 'SET_REPEAT_WORD_INFO';
 const FINISH_REPEAT_WORD: string = 'FINISH_REPEAT_WORD';

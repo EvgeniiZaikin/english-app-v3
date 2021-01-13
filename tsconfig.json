@@ -23,6 +23,7 @@
       "@presentations": ["src/components/presentations"],
       "@store": ["src/store"],
       "@reducers/*": ["src/store/reducers/*"],
+      "@utils/*": ["src/utils/*"],
     }
   },
   "include": [
@@ -33,6 +34,7 @@
     "src/components/presentations",
     "src/store",
     "src/store/reducers/*",
+    "src/utils/*",
   ],
   "exclude": [
     "node_modules"
