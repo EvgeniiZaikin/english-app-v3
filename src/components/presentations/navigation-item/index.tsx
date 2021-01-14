@@ -6,7 +6,8 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
-import TableChartIcon from '@material-ui/icons/TableChart';
+import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { SvgIconProps } from "@material-ui/core/SvgIcon";
 
 import { navitem__container, navitem__label } from './styles.scss';
@@ -21,6 +22,10 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }) : ReactElem
     let text: string;
     
     switch (type) {
+        case 'auth':
+            elem = <TransferWithinAStationIcon />;
+            text = `Авторизация`;
+            break;
         case 'repeat':
             elem = <SchoolIcon />;
             text = `Повторять`;
@@ -45,13 +50,13 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }) : ReactElem
             elem = <Brightness4Icon />;
             text = `Тема`;
             break;
-        case 'statistic':
-            elem = <TableChartIcon />
-            text = `Статистика`;
+        case 'rules':
+            elem = <MenuBookIcon />
+            text = `Правила`;
             break;
         default:
             elem = <HomeIcon />;
-            text = `Главная`;
+            text = ` Не определенно`;
             break;
     }
 

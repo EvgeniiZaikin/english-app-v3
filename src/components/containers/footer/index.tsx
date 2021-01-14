@@ -23,13 +23,13 @@ const footerBlock: FC<IProps> = ({ fullNavigation, appTheme, router, toggleAppTh
     return (
         <footer className={ `${ footer } ${ footerStyle }` }>
             <div className={ layout__footer }>
-                <Presentations.NavigationItem action={ () => router.push('/') } />
+                <Presentations.NavigationItem type={`auth`} action={ () => router.push('/') } />
                 <Presentations.NavigationItem type={`repeat`} action={ () => router.push('/repeat') }/>
                 <Presentations.NavigationItem type={`create`} action={ () => router.push('/create') } />
                 <Presentations.NavigationItem type={`more`} action={ openNavigation } />
             </div>
             <div className={ layout__footer }>
-                <Presentations.NavigationItem type={`statistic`} action={ () => router.push('/') } />
+                <Presentations.NavigationItem type={`rules`} action={ () => router.push('/') } />
                 <Presentations.NavigationItem type={`search`} action={ () => router.push('/search') } />
                 <Presentations.NavigationItem type={`theme`} action={ () => toggleAppTheme(appTheme) } />
                 <Presentations.NavigationItem type={`close`} action={ hideNavigation } />
