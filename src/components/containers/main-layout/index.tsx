@@ -1,25 +1,15 @@
 import { FunctionComponent, ReactElement } from 'react';
-import Presentations from '@presentations';
-import { NextRouter, withRouter } from 'next/router';
+import Containers from '@containers';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
-import { toggleNavigationFullsize } from '@reducers/navigation';
-import { setAppTheme } from '@reducers/theme';
-import { Dispatch } from 'redux';
 
-import styles, { footer, layout__container, layout__content, layout__footer } from './styles.scss';
+import styles, { layout__container, layout__content } from './styles.scss';
 
-type LayoutProps = React.PropsWithChildren<{ 
-    router: NextRouter,
-    fullNavigation: boolean,
-    openNavigation: Function,
-    hideNavigation: Function,
+type LayoutProps = React.PropsWithChildren<{
     appTheme: string,
-    toggleAppTheme: Function,
 }>;
 
-const Layout: FunctionComponent<LayoutProps> = ({ children, router, fullNavigation, openNavigation, hideNavigation, appTheme, toggleAppTheme }) : ReactElement => {
-    const footerStyle = styles[ fullNavigation ?  `layout__footer_show` : `layout__footer_hide` ];
+const Layout: FunctionComponent<LayoutProps> = ({ children, appTheme }) : ReactElement => {
     const containerStyle = styles[ appTheme === `light` ? `layout__container_light` : `layout__container_dark` ];
     
     return (
@@ -27,44 +17,17 @@ const Layout: FunctionComponent<LayoutProps> = ({ children, router, fullNavigati
             <div className={ layout__content }>
                 { children }
             </div>
-            <footer className={ `${ footer } ${ footerStyle }` }>
-                <div className={ layout__footer }>
-                    <Presentations.NavigationItem action={ () => router.push('/') } />
-                    <Presentations.NavigationItem type={`repeat`} action={ () => router.push('/repeat') }/>
-                    <Presentations.NavigationItem type={`create`} action={ () => router.push('/create') } />
-                    <Presentations.NavigationItem type={`more`} action={ openNavigation } />
-                </div>
-                <div className={ layout__footer }>
-                    <Presentations.NavigationItem type={`statistic`} action={ () => router.push('/') } />
-                    <Presentations.NavigationItem type={`search`} action={ () => router.push('/search') } />
-                    <Presentations.NavigationItem type={`theme`} action={ () => toggleAppTheme(appTheme) } />
-                    <Presentations.NavigationItem type={`close`} action={ hideNavigation } />
-                </div>
-            </footer>
+           <Containers.Footer />
         </div>
     );
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { navigation, theme } = state;
+    const { theme: { theme } } = state;
 
     return {
-        fullNavigation: navigation.fullsize,
-        appTheme: theme.theme,
+        appTheme: theme,
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    const toggleAppTheme = (theme: string) => dispatch(setAppTheme(theme === 'dark' ? 'light' : 'dark'));
-
-    const openNavigation = () => dispatch(toggleNavigationFullsize(true));
-    const hideNavigation = () => dispatch(toggleNavigationFullsize(false));
-
-    return {
-        toggleAppTheme,
-        openNavigation,
-        hideNavigation,
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Layout));
+export default connect(mapStateToProps)(Layout);

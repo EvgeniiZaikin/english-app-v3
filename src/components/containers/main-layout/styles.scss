@@ -22,25 +22,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.footer {
-    transition: all .3s ease;
-    position: absolute;
-    width: 100vw;
-    background-color: lightgray;
-    padding-top: 4px;
-}
-
-.layout__footer {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-}
-
-.layout__footer_hide {
-    bottom: -62px;
-}
-
-.layout__footer_show {
-    bottom: 0px;
-}

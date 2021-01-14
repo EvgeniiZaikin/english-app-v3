@@ -12,6 +12,7 @@ import SearchInput from './search-input';
 import NextButton from './next-button';
 import TranslateVariant from './translate-variant';
 import RepeatPageWrapper from './repeat-page-wrapper';
+import Footer from './footer';
 
 export default {
     MainLayout,
@@ -28,4 +29,5 @@ export default {
     NextButton,
     TranslateVariant,
     RepeatPageWrapper,
+    Footer,
 };
