@@ -13,8 +13,13 @@ import NextButton from './next-button';
 import TranslateVariant from './translate-variant';
 import RepeatPageWrapper from './repeat-page-wrapper';
 import Footer from './footer';
+import AuthPageWrapper from './auth-page-wrapper';
+import PasswordInput from './password-input';
+import LoginInput from './login-input';
+import AuthButton from './auth-button';
 
 export default {
+    AuthButton,
     MainLayout,
     GlobalAlert,
     GlobalLoading,
@@ -30,4 +35,7 @@ export default {
     TranslateVariant,
     RepeatPageWrapper,
     Footer,
+    AuthPageWrapper,
+    PasswordInput,
+    LoginInput,
 };

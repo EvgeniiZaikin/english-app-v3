@@ -7,6 +7,7 @@ import WordCard from './word-card';
 import SearchPageWrapper from './search-page-wrapper';
 import EnglishLetterTd from './english-letter-td';
 import LettersTable from './letters-table';
+import HelperLabel from './helper-label';
 
 export default {
     NavigationItem,
@@ -18,4 +19,5 @@ export default {
     SearchPageWrapper,
     EnglishLetterTd,
     LettersTable,
+    HelperLabel,
 };

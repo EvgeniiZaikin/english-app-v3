@@ -7,6 +7,7 @@ import globalLoading from './global-loading';
 import globalAlert from './global-alert';
 import search from './search';
 import repeat from './repeat';
+import auth from './auth';
 
 export default combineReducers({
     test,
@@ -17,6 +18,7 @@ export default combineReducers({
     globalAlert,
     search,
     repeat,
+    auth,
 });
 
 interface IAction<P> {

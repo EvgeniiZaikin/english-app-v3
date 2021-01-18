@@ -4,7 +4,7 @@ import Containers from '@containers';
 
 const authPage: NextPage = () : ReactElement => (
     <Containers.MainLayout>
-        
+        <Containers.AuthPageWrapper />
     </Containers.MainLayout>
 );
 
