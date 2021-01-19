@@ -9,8 +9,8 @@ interface IUser {
     user_password: string,
 };
 
-router.post(`/register`, async (req: Request, res: Response) => {
-    const logic = async () => {
+router.post(`/registration`, async (req: Request, res: Response) => {
+    const logic = async () : Promise<IUser[]> => {
         const query: string = queries.users.checkUserExists(req.body.login);
         const [ rows ]: queryResultType = await dbRequest(query);
         if ((rows as Array<IUser>).length) {
@@ -19,9 +19,9 @@ router.post(`/register`, async (req: Request, res: Response) => {
             await dbRequest(queries.users.addUser(req.body.login, req.body.password));
 
             const [ rows ]: queryResultType = await dbRequest(queries.users.authUser(req.body.login, req.body.password));
-            const user = (rows as Array<IUser>)[0];
+            const users = (rows as Array<IUser>);
 
-            return user;
+            return users;
         }
     };
 
@@ -29,12 +29,12 @@ router.post(`/register`, async (req: Request, res: Response) => {
 });
 
 router.post('/auth', async (req: Request, res: Response) => {
-    const logic = async () => {
+    const logic = async () : Promise<IUser[]> => {
         const query: string = queries.users.authUser(req.body.login, req.body.password);
         const [ rows ]: queryResultType = await dbRequest(query);
         const result = rows as Array<IUser>;
         if (result.length) {
-            return result[0];
+            return result;
         } else {
             throw new Error(`User with this login not found!`);
         }
