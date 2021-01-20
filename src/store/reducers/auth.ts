@@ -85,3 +85,34 @@ export const registration = (login: string, password: string) => async (dispatch
 
     dispatch(hideGlobalLoading());
 };
+
+export const authorization = (login: string, password: string) => async (dispatch: AsyncDispatch) => {
+    dispatch(showGlobalLoading());
+
+    try {
+        const { data: { status, result, error } }: { data: IResponse } = await axios.post('/api/users/authorization', {
+            login, password,
+        });
+
+        if (status) {
+            dispatch(showGlobalAlert(AlertTypes.SUCCESS, `User successfully auth!`));
+
+            const [ user ] = result;
+            const { user_login, user_password } = user;
+            dispatch(setLogin(user_login));
+            dispatch(setPassword(user_password));
+            dispatch(loginUser());
+        } else {
+            dispatch(showGlobalAlert(AlertTypes.ERROR, error));
+            console.log(error);
+        }
+
+        delayHideGlobalAlert(dispatch, 1500);
+    } catch (error: any) {
+        dispatch(showGlobalAlert(AlertTypes.ERROR, `Error with auth user!`));
+        console.log(error);
+        delayHideGlobalAlert(dispatch, 1500);
+    }
+
+    dispatch(hideGlobalLoading());
+};

@@ -5,7 +5,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { AsyncDispatch } from '@utils/types';
-import { registration } from '@reducers/auth';
+import { registration, authorization } from '@reducers/auth';
 
 const theme = createMuiTheme({
     palette: {
@@ -22,15 +22,18 @@ interface IProps {
     password: string,
     withRegistration?: boolean,
     doRegistration: Function,
+    doAuth: Function,
 };
 
-const authButton: FC<IProps> = ({ label, login, password, withRegistration = false, doRegistration }) : ReactElement => {
-    const registration = () => doRegistration(login, password);
+const authButton: FC<IProps> = ({ 
+    label, login, password, withRegistration = false, doRegistration, doAuth, 
+}) : ReactElement => {
+    const doLogin = () => withRegistration ? doRegistration(login, password) : doAuth(login, password);
 
     return (
         <ThemeProvider theme={ theme }>
             <Presentations.Button 
-                click={ registration }
+                click={ doLogin }
                 disabled={ false }
                 icon={ <NavigateNextIcon /> }
                 title={ label }
@@ -46,8 +49,9 @@ const mapStateToProps = (state: reducersState) => {
 
 const mapDispatchToProps = (dispatch: AsyncDispatch) => {
     const doRegistration = (login: string, password: string) => dispatch(registration(login, password));
+    const doAuth = (login: string, password: string) => dispatch(authorization(login, password));
 
-    return { doRegistration };
+    return { doRegistration, doAuth };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(authButton);

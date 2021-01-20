@@ -28,7 +28,7 @@ router.post(`/registration`, async (req: Request, res: Response) => {
     await endpoint(res, logic);
 });
 
-router.post('/auth', async (req: Request, res: Response) => {
+router.post('/authorization', async (req: Request, res: Response) => {
     const logic = async () : Promise<IUser[]> => {
         const query: string = queries.users.authUser(req.body.login, req.body.password);
         const [ rows ]: queryResultType = await dbRequest(query);
@@ -36,7 +36,7 @@ router.post('/auth', async (req: Request, res: Response) => {
         if (result.length) {
             return result;
         } else {
-            throw new Error(`User with this login not found!`);
+            throw new Error(`User with this login or password not found!`);
         }
     };
 
