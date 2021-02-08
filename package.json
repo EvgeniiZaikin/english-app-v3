@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "scss": "npx tsm src --nameFormat none",
     "create-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate create $NAME",
-    "apply-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate up",
+    "apply-db-migrations": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate up",
     "cancel-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate down",
     "reset-db-migrations": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate reset"
   },
