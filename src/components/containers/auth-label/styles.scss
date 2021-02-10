@@ -1,3 +1,5 @@
+@import '../../../assets/styles/default.scss';
+
 .label__container {
     position: absolute;
     top: 0;
@@ -8,7 +10,13 @@
 
 .label__text {
     border: 1px solid lightgray;
-    padding: 5px 25px 10px 25px;
+    padding: 5px 25px;
     border-radius: 0 0 10px 10px;
-    color: lightgray;
+    color: rgba(0, 0, 0, 0.87);
+    background-color: #e0e0e0;
+    font-family: $default-font-family;
+    text-transform: capitalize;
+    line-height: $default-line-height;
+    letter-spacing: $default-letter-spacing;
+    font-size: $default-font-size;
 }

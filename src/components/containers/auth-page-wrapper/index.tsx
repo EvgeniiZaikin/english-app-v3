@@ -1,15 +1,21 @@
-import { FC, ReactElement, useState } from 'react';
+import { FC, ReactElement } from 'react';
+import { connect } from 'react-redux';
 
 import { container, authPageWrapper__label } from './styles.scss';
 import Button from '@material-ui/core/Button';
 
 import Presentations from '@presentations';
 import Containers from '@containers';
+import { reducersState } from '@store';
 
-const authPageWrapper: FC = () : ReactElement => {
+interface IProps {
+    showAuthForm: boolean,
+};
+
+const authPageWrapper: FC<IProps> = ({ showAuthForm }) : ReactElement => {
     return (
         <div className={ container }>
-            <Containers.AuthForm />
+            { showAuthForm ? <Containers.AuthForm /> : null }
             <Button variant="contained" color="primary">Авторизация</Button>
             <div className={ authPageWrapper__label }>
                 <Presentations.HelperLabel text='или'/>
@@ -23,4 +29,9 @@ const authPageWrapper: FC = () : ReactElement => {
     );
 };
 
-export default authPageWrapper;
+const mapStateToProps = (state: reducersState) => {
+    const { auth: { showAuthForm } } = state;
+    return { showAuthForm };
+};
+
+export default connect(mapStateToProps)(authPageWrapper);

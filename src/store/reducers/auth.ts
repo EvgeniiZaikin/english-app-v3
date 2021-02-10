@@ -12,12 +12,15 @@ const SET_PASSWORD: string = 'SET_PASSWORD';
 const TOGGLE_SHOW_PASSWORD: string = 'TOGGLE_SHOW_PASSWORD';
 const LOGIN: string = 'LOGIN';
 const LOGOUT: string = 'LOGOUT';
+const SHOW_AUTH_FORM: string = 'SHOW_AUTH_FORM';
+const HIDE_AUTH_FORM: string = 'HIDE_AUTH_FORM';
 
 interface IState {
     login: string,
     password: string,
     showPassword: boolean,
     isAuth: boolean,
+    showAuthForm: boolean,
 };
 
 const initialState: IState = {
@@ -25,6 +28,7 @@ const initialState: IState = {
     password: '',
     showPassword: false,
     isAuth: false,
+    showAuthForm: false,
 };
 
 const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -42,6 +46,10 @@ const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
             return { ...state, isAuth: true };
         case LOGOUT:
             return { ...state, isAuth: false };
+        case SHOW_AUTH_FORM: 
+            return { ...state, showAuthForm: true };   
+        case HIDE_AUTH_FORM: 
+            return { ...state, showAuthForm: false };
         default:
             return { ...state };
     }
@@ -54,6 +62,8 @@ export const setPassword = (password: string) => action<string>(SET_PASSWORD, pa
 export const toggleShowPassword = () => action(TOGGLE_SHOW_PASSWORD);
 export const loginUser = () => action(LOGIN);
 export const logoutUser = () => action(LOGOUT);
+export const showAuthForm = () => action(SHOW_AUTH_FORM);
+export const hideAuthForm = () => action(HIDE_AUTH_FORM);
 
 export const registration = (login: string, password: string) => async (dispatch: AsyncDispatch) => {
     dispatch(showGlobalLoading());
