@@ -3,27 +3,40 @@ import Containers from '@containers';
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { container } from './styles.scss';
+import { container, authPageWrapper__label } from './styles.scss';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 import Presentations from '@presentations';
 
-const authPageWrapper: FC<{}> = () : ReactElement => {
+const authPageWrapper: FC = () : ReactElement => {
     const [ remember, setRemember ] = useState<boolean>(false);
     const changeRemember = () => setRemember(!remember);
 
-    const theme = createMuiTheme({
+    /*const theme = createMuiTheme({
         palette: {
           primary: {
             main: '#008000',
             contrastText: '#fff',
           },
         },
-    });
+    });*/
 
     return (
         <div className={ container }>
+            <Button variant="contained" color="primary">Авторизация</Button>
+            <div className={ authPageWrapper__label }>
+                <Presentations.HelperLabel text='или'/>
+            </div>
+            <Button variant="contained" color="secondary">Регистрация</Button>
+            <div className={ authPageWrapper__label }>
+                <Presentations.HelperLabel text='или'/>
+            </div>
+            <Button variant="contained">Анонимно</Button>
+        </div>
+
+        /*<div className={ container }>
             <Presentations.HelperLabel 
                 text={ `
                     Авторизация поможет приложению лучше подбирать слова на повтор исходя из ваших ответов.
@@ -57,7 +70,7 @@ const authPageWrapper: FC<{}> = () : ReactElement => {
             />
 
             <Containers.AuthButton label='Авторизация' />
-        </div>
+        </div>*/
     );
 };
 
