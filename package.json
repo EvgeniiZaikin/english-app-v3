@@ -10,7 +10,7 @@
     "check": "npm run build && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "scss": "npx tsm src --nameFormat none",
-    "create-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate create $NAME",
+    "create-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate create %NAME%",
     "apply-db-migrations": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate up",
     "cancel-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate down",
     "reset-db-migrations": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate reset"
