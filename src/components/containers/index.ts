@@ -18,9 +18,11 @@ import PasswordInput from './password-input';
 import LoginInput from './login-input';
 import AuthButton from './auth-button';
 import AuthLabel from './auth-label';
+import AuthForm from './auth-form';
 
 export default {
     AuthButton,
+    AuthForm,
     AuthLabel,
     MainLayout,
     GlobalAlert,
