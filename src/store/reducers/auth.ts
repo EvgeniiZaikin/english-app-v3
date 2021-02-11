@@ -84,74 +84,63 @@ export const logoutUser = () => action(LOGOUT);
 export const showAuthForm = (type: string) => action(SHOW_AUTH_FORM, type);
 export const hideAuthForm = () => action(HIDE_AUTH_FORM);
 
-export const registration = (login: string, password: string) => async (dispatch: AsyncDispatch) => {
+const loginAction = (auth: boolean, login: string, password: string) => async (dispatch: AsyncDispatch) : Promise<boolean> => {
+    const authData = {
+        url: '/api/users/authorization',
+        successMessage: 'Вы успешно авторизированы!',
+        errorMessage: 'Ошибка при авторизации пользователя!',
+        detailErrorMessage: (error: any) => `Ошибка при авторизации пользователя: ${ error }`,
+    };
+
+    const regData = {
+        url: '/api/users/registration',
+        successMessage: 'Пользователь успешно зарегистрирован и авторизирован!',
+        errorMessage: 'Ошибка при регистрации пользователя!',
+        detailErrorMessage: (error: any) => `Ошибка при регистрации пользователя: ${ error }`,
+    };
+
+    const data = auth ? authData : regData;
+
+    let success = true;
+    
     dispatch(showGlobalLoading());
 
     try {
         if (!login || !password) {
+            success = false;
             dispatch(showGlobalAlert(AlertTypes.ERROR, `Логин или Пароль не заполнены!`));
         } else {
-            const { data: { status, result, error } }: { data: IResponse } = await axios.post('/api/users/registration', {
+            const { data: { status, result, error } }: { data: IResponse } = await axios.post(data.url, {
                 login, password,
             });
     
             if (status) {
-                dispatch(showGlobalAlert(AlertTypes.SUCCESS, `Пользователь успешно зарегистрирован и авторизирован!`));
-    
+                dispatch(showGlobalAlert(AlertTypes.SUCCESS, data.successMessage));
+
                 const [ user ] = result;
                 const { user_login, user_password } = user;
                 dispatch(setLogin(user_login));
                 dispatch(setPassword(user_password));
                 dispatch(loginUser());
             } else {
-                dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при регистрации пользователя: ${ error }`));
+                dispatch(showGlobalAlert(AlertTypes.ERROR, data.detailErrorMessage(error)));
                 console.log(error);
+                success = false;
             }
         }
 
-        delayHideGlobalAlert(dispatch, 1500);
+        delayHideGlobalAlert(dispatch, 2000);
     } catch (error: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при регистрации пользователя!`));
+        dispatch(showGlobalAlert(AlertTypes.ERROR, data.errorMessage));
         console.log(error);
-        delayHideGlobalAlert(dispatch, 1500);
+        delayHideGlobalAlert(dispatch, 2000);
+        success = false;
     }
 
     dispatch(hideGlobalLoading());
     dispatch(hideAuthForm());
+    return success;
 };
 
-export const authorization = (login: string, password: string) => async (dispatch: AsyncDispatch) => {
-    dispatch(showGlobalLoading());
-
-    try {
-        if (!login || !password) {
-            dispatch(showGlobalAlert(AlertTypes.ERROR, `Логин или Пароль не заполнены!`));
-        } else {
-            const { data: { status, result, error } }: { data: IResponse } = await axios.post('/api/users/authorization', {
-                login, password,
-            });
-    
-            if (status) {
-                dispatch(showGlobalAlert(AlertTypes.SUCCESS, `Вы успешно авторизированы!`));
-    
-                const [ user ] = result;
-                const { user_login, user_password } = user;
-                dispatch(setLogin(user_login));
-                dispatch(setPassword(user_password));
-                dispatch(loginUser());
-            } else {
-                dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при авторизации пользователя: ${ error }`));
-                console.log(error);
-            }
-        }
-
-        delayHideGlobalAlert(dispatch, 1500);
-    } catch (error: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при авторизации пользователя!`));
-        console.log(error);
-        delayHideGlobalAlert(dispatch, 1500);
-    }
-
-    dispatch(hideGlobalLoading());
-    dispatch(hideAuthForm());
-};
+export const registration = (login: string, password: string) => loginAction(false, login, password);
+export const authorization = (login: string, password: string) => loginAction(true, login, password);

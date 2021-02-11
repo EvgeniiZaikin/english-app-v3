@@ -19,8 +19,8 @@ interface IProps {
     isAuthProcess: boolean, 
     isRegProcess: boolean,
     isAuth: boolean,
-    doRegistration: Function,
-    doAuth: Function,
+    doRegistration: (login: string, password: string) => Promise<boolean>,
+    doAuth: (login: string, password: string) => Promise<boolean>,
     showForm: Function,
     logout: Function,
     router: NextRouter,
@@ -30,8 +30,22 @@ const authPageWrapper: FC<IProps> = ({
     showAuthForm, login, password, doRegistration, doAuth, showForm, 
     router, isAuthProcess, isRegProcess, isAuth, logout
 }) : ReactElement => {
-    const regLogic = showAuthForm ? () => doRegistration(login, password) : () => showForm('reg');
-    const authLogic = showAuthForm ? () => doAuth(login, password) : () => showForm('auth');
+    const authUser = showAuthForm ? 
+        async () => {
+            const success: boolean = await doAuth(login, password);
+            success && router.push('/repeat');
+        } : () => showForm('auth');
+
+    const regUser = showAuthForm ? 
+        async () => {
+            const success: boolean = await doRegistration(login, password);
+            success && router.push('/repeat');
+        } : () => showForm('reg');
+
+    const logoutUser = () => {
+        logout();
+        router.push('/repeat');
+    };
 
     return (
         <div className={ container }>
@@ -42,7 +56,7 @@ const authPageWrapper: FC<IProps> = ({
                 <Button 
                     variant="contained" 
                     color="primary"
-                    onClick={ authLogic }
+                    onClick={ authUser }
                 >Авторизация</Button> : null
             }
 
@@ -58,7 +72,7 @@ const authPageWrapper: FC<IProps> = ({
                 <Button
                     variant="contained" 
                     color="secondary" 
-                    onClick={ regLogic }
+                    onClick={ regUser }
                 >Регистрация</Button> : null
             }
 
@@ -71,7 +85,7 @@ const authPageWrapper: FC<IProps> = ({
 
             {
                 !showAuthForm ?
-                <Button variant="contained" onClick={ () => logout() }>Анонимно</Button>
+                <Button variant="contained" onClick={ logoutUser }>Анонимно</Button>
                 : null
             }
         </div>
@@ -84,8 +98,8 @@ const mapStateToProps = (state: reducersState) => {
 };
 
 const mapDispatchToProps = (dispatch: AsyncDispatch) => {
-    const doRegistration = (login: string, password: string) => dispatch(registration(login, password));
-    const doAuth = (login: string, password: string) => dispatch(authorization(login, password));
+    const doRegistration = (login: string, password: string) : Promise<boolean> => dispatch(registration(login, password));
+    const doAuth = (login: string, password: string) : Promise<boolean> => dispatch(authorization(login, password));
     const showForm = (type: string) => dispatch(showAuthForm(type));
     const logout = () => dispatch(logoutUser());
 
