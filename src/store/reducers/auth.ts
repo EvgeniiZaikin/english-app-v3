@@ -49,7 +49,12 @@ const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
         case LOGIN:
             return { ...state, isAuth: true };
         case LOGOUT:
-            return { ...state, isAuth: false };
+            return { 
+                ...state, 
+                isAuth: false,
+                login: '',
+                password: '',
+            };
         case SHOW_AUTH_FORM:
             return { 
                 ...state, 
@@ -112,6 +117,7 @@ export const registration = (login: string, password: string) => async (dispatch
     }
 
     dispatch(hideGlobalLoading());
+    dispatch(hideAuthForm());
 };
 
 export const authorization = (login: string, password: string) => async (dispatch: AsyncDispatch) => {
@@ -147,4 +153,5 @@ export const authorization = (login: string, password: string) => async (dispatc
     }
 
     dispatch(hideGlobalLoading());
+    dispatch(hideAuthForm());
 };

@@ -26,6 +26,10 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }) : ReactElem
             elem = <TransferWithinAStationIcon />;
             text = `Авторизация`;
             break;
+        case 'logout':
+            elem = <TransferWithinAStationIcon />;
+            text = `Выйти`;
+            break;
         case 'repeat':
             elem = <SchoolIcon />;
             text = `Повторять`;

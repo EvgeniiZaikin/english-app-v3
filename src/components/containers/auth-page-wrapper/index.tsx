@@ -10,7 +10,7 @@ import { reducersState } from '@store';
 import { NextRouter, withRouter } from 'next/router';
 
 import { AsyncDispatch } from '@utils/types';
-import { registration, authorization, showAuthForm } from '@reducers/auth';
+import { registration, authorization, showAuthForm, logoutUser } from '@reducers/auth';
 
 interface IProps {
     showAuthForm: boolean,
@@ -18,14 +18,17 @@ interface IProps {
     password: string,
     isAuthProcess: boolean, 
     isRegProcess: boolean,
+    isAuth: boolean,
     doRegistration: Function,
     doAuth: Function,
     showForm: Function,
+    logout: Function,
     router: NextRouter,
 };
 
 const authPageWrapper: FC<IProps> = ({ 
-    showAuthForm, login, password, doRegistration, doAuth, showForm, router, isAuthProcess, isRegProcess
+    showAuthForm, login, password, doRegistration, doAuth, showForm, 
+    router, isAuthProcess, isRegProcess, isAuth, logout
 }) : ReactElement => {
     const regLogic = showAuthForm ? () => doRegistration(login, password) : () => showForm('reg');
     const authLogic = showAuthForm ? () => doAuth(login, password) : () => showForm('auth');
@@ -35,7 +38,7 @@ const authPageWrapper: FC<IProps> = ({
             { showAuthForm ? <Containers.AuthForm /> : null }
 
             {
-                !showAuthForm || (showAuthForm && isAuthProcess) ?
+                !isAuth && (!showAuthForm || (showAuthForm && isAuthProcess)) ?
                 <Button 
                     variant="contained" 
                     color="primary"
@@ -44,14 +47,14 @@ const authPageWrapper: FC<IProps> = ({
             }
 
             {
-                !showAuthForm ?
+                !isAuth && !showAuthForm ?
                 <div className={ authPageWrapper__label }>
                     <Presentations.HelperLabel text='или'/>
                 </div> : null
             }
             
             {
-                !showAuthForm || (showAuthForm && isRegProcess) ?
+                !isAuth && !showAuthForm || (showAuthForm && isRegProcess) ?
                 <Button
                     variant="contained" 
                     color="secondary" 
@@ -60,30 +63,33 @@ const authPageWrapper: FC<IProps> = ({
             }
 
             {
-                !showAuthForm ?
-                <>
-                    <div className={ authPageWrapper__label }>
-                        <Presentations.HelperLabel text='или'/>
-                    </div>
+                !isAuth && !showAuthForm ?
+                <div className={ authPageWrapper__label }>
+                    <Presentations.HelperLabel text='или'/>
+                </div> : null
+            }
 
-                    <Button variant="contained" onClick={ () => router.push('/repeat') }>Анонимно</Button>
-                </> : null
+            {
+                !showAuthForm ?
+                <Button variant="contained" onClick={ () => logout() }>Анонимно</Button>
+                : null
             }
         </div>
     );
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { auth: { showAuthForm, login, password, isAuthProcess, isRegProcess } } = state;
-    return { showAuthForm, login, password, isAuthProcess, isRegProcess };
+    const { auth: { showAuthForm, login, password, isAuthProcess, isRegProcess, isAuth } } = state;
+    return { showAuthForm, login, password, isAuthProcess, isRegProcess, isAuth };
 };
 
 const mapDispatchToProps = (dispatch: AsyncDispatch) => {
     const doRegistration = (login: string, password: string) => dispatch(registration(login, password));
     const doAuth = (login: string, password: string) => dispatch(authorization(login, password));
     const showForm = (type: string) => dispatch(showAuthForm(type));
+    const logout = () => dispatch(logoutUser());
 
-    return { doRegistration, doAuth, showForm };
+    return { doRegistration, doAuth, showForm, logout };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(authPageWrapper));
