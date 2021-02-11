@@ -21,6 +21,8 @@ interface IState {
     showPassword: boolean,
     isAuth: boolean,
     showAuthForm: boolean,
+    isAuthProcess: boolean,
+    isRegProcess: boolean,
 };
 
 const initialState: IState = {
@@ -29,6 +31,8 @@ const initialState: IState = {
     showPassword: false,
     isAuth: false,
     showAuthForm: false,
+    isAuthProcess: false,
+    isRegProcess: false,
 };
 
 const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -46,10 +50,20 @@ const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
             return { ...state, isAuth: true };
         case LOGOUT:
             return { ...state, isAuth: false };
-        case SHOW_AUTH_FORM: 
-            return { ...state, showAuthForm: true };   
+        case SHOW_AUTH_FORM:
+            return { 
+                ...state, 
+                showAuthForm: true,
+                isAuthProcess: action.payload === 'auth',
+                isRegProcess: action.payload === 'reg',
+            };   
         case HIDE_AUTH_FORM: 
-            return { ...state, showAuthForm: false };
+            return { 
+                ...state, 
+                showAuthForm: false,
+                isAuthProcess: false,
+                isRegProcess: false,
+            };
         default:
             return { ...state };
     }
@@ -62,33 +76,37 @@ export const setPassword = (password: string) => action<string>(SET_PASSWORD, pa
 export const toggleShowPassword = () => action(TOGGLE_SHOW_PASSWORD);
 export const loginUser = () => action(LOGIN);
 export const logoutUser = () => action(LOGOUT);
-export const showAuthForm = () => action(SHOW_AUTH_FORM);
+export const showAuthForm = (type: string) => action(SHOW_AUTH_FORM, type);
 export const hideAuthForm = () => action(HIDE_AUTH_FORM);
 
 export const registration = (login: string, password: string) => async (dispatch: AsyncDispatch) => {
     dispatch(showGlobalLoading());
 
     try {
-        const { data: { status, result, error } }: { data: IResponse } = await axios.post('/api/users/registration', {
-            login, password,
-        });
-
-        if (status) {
-            dispatch(showGlobalAlert(AlertTypes.SUCCESS, `User successfully registered and auth!`));
-
-            const [ user ] = result;
-            const { user_login, user_password } = user;
-            dispatch(setLogin(user_login));
-            dispatch(setPassword(user_password));
-            dispatch(loginUser());
+        if (!login || !password) {
+            dispatch(showGlobalAlert(AlertTypes.ERROR, `Логин или Пароль не заполнены!`));
         } else {
-            dispatch(showGlobalAlert(AlertTypes.ERROR, error));
-            console.log(error);
+            const { data: { status, result, error } }: { data: IResponse } = await axios.post('/api/users/registration', {
+                login, password,
+            });
+    
+            if (status) {
+                dispatch(showGlobalAlert(AlertTypes.SUCCESS, `Пользователь успешно зарегистрирован и авторизирован!`));
+    
+                const [ user ] = result;
+                const { user_login, user_password } = user;
+                dispatch(setLogin(user_login));
+                dispatch(setPassword(user_password));
+                dispatch(loginUser());
+            } else {
+                dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при регистрации пользователя: ${ error }`));
+                console.log(error);
+            }
         }
 
         delayHideGlobalAlert(dispatch, 1500);
     } catch (error: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, `Error with register user!`));
+        dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при регистрации пользователя!`));
         console.log(error);
         delayHideGlobalAlert(dispatch, 1500);
     }
@@ -100,26 +118,30 @@ export const authorization = (login: string, password: string) => async (dispatc
     dispatch(showGlobalLoading());
 
     try {
-        const { data: { status, result, error } }: { data: IResponse } = await axios.post('/api/users/authorization', {
-            login, password,
-        });
-
-        if (status) {
-            dispatch(showGlobalAlert(AlertTypes.SUCCESS, `User successfully auth!`));
-
-            const [ user ] = result;
-            const { user_login, user_password } = user;
-            dispatch(setLogin(user_login));
-            dispatch(setPassword(user_password));
-            dispatch(loginUser());
+        if (!login || !password) {
+            dispatch(showGlobalAlert(AlertTypes.ERROR, `Логин или Пароль не заполнены!`));
         } else {
-            dispatch(showGlobalAlert(AlertTypes.ERROR, error));
-            console.log(error);
+            const { data: { status, result, error } }: { data: IResponse } = await axios.post('/api/users/authorization', {
+                login, password,
+            });
+    
+            if (status) {
+                dispatch(showGlobalAlert(AlertTypes.SUCCESS, `Вы успешно авторизированы!`));
+    
+                const [ user ] = result;
+                const { user_login, user_password } = user;
+                dispatch(setLogin(user_login));
+                dispatch(setPassword(user_password));
+                dispatch(loginUser());
+            } else {
+                dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при авторизации пользователя: ${ error }`));
+                console.log(error);
+            }
         }
 
         delayHideGlobalAlert(dispatch, 1500);
     } catch (error: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, `Error with auth user!`));
+        dispatch(showGlobalAlert(AlertTypes.ERROR, `Ошибка при авторизации пользователя!`));
         console.log(error);
         delayHideGlobalAlert(dispatch, 1500);
     }
