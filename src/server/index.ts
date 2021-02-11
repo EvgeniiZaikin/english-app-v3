@@ -21,6 +21,7 @@ const port = process.env.PORT || 3000;
         server.use('/api/words', routing.words);
         server.use('/api/categories', routing.categories);
         server.use('/api/users', routing.users);
+        server.use('/api/users-words', routing.usersWords);
 
         server.get('*', (req: Request, res: Response) => {
             return handle(req, res);

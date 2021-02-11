@@ -1,6 +1,7 @@
 import words from './words';
 import categories from './categories';
 import users from './users';
+import usersWords from './users-words';
 
 import { ResultSetHeader, OkPacket, RowDataPacket, FieldPacket } from 'mysql2';
 import connection from '../database';
@@ -10,6 +11,7 @@ export default {
     words,
     categories,
     users,
+    usersWords,
 };
 
 export type queryResultType = [RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader, FieldPacket[]];
