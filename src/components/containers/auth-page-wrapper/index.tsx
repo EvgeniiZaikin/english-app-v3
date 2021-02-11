@@ -7,12 +7,14 @@ import Button from '@material-ui/core/Button';
 import Presentations from '@presentations';
 import Containers from '@containers';
 import { reducersState } from '@store';
+import { NextRouter, withRouter } from 'next/router';
 
 interface IProps {
     showAuthForm: boolean,
+    router: NextRouter,
 };
 
-const authPageWrapper: FC<IProps> = ({ showAuthForm }) : ReactElement => {
+const authPageWrapper: FC<IProps> = ({ showAuthForm, router }) : ReactElement => {
     return (
         <div className={ container }>
             { showAuthForm ? <Containers.AuthForm /> : null }
@@ -24,7 +26,7 @@ const authPageWrapper: FC<IProps> = ({ showAuthForm }) : ReactElement => {
             <div className={ authPageWrapper__label }>
                 <Presentations.HelperLabel text='или'/>
             </div>
-            <Button variant="contained">Анонимно</Button>
+            <Button variant="contained" onClick={ () => router.push('/repeat') }>Анонимно</Button>
         </div>
     );
 };
@@ -34,4 +36,4 @@ const mapStateToProps = (state: reducersState) => {
     return { showAuthForm };
 };
 
-export default connect(mapStateToProps)(authPageWrapper);
+export default connect(mapStateToProps)(withRouter(authPageWrapper));
