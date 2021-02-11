@@ -1,0 +1,3 @@
+ALTER TABLE users_words
+DROP COLUMN user_word_count_views,
+DROP COLUMN user_word_count_success_guesses;
