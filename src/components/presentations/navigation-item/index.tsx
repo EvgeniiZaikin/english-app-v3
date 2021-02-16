@@ -7,7 +7,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+import InfoIcon from '@material-ui/icons/Info';
 import { SvgIconProps } from "@material-ui/core/SvgIcon";
 
 import { navitem__container, navitem__label } from './styles.scss';
@@ -54,9 +54,9 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }) : ReactElem
             elem = <Brightness4Icon />;
             text = `Тема`;
             break;
-        case 'rules':
-            elem = <MenuBookIcon />
-            text = `Правила`;
+        case 'info':
+            elem = <InfoIcon />
+            text = `Информация`;
             break;
         default:
             elem = <HomeIcon />;
