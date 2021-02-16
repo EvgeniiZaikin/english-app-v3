@@ -8,11 +8,20 @@
     justify-content: center;
 }
 
-.label__text {
+.label__text_light {
     border: 1px solid lightgray;
     padding: 5px 25px;
     border-radius: 0 0 10px 10px;
     color: $light-secondary-color;
     background-color: $light-secondary-background;
+    text-transform: capitalize;
+}
+
+.label__text_dark {
+    border: 1px solid black;
+    padding: 5px 25px;
+    border-radius: 0 0 10px 10px;
+    color: $dark-theme-color;
+    background-color: black;
     text-transform: capitalize;
 }

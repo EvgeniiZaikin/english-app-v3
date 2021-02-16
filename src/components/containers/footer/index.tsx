@@ -1,6 +1,6 @@
 import { FC, ReactElement } from 'react';
 import Presentations from '@presentations';
-import styles, { footer, layout__footer } from './styles.scss';
+import styles, { layout__footer } from './styles.scss';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
 import { NextRouter, withRouter } from 'next/router';
@@ -23,7 +23,11 @@ interface IProps {
 const footerBlock: FC<IProps> = ({ 
     fullNavigation, appTheme, isAuth, router, toggleAppTheme, openNavigation, hideNavigation, logout
 }) : ReactElement => {
-    const footerStyle = styles[ fullNavigation ?  `layout__footer_show` : `layout__footer_hide` ];
+    const footerClass: string = `
+        ${ styles[ fullNavigation ?  `layout__footer_show` : `layout__footer_hide` ] }
+        &nbsp;
+        ${ styles[ appTheme === 'light' ? `footer_light` : `footer_dark` ] }
+    `;
 
     const loginUser = () => router.push('/auth');
     const logoutUser = () => {
@@ -33,7 +37,7 @@ const footerBlock: FC<IProps> = ({
     const authAction = isAuth ? logoutUser : loginUser;
 
     return (
-        <footer className={ `${ footer } ${ footerStyle }` }>
+        <footer className={ footerClass }>
             <div className={ layout__footer }>
                 <Presentations.NavigationItem type={ isAuth ? 'logout' : 'auth' } action={ authAction } />
                 <Presentations.NavigationItem type={`repeat`} action={ () => router.push('/repeat') }/>
