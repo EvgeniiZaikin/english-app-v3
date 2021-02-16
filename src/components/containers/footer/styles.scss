@@ -1,9 +1,12 @@
+@import '../../../assets/styles/default.scss';
+
 .footer {
     transition: all .3s ease;
     position: absolute;
     width: 100vw;
-    background-color: lightgray;
+    background-color: $light-secondary-background;
     padding-top: 4px;
+    color: $light-secondary-color;
 }
 
 .layout__footer {

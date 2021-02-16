@@ -12,7 +12,7 @@
     border: 1px solid lightgray;
     padding: 5px 25px;
     border-radius: 0 0 10px 10px;
-    color: rgba(0, 0, 0, 0.87);
-    background-color: #e0e0e0;
+    color: $light-secondary-color;
+    background-color: $light-secondary-background;
     text-transform: capitalize;
 }
