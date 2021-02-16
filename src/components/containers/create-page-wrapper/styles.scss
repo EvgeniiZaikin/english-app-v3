@@ -33,6 +33,10 @@
     margin-top: 50px;
 }
 
+.layout__spacer {
+    height: 66.2px;
+}
+
 @media screen and (max-height: 415px) {
     .layout__wrap {
         width: 80vw;
@@ -52,5 +56,9 @@
 
     .layout__save {
         margin-top: 25px;
+    }
+
+    .layout__spacer {
+        height: 72.2px;
     }
 }
