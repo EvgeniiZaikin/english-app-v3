@@ -4,7 +4,8 @@ import { NextPage, NextPageContext } from 'next';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { setEnabledCategories } from '@reducers/create';
-import { IResponse } from '@utils/interfaces';
+import { AxiosResponse } from '@utils/types';
+import { getHost } from '@utils/functions';
 
 interface ICategory {
     category_id: number,
@@ -20,15 +21,11 @@ const createPage: NextPage = () : ReactElement => (
 
 createPage.getInitialProps = async ({ req, store } : NextPageContext) => {
     try {
-        let host: string = '';
-        if (process.browser) host = window.location.origin;
-        else if (req) host = `http://${ req.headers.host }`;
-        else {
-            throw new Error(`Can not get request object!`);
-        }
+        const host: string = getHost(req);
 
-        const { data }: { data: IResponse } = await axios.get(`${ host }/api/categories/categories`);
+        const { data }: AxiosResponse = await axios.get(`${ host }/api/categories/categories`);
         const categories: Array<string> = data.result.map((item: ICategory) => item.category_label);
+        
         store.dispatch(setEnabledCategories(categories));
     } catch (error: any) {
         console.log(error);

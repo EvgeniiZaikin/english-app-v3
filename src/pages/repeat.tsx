@@ -4,15 +4,9 @@ import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
 import Containers from '@containers';
 import { setRepeatWordInfo } from '@reducers/repeat';
-import { IResponse } from '@utils/interfaces';
-
-interface IRepeatWord {
-    word: string,
-    wordId: number,
-    category: string,
-    rightEnValue: string,
-    enValues: Array<string>,
-};
+import { reducersState } from '@store';
+import { AxiosResponse } from '@utils/types';
+import { getHost } from '@utils/functions';
 
 const repeatPage: NextPage = () : ReactElement => {
     return (
@@ -22,17 +16,18 @@ const repeatPage: NextPage = () : ReactElement => {
     );
 };
 
-repeatPage.getInitialProps = async ({ req, store } : NextPageContext) => {
+repeatPage.getInitialProps = async ({ req, store } : NextPageContext<reducersState>) => {
     try {
-        let host: string = '';
-        if (process.browser) host = window.location.origin;
-        else if (req) host = `http://${ req.headers.host }`;
-        else {
-            throw new Error(`Can not get request object!`);
-        }
+        const host: string = getHost(req);
 
-        const { data }: { data: IResponse } = await axios.get(`${ host }/api/words/guess-word`);
+        const { isAuth, userId } = store.getState().auth;
+        const url: string = isAuth ?
+            `${ host }/api/users-words/guess-word?userId=${ userId }` :
+            `${ host }/api/words/guess-word`;
+
+        const { data }: AxiosResponse = await axios.get(url);
         const { status, result, error } = data;
+        console.log(result, status, error);
         if (status && !error) {
             const [ words ] = result;
             store.dispatch(setRepeatWordInfo(words));

@@ -9,6 +9,7 @@ import axios from 'axios';
 
 const SET_LOGIN: string = 'SET_LOGIN';
 const SET_PASSWORD: string = 'SET_PASSWORD';
+const SET_USER_ID: string = 'SET_USER_ID';
 const TOGGLE_SHOW_PASSWORD: string = 'TOGGLE_SHOW_PASSWORD';
 const LOGIN: string = 'LOGIN';
 const LOGOUT: string = 'LOGOUT';
@@ -16,6 +17,7 @@ const SHOW_AUTH_FORM: string = 'SHOW_AUTH_FORM';
 const HIDE_AUTH_FORM: string = 'HIDE_AUTH_FORM';
 
 interface IState {
+    userId: number | null,
     login: string,
     password: string,
     showPassword: boolean,
@@ -26,6 +28,7 @@ interface IState {
 };
 
 const initialState: IState = {
+    userId: null,
     login: '',
     password: '',
     showPassword: false,
@@ -44,6 +47,8 @@ const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
             return { ...state, login: action.payload };
         case SET_PASSWORD:
             return { ...state, password: action.payload };
+        case SET_USER_ID:
+            return { ...state, userId: action.payload };
         case TOGGLE_SHOW_PASSWORD:
             return { ...state, showPassword: !state.showPassword };
         case LOGIN:
@@ -52,6 +57,7 @@ const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
             return { 
                 ...state, 
                 isAuth: false,
+                userId: null,
                 login: '',
                 password: '',
             };
@@ -78,6 +84,7 @@ export default auth;
 
 export const setLogin = (login: string) => action<string>(SET_LOGIN, login);
 export const setPassword = (password: string) => action<string>(SET_PASSWORD, password);
+export const setUserId = (userId: number) => action<number>(SET_USER_ID, userId);
 export const toggleShowPassword = () => action(TOGGLE_SHOW_PASSWORD);
 export const loginUser = () => action(LOGIN);
 export const logoutUser = () => action(LOGOUT);
@@ -118,7 +125,8 @@ const loginAction = (auth: boolean, login: string, password: string) => async (d
                 dispatch(showGlobalAlert(AlertTypes.SUCCESS, data.successMessage));
 
                 const [ user ] = result;
-                const { user_login, user_password } = user;
+                const { user_id, user_login, user_password } = user;
+                dispatch(setUserId(user_id));
                 dispatch(setLogin(user_login));
                 dispatch(setPassword(user_password));
                 dispatch(loginUser());
