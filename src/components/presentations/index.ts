@@ -8,6 +8,7 @@ import SearchPageWrapper from './search-page-wrapper';
 import EnglishLetterTd from './english-letter-td';
 import LettersTable from './letters-table';
 import HelperLabel from './helper-label';
+import InfoText from './info-text';
 
 export default {
     NavigationItem,
@@ -20,4 +21,5 @@ export default {
     EnglishLetterTd,
     LettersTable,
     HelperLabel,
+    InfoText,
 };

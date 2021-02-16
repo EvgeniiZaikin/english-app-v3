@@ -41,7 +41,7 @@ const footerBlock: FC<IProps> = ({
                 <Presentations.NavigationItem type={`more`} action={ openNavigation } />
             </div>
             <div className={ layout__footer }>
-                <Presentations.NavigationItem type={`info`} action={ () => router.push('/') } />
+                <Presentations.NavigationItem type={`info`} action={ () => router.push('/info') } />
                 <Presentations.NavigationItem type={`search`} action={ () => router.push('/search') } />
                 <Presentations.NavigationItem type={`theme`} action={ () => toggleAppTheme(appTheme) } />
                 <Presentations.NavigationItem type={`close`} action={ hideNavigation } />
