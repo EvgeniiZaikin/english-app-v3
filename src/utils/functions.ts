@@ -11,3 +11,7 @@ export function getHost(req: IncomingMessage | undefined) : string {
 
     return host;
 };
+
+export async function sleep(delay: number) {
+    await new Promise(resolve => setTimeout(resolve, delay));
+};

@@ -4,8 +4,11 @@ import { action } from '@rootReducer';
 import axios from 'axios';
 import { showGlobalAlert, AlertTypes, delayHideGlobalAlert } from './global-alert';
 import { AsyncDispatch } from '@utils/types';
+import { hideGlobalLoading, showGlobalLoading } from './global-loading';
+import { sleep } from '@utils/functions';
 
 export const SET_SEARCH_INFO: string = 'SET_SEARCH_INFO';
+export const RESET_SEARCH_INFO: string = 'RESET_SEARCH_INFO';
 
 interface IState {
     ruValue: string,
@@ -14,9 +17,9 @@ interface IState {
 };
 
 const initialState: IState = {
-    ruValue: '',
-    enValue: '',
-    category: '',
+    ruValue: 'Слово не определено',
+    enValue: 'Translate is not define',
+    category: 'Категория не определена',
 };
 
 const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -27,6 +30,13 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
         case SET_SEARCH_INFO:
             const { ruValue, enValue, category } = action.payload;
             return { ...state, ruValue, enValue, category };
+        case RESET_SEARCH_INFO:
+            return { 
+                ...state,
+                ruValue: 'Слово не определено',
+                enValue: 'Translate is not define',
+                category: 'Категория не определена',
+            };
         default:
             return { ...state };
     }
@@ -35,7 +45,12 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
 export default search;
 
 export const setSearchInfo = (info: IState) => action<IState>(SET_SEARCH_INFO, info);
+export const resetSearchInfo = () => action(RESET_SEARCH_INFO);
 export const setSearchData = (ruValue: string, enValue: string) => async (dispatch: AsyncDispatch) => {
+    dispatch(showGlobalLoading());
+
+    await sleep(800);
+
     try {
         const { data } = await axios.get(`/api/words/word`, { params: { ruValue, enValue } });
         const { status, result, error } = data;
@@ -44,11 +59,7 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
             const [ word ] = result;
             dispatch(setSearchInfo(word));
         } else {
-            dispatch(setSearchInfo({
-                ruValue: '',
-                enValue: '',
-                category: '',
-            }));
+            dispatch(resetSearchInfo());
             throw new Error(`Status search word is false! Error: ${ error.toString() }`);
         }
     } catch (exception: any) {
@@ -57,4 +68,6 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
         
         delayHideGlobalAlert(dispatch, 1500);
     }
+
+    dispatch(hideGlobalLoading());
 };
