@@ -57,13 +57,17 @@ export const setRepeatWordInfo = (data: object) => action<object>(SET_REPEAT_WOR
 export const finishRepeatWord = () => action(FINISH_REPEAT_WORD);
 export const setRepeatWordStatus = (status: boolean) => action<boolean>(SET_REPEAT_WORD_STATUS, status);
 export const resetRepeatWordInfo = () => action(RESET_REPEAT_WORD_INFO);
-export const setRepeatWordData = () => async (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+export const setRepeatWordData = (userId: number | null, isAuth: boolean) => async (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
     dispatch(showGlobalLoading());
 
     try {
         dispatch(resetRepeatWordInfo());
 
-        const { data }: { data: IResponse } = await axios.get(`/api/words/guess-word`);
+        const url: string = isAuth && userId ?
+            `/api/users-words/guess-word?userId=${ userId }` :
+            `/api/words/guess-word`;
+
+        const { data }: { data: IResponse } = await axios.get(url);
         const { status, result, error } = data;
         if (status && !error) {
             const [ words ] = result as Array<object>;

@@ -19,14 +19,16 @@ const theme = createMuiTheme({
 
 interface IProps {
     disabled: boolean,
-    nextWord: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void,
+    isAuth: boolean,
+    userId: number | null,
+    nextWord: (userId: number | null, isAuth: boolean) => void,
 };
 
-const nextButton: FC<IProps> = ({ disabled, nextWord }) : ReactElement => {
+const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord }) : ReactElement => {
     return (
         <ThemeProvider theme={ theme }>
             <Presentations.Button 
-                click={ nextWord }
+                click={ () => nextWord(userId, isAuth) }
                 disabled={ disabled }
                 icon={ <NavigateNextIcon /> }
                 title={ `Далее` }
@@ -36,12 +38,15 @@ const nextButton: FC<IProps> = ({ disabled, nextWord }) : ReactElement => {
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { repeat: { finished } } = state;
-    return { disabled: !finished };
+    const { 
+        repeat: { finished },
+        auth: { isAuth, userId },
+    } = state;
+    return { disabled: !finished, isAuth, userId };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
-    const nextWord = () => dispatch(setRepeatWordData());
+    const nextWord = (userId: number | null, isAuth: boolean) => dispatch(setRepeatWordData(userId, isAuth));
     return { nextWord };
 };
 
