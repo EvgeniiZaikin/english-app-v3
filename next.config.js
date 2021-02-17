@@ -27,8 +27,8 @@ module.exports = withTypescript(withSass({
       config.resolve.alias['@rootReducer'] = path.join(__dirname, 'src/store/reducers');
       config.resolve.alias['@reducers/*'] = path.join(__dirname, 'src/store/reducers/*');
       config.resolve.alias['@utils/*'] = path.join(__dirname, 'src/utils/*');
-      /* config.resolve.alias['@defaultStyles'] = path.join(__dirname, 'src/client/assets/styles/default.scss');
-      config.resolve.alias['@actions'] = path.join(__dirname, 'src/client/store/actions'); */
+      config.resolve.alias['@defaultStyles'] = path.join(__dirname, 'src/assets/styles/default.scss');
+      /* config.resolve.alias['@actions'] = path.join(__dirname, 'src/client/store/actions'); */
 
       return config;
     }
