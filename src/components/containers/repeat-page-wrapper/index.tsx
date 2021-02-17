@@ -9,13 +9,14 @@ interface IProps {
     word: string,
     category: string,
     enValues: Array<string>,
+    theme: string,
 };
 
-const repeatPageWrapper: FC<IProps> = ({ word, category, enValues }) : ReactElement => {
+const repeatPageWrapper: FC<IProps> = ({ word, category, enValues, theme }) : ReactElement => {
     return (
         <div className={ repeatPage_container }>
             <div className={ repeatPage__wordCard }>
-                <Presentations.WordCard word={ word } category={ category } />
+                <Presentations.WordCard theme={ theme } word={ word } category={ category } />
             </div>
             <div className={ repeatPage__variants }>
                 {
@@ -36,8 +37,11 @@ const repeatPageWrapper: FC<IProps> = ({ word, category, enValues }) : ReactElem
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { repeat: { word, category, enValues } } = state;
-    return { word, category, enValues };
+    const { 
+        repeat: { word, category, enValues },
+        theme: { theme },
+    } = state;
+    return { word, category, enValues, theme };
 };
 
 export default connect(mapStateToProps)(repeatPageWrapper);

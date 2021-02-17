@@ -1,0 +1,9 @@
+@import '../../../assets/styles/default.scss';
+
+.button_dark:disabled {
+    color: $dark-theme-color !important;
+}
+
+.button_light:disabled {
+    color: rgba(0, 0, 0, .26) !important;
+}

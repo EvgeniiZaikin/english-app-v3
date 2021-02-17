@@ -2,6 +2,7 @@ import { ReactElement, FC, useState } from 'react';
 import { 
     translateVariant__button, translateVariant__button_neutral, 
     translateVariant__button_success, translateVariant__button_error,
+    translateVariant__button_light, translateVariant__button_dark,
 } from './styles.scss';
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
@@ -18,14 +19,22 @@ interface IProps {
     setGuessedWordStatus: Function,
     finished: boolean,
     updateGuessedWord: Function,
+    theme: string,
 };
 
 const translateVariant: FC<IProps> = ({ 
-    value, rightEnValue, wordId, wordRuValue, openNextButton, setGuessedWordStatus, finished, updateGuessedWord 
+    value, rightEnValue, wordId, wordRuValue, openNextButton, 
+    setGuessedWordStatus, finished, updateGuessedWord, theme,
 }) : ReactElement => {
     const [ style, setStyle ] = useState(translateVariant__button_neutral);
 
-    const classes: string = `${ translateVariant__button } ${ style }`;
+    const classes: string = `
+        ${ translateVariant__button }
+        &nbsp;
+        ${ style }
+        &nbsp;
+        ${ theme === 'light' ? translateVariant__button_light : translateVariant__button_dark }
+    `;
 
     const click = () => {
         const guessed: boolean = value === rightEnValue;
@@ -52,8 +61,11 @@ const translateVariant: FC<IProps> = ({
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { repeat: { wordId, word, rightEnValue, finished } } = state;
-    return { wordId, wordRuValue: word, rightEnValue, finished };
+    const { 
+        repeat: { wordId, word, rightEnValue, finished },
+        theme: { theme },
+    } = state;
+    return { wordId, wordRuValue: word, rightEnValue, finished, theme };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {

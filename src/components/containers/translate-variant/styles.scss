@@ -7,8 +7,18 @@
     transition: all .2s ease;
 }
 
+.translateVariant__button_light {
+    background-color: white !important;
+    color: black !important;
+}
+
+.translateVariant__button_dark {
+    background-color: black !important;
+    color: #e2e2e2 !important;
+}
+
 .translateVariant__button:hover {
-    background-color: rgba(0, 0, 0, .3);
+    background-color: rgba(0, 0, 0, .3) !important;
 }
 
 .translateVariant__button:disabled {
