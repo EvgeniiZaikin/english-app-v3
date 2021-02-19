@@ -20,11 +20,14 @@ interface IProps {
     finished: boolean,
     updateGuessedWord: Function,
     theme: string,
+    isAuth: boolean, 
+    userId: number | null,
 };
 
 const translateVariant: FC<IProps> = ({ 
     value, rightEnValue, wordId, wordRuValue, openNextButton, 
     setGuessedWordStatus, finished, updateGuessedWord, theme,
+    isAuth, userId,
 }) : ReactElement => {
     const [ style, setStyle ] = useState(translateVariant__button_neutral);
 
@@ -50,6 +53,8 @@ const translateVariant: FC<IProps> = ({
             enValue: rightEnValue,
             incrementViews: true,
             success: guessed,
+            isAuth, 
+            userId,
         });
     };
 
@@ -64,8 +69,9 @@ const mapStateToProps = (state: reducersState) => {
     const { 
         repeat: { wordId, word, rightEnValue, finished },
         theme: { theme },
+        auth: { isAuth, userId },
     } = state;
-    return { wordId, wordRuValue: word, rightEnValue, finished, theme };
+    return { wordId, wordRuValue: word, rightEnValue, finished, theme, isAuth, userId };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {

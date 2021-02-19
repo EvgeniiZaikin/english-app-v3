@@ -55,4 +55,34 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
     await endpoint(res, logic);
 });
 
+router.get(`/user-word`, async (req: Request, res: Response) => {
+    const logic = async () : Promise<Array<boolean>> => {
+        const [ rows ]: queryResultType = await dbRequest(queries.usersWords.getUserWord(
+            req.query.userId as unknown as number, req.query.id as unknown as number
+        ));
+
+        return [ !!(rows as Array<object>).length ];
+    };
+
+    await endpoint(res, logic);
+});
+
+router.put(`/user-word`, async (req: Request, res: Response) => {
+    const logic = async () : Promise<void> => {
+        const { userId, id, incrementViews, success } = req.body;
+        await dbRequest(queries.usersWords.updateWord(userId, id, incrementViews, success));
+    };
+
+    await endpoint(res, logic);
+});
+
+router.post(`/user-word`, async (req: Request, res: Response) => {
+    const logic = async () : Promise<void> => {
+        const { userId, id } = req.body;
+        await dbRequest(queries.usersWords.addUserWord(userId, id));
+    };
+
+    await endpoint(res, logic);
+})
+
 export default router;

@@ -85,20 +85,50 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean) => asy
     dispatch(hideGlobalLoading());
 };
 
-export const updateWord = (params: object) => async (dispatch: Dispatch) => {
-    try {
-        const { data } : { data: IResponse } = await axios.put(`/api/words/word`, params);
-        const { status, error } = data;
+interface IUpdateWordParams {
+    id: number,
+    ruValue: string,
+    enValue: string,
+    incrementViews: boolean,
+    success: boolean,
+    isAuth: boolean, 
+    userId: number | null,
+}
 
-        if (!status || error) {
-            dispatch(showGlobalAlert(AlertTypes.ERROR, 'Word did not update!'));
-            console.log(error);
-            delayHideGlobalAlert(dispatch, 1500);
+const errorLogic = (dispatch: Dispatch, message: string, error: any): void => {
+    dispatch(showGlobalAlert(AlertTypes.ERROR, 'User word did not update!'));
+    console.log(error);
+    delayHideGlobalAlert(dispatch, 1500);
+};
+
+export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispatch) => {
+    try {
+        const { data: { status, error } } : { data: IResponse } = await axios.put(`/api/words/word`, params);
+
+        if (!status || error) errorLogic(dispatch, `Word did not update!`, error);
+        else {
+            if (params.isAuth && params.userId) {
+                const { data: { status, result, error } } : { data: IResponse } = await axios.get(`/api/users-words/user-word`, { params: {
+                    userId: params.userId, id: params.id,
+                }});
+                if (!status || error) {
+                    errorLogic(dispatch, `User word did not update!`, error);
+                }
+                if (result[0]) {
+                    const { data: { status, error } } : { data: IResponse } = await axios.put(`/api/users-words/user-word`, params);
+                    (!status || error) && errorLogic(dispatch, `User word did not update!`, error);
+                } else {
+                    const { data: { status, error } } : { data: IResponse } = await axios.post(`/api/users-words/user-word`, params);
+    
+                    if (!status || error) errorLogic(dispatch, `User word did not create!`, error);
+                    else {
+                        const { data: { status, error } } : { data: IResponse } = await axios.put(`/api/users-words/user-word`, params);
+                        (!status || error) && errorLogic(dispatch, `User word did not update!`, error);
+                    }
+                }
+            }
         }
-    } catch (exception: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, 'Word did not update!'));
-        console.log(exception);
-        
-        delayHideGlobalAlert(dispatch, 1500);
+    } catch (error: any) {
+        errorLogic(dispatch, `Word did not update!`, error);
     }
 };

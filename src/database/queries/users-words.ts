@@ -25,4 +25,44 @@ export default {
             LIMIT ${ count };
         `;
     },
+
+    updateWord: (userId: number, wordId: number, incrementViews: boolean, success: boolean): string => {
+        const count_success_guesses: string = `user_word_count_success_guesses${ success ? ` + 1` : `` }`;
+        const count_views: string = `user_word_count_views${ incrementViews ? ` + 1` : `` }`;
+
+        return `
+            UPDATE 
+                users_words
+            SET
+                user_word_count_views = ${ count_views },
+                user_word_count_success_guesses = ${ count_success_guesses }
+            WHERE
+                word_id = ${ wordId }
+                AND user_id = ${ userId }
+        `;
+    },
+
+    getUserWord: (userId: number, wordId: number): string => {
+        return `
+            SELECT
+                *
+            FROM
+                users_words
+            WHERE
+                word_id = ${ wordId }
+                AND user_id = ${ userId } 
+        `;
+    },
+
+    addUserWord: (userId: number, wordId: number): string => {
+        return `
+            INSERT INTO users_words (
+                user_id,
+                word_id
+            ) VALUES (
+                ${ userId },
+                ${ wordId }
+            )
+        `;
+    },
 };
