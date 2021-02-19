@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import test from './test';
 import navigation from './navigation';
 import theme from './theme';
 import create from './create';
@@ -10,7 +9,6 @@ import repeat from './repeat';
 import auth from './auth';
 
 export default combineReducers({
-    test,
     navigation,
     theme,
     create,
