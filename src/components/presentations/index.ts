@@ -5,8 +5,6 @@ import RadioButtons from './radio-buttons';
 import Select from './select';
 import WordCard from './word-card';
 import SearchPageWrapper from './search-page-wrapper';
-import EnglishLetterTd from './english-letter-td';
-import LettersTable from './letters-table';
 import HelperLabel from './helper-label';
 import InfoText from './info-text';
 
@@ -18,8 +16,6 @@ export default {
     Select,
     WordCard,
     SearchPageWrapper,
-    EnglishLetterTd,
-    LettersTable,
     HelperLabel,
     InfoText,
 };

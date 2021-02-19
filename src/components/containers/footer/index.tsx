@@ -29,10 +29,10 @@ const footerBlock: FC<IProps> = ({
         ${ styles[ appTheme === 'light' ? `footer_light` : `footer_dark` ] }
     `;
 
-    const loginUser = () => router.push('/auth');
+    const loginUser = () => router.push('/');
     const logoutUser = () => {
         logout();
-        router.push('/auth');
+        router.push('/');
     };
     const authAction = isAuth ? logoutUser : loginUser;
 
