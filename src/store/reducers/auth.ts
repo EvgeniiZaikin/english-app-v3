@@ -3,7 +3,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { action } from '@rootReducer';
 import { AsyncDispatch } from '@utils/types';
 import { hideGlobalLoading, showGlobalLoading } from './global-loading';
-import { AlertTypes, delayHideGlobalAlert, showGlobalAlert } from './global-alert';
+import { AlertTypes, delayHideGlobalAlert, showGlobalAlert, showErrorGlobalAlert } from './global-alert';
 import { IResponse } from '@utils/interfaces';
 import axios from 'axios';
 
@@ -115,7 +115,7 @@ const loginAction = (auth: boolean, login: string, password: string) => async (d
     try {
         if (!login || !password) {
             success = false;
-            dispatch(showGlobalAlert(AlertTypes.ERROR, `Логин или Пароль не заполнены!`));
+            showErrorGlobalAlert(dispatch, `Логин или Пароль не заполнены!`);
         } else {
             const { data: { status, result, error } }: { data: IResponse } = await axios.post(data.url, {
                 login, password,
@@ -131,17 +131,14 @@ const loginAction = (auth: boolean, login: string, password: string) => async (d
                 dispatch(setPassword(user_password));
                 dispatch(loginUser());
             } else {
-                dispatch(showGlobalAlert(AlertTypes.ERROR, data.detailErrorMessage(error)));
-                console.log(error);
+                showErrorGlobalAlert(dispatch, data.detailErrorMessage(error), error);
                 success = false;
             }
         }
 
         delayHideGlobalAlert(dispatch, 2000);
     } catch (error: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, data.errorMessage));
-        console.log(error);
-        delayHideGlobalAlert(dispatch, 2000);
+        showErrorGlobalAlert(dispatch, data.errorMessage, error);
         success = false;
     }
 

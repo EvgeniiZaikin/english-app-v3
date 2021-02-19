@@ -2,7 +2,7 @@ import { Reducer, AnyAction } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 import { action } from '@rootReducer';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
-import { showGlobalAlert, delayHideGlobalAlert, AlertTypes } from './global-alert';
+import { showGlobalAlert, delayHideGlobalAlert, AlertTypes, showErrorGlobalAlert } from './global-alert';
 import { IResponse } from '@utils/interfaces';
 import axios from 'axios';
 import { AsyncDispatch } from '@utils/types';
@@ -72,15 +72,12 @@ export const createWordOrCategory = (type: string, params: object) => async (dis
             let label = `${ type.charAt(0).toUpperCase() + type.slice(1) } did not save!`;
             message.includes(`Duplicate entry`) && (label += ` This ${ type } already exists!`);
 
-            dispatch(showGlobalAlert(AlertTypes.ERROR, label));
-            console.log(error);
+            showErrorGlobalAlert(dispatch, label, error);
         }
 
         delayHideGlobalAlert(dispatch, 1500);
     } catch (error: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, `Error with save ${ type }!`));
-        console.log(error);
-        delayHideGlobalAlert(dispatch, 1500);
+        showErrorGlobalAlert(dispatch, `Error with save ${ type }!`, error);
     }
 
     dispatch(hideGlobalLoading());

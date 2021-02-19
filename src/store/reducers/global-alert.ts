@@ -1,5 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
-import { Reducer, AnyAction } from 'redux';
+import { Reducer, AnyAction, Dispatch } from 'redux';
 import { action } from '@rootReducer';
 
 const SHOW_GLOBAL_ALERT: string = 'SHOW_GLOBAL_ALERT';
@@ -42,8 +42,15 @@ export default globalAlert;
 
 export const showGlobalAlert = (type: AlertTypes, text: string) => action<object>(SHOW_GLOBAL_ALERT, { type, text });
 export const hideGlobalAlert = () => action(HIDE_GLOBAL_ALERT);
-export const delayHideGlobalAlert = (dispatch: Function, delay: number) => {
+
+export const delayHideGlobalAlert = (dispatch: Function, delay: number): void => {
     setTimeout(() => {
         dispatch(hideGlobalAlert());  
     }, delay);
+};
+
+export const showErrorGlobalAlert = (dispatch: Dispatch, message: string, error?: any): void => {
+    dispatch(showGlobalAlert(AlertTypes.ERROR, message));
+    error && console.log(error);
+    delayHideGlobalAlert(dispatch, 1500);
 };

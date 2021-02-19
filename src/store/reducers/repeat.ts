@@ -4,7 +4,7 @@ import { action } from '@rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { reducersState } from '@store';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
-import { showGlobalAlert, delayHideGlobalAlert, AlertTypes } from './global-alert';
+import { showErrorGlobalAlert } from './global-alert';
 import axios from 'axios';
 import { IResponse } from '@utils/interfaces';
 
@@ -57,6 +57,7 @@ export const setRepeatWordInfo = (data: object) => action<object>(SET_REPEAT_WOR
 export const finishRepeatWord = () => action(FINISH_REPEAT_WORD);
 export const setRepeatWordStatus = (status: boolean) => action<boolean>(SET_REPEAT_WORD_STATUS, status);
 export const resetRepeatWordInfo = () => action(RESET_REPEAT_WORD_INFO);
+
 export const setRepeatWordData = (userId: number | null, isAuth: boolean) => async (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
     dispatch(showGlobalLoading());
 
@@ -67,8 +68,7 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean) => asy
             `/api/users-words/guess-word?userId=${ userId }` :
             `/api/words/guess-word`;
 
-        const { data }: { data: IResponse } = await axios.get(url);
-        const { status, result, error } = data;
+        const { data: { status, result, error } }: { data: IResponse } = await axios.get(url);
         if (status && !error) {
             const [ words ] = result as Array<object>;
             dispatch(setRepeatWordInfo(words));
@@ -76,10 +76,7 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean) => asy
             throw new Error(`Status get words is false! Error: ${error}`);
         }
     } catch (error: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, 'Can not get guess word!'));
-        console.log(error);
-        
-        delayHideGlobalAlert(dispatch, 1500);
+        showErrorGlobalAlert(dispatch, `Can not get guess word!`, error);
     }
 
     dispatch(hideGlobalLoading());
@@ -95,40 +92,34 @@ interface IUpdateWordParams {
     userId: number | null,
 }
 
-const errorLogic = (dispatch: Dispatch, message: string, error: any): void => {
-    dispatch(showGlobalAlert(AlertTypes.ERROR, 'User word did not update!'));
-    console.log(error);
-    delayHideGlobalAlert(dispatch, 1500);
-};
-
 export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispatch) => {
     try {
         const { data: { status, error } } : { data: IResponse } = await axios.put(`/api/words/word`, params);
 
-        if (!status || error) errorLogic(dispatch, `Word did not update!`, error);
+        if (!status || error) showErrorGlobalAlert(dispatch, `Word did not update!`, error);
         else {
             if (params.isAuth && params.userId) {
                 const { data: { status, result, error } } : { data: IResponse } = await axios.get(`/api/users-words/user-word`, { params: {
                     userId: params.userId, id: params.id,
                 }});
                 if (!status || error) {
-                    errorLogic(dispatch, `User word did not update!`, error);
+                    showErrorGlobalAlert(dispatch, `User word did not update!`, error);
                 }
                 if (result[0]) {
                     const { data: { status, error } } : { data: IResponse } = await axios.put(`/api/users-words/user-word`, params);
-                    (!status || error) && errorLogic(dispatch, `User word did not update!`, error);
+                    (!status || error) && showErrorGlobalAlert(dispatch, `User word did not update!`, error);
                 } else {
                     const { data: { status, error } } : { data: IResponse } = await axios.post(`/api/users-words/user-word`, params);
     
-                    if (!status || error) errorLogic(dispatch, `User word did not create!`, error);
+                    if (!status || error) showErrorGlobalAlert(dispatch, `User word did not create!`, error);
                     else {
                         const { data: { status, error } } : { data: IResponse } = await axios.put(`/api/users-words/user-word`, params);
-                        (!status || error) && errorLogic(dispatch, `User word did not update!`, error);
+                        (!status || error) && showErrorGlobalAlert(dispatch, `User word did not update!`, error);
                     }
                 }
             }
         }
     } catch (error: any) {
-        errorLogic(dispatch, `Word did not update!`, error);
+        showErrorGlobalAlert(dispatch, `Word did not update!`, error);
     }
 };

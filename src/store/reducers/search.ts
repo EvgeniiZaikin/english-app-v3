@@ -2,7 +2,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
 import { action } from '@rootReducer';
 import axios from 'axios';
-import { showGlobalAlert, AlertTypes, delayHideGlobalAlert } from './global-alert';
+import { showGlobalAlert, AlertTypes, delayHideGlobalAlert, showErrorGlobalAlert } from './global-alert';
 import { AsyncDispatch } from '@utils/types';
 import { hideGlobalLoading, showGlobalLoading } from './global-loading';
 import { sleep } from '@utils/functions';
@@ -46,14 +46,14 @@ export default search;
 
 export const setSearchInfo = (info: IState) => action<IState>(SET_SEARCH_INFO, info);
 export const resetSearchInfo = () => action(RESET_SEARCH_INFO);
+
 export const setSearchData = (ruValue: string, enValue: string) => async (dispatch: AsyncDispatch) => {
     dispatch(showGlobalLoading());
 
     await sleep(800);
 
     try {
-        const { data } = await axios.get(`/api/words/word`, { params: { ruValue, enValue } });
-        const { status, result, error } = data;
+        const { data: { status, result, error } } = await axios.get(`/api/words/word`, { params: { ruValue, enValue } });
 
         if (status && result.length && !error) {
             const [ word ] = result;
@@ -62,11 +62,8 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
             dispatch(resetSearchInfo());
             throw new Error(`Status search word is false! Error: ${ error.toString() }`);
         }
-    } catch (exception: any) {
-        dispatch(showGlobalAlert(AlertTypes.ERROR, 'Can not search word!'));
-        console.log(exception);
-        
-        delayHideGlobalAlert(dispatch, 1500);
+    } catch (error: any) {
+        showErrorGlobalAlert(dispatch, `Can not search word!`, error);
     }
 
     dispatch(hideGlobalLoading());
