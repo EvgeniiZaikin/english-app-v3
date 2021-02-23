@@ -28,6 +28,12 @@ repeatPage.getInitialProps = async ({ req, store } : NextPageContext<reducersSta
         const { data }: AxiosResponse = await axios.get(url);
         const { status, result, error } = data;
         console.log(result, status, error);
+
+        if (!result.length) {
+            console.log(`Empty result from server!`);
+            return {};
+        }
+
         if (status && !error) {
             const [ words ] = result;
             store.dispatch(setRepeatWordInfo(words));

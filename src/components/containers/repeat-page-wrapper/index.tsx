@@ -14,25 +14,33 @@ interface IProps {
 
 const repeatPageWrapper: FC<IProps> = ({ word, category, enValues, theme }) : ReactElement => {
     return (
-        <div className={ repeatPage_container }>
-            <div className={ repeatPage__wordCard }>
-                <Presentations.WordCard theme={ theme } word={ word } category={ category } />
-            </div>
-            <div className={ repeatPage__variants }>
-                {
-                    enValues.map((variant: string, index: number) => {
-                        return (
-                            <Fragment key={ index }>
-                                <Containers.TranslateVariant value={ variant } />
-                            </Fragment>
-                        );
-                    })
-                }
-            </div>
-            <div className={ repeatPage__nextButton }>
-                <Containers.NextButton />
-            </div>
-        </div>
+        <>
+            { 
+                word.length ?
+                <div className={ repeatPage_container }>
+                    <div className={ repeatPage__wordCard }>
+                        <Presentations.WordCard theme={ theme } word={ word } category={ category } />
+                    </div>
+                    <div className={ repeatPage__variants }>
+                        {
+                            enValues.map((variant: string, index: number) => {
+                                return (
+                                    <Fragment key={ index }>
+                                        <Containers.TranslateVariant value={ variant } />
+                                    </Fragment>
+                                );
+                            })
+                        }
+                    </div>
+                    <div className={ repeatPage__nextButton }>
+                        <Containers.NextButton />
+                    </div>
+                </div> :
+                <div>
+                    На сервере произошла ошибка. Попробуйте позже.
+                </div>
+            }
+        </>
     );
 };
 

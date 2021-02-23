@@ -49,6 +49,8 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
         const [ rows ]: queryResultType = await dbRequest(queries.words.getGuessWords(4));
         const basicWords = (rows as [ IGuessWord ]);
 
+        if (!basicWords.length) return [];
+
         const { ruValue, wordId, category, enValue } = basicWords[0];
 
         let isRepeatValue: boolean = false;
