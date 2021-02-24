@@ -1,11 +1,22 @@
 export default {
-    createWord: (ruValue: string, enValue: string) : string => `
+    createWord: (
+        ruValue: string, enValue: string, expression: boolean, 
+        slang: boolean, abuse: boolean, abbreviation: boolean
+    ) : string => `
         INSERT INTO words (
             word_ru_value,
-            word_en_value
+            word_en_value,
+            word_is_expression,
+            word_is_slang,
+            word_is_abuse,
+            word_is_abbreviation
         ) VALUES (
             '${ ruValue }',
-            '${ enValue }'
+            '${ enValue }',
+            ${ expression },
+            ${ slang },
+            ${ abuse },
+            ${ abbreviation }
         );
     `,
 

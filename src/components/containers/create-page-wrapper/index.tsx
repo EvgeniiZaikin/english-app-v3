@@ -27,6 +27,14 @@ const createPageWrapper: FC<IProps> = ({ type }) : ReactElement => {
                     <Containers.RuValueInput />
                     { type === `word` ? <Containers.EnValueInput /> : <Spacer /> }
                 </div>
+                { 
+                    type === `word` ? 
+                    <Containers.CreateCheckboxsGroup /> :
+                    <>
+                        <Spacer />
+                        <Spacer />
+                    </>
+                }
                 <div className={ layout__save }>
                     <Containers.SaveButton />
                 </div>

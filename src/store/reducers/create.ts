@@ -12,6 +12,7 @@ const SET_RU_VALUE: string = 'SET_RU_VALUE';
 const SET_EN_VALUE: string = 'SET_EN_VALUE';
 const SET_CATEGORY: string = 'SET_CATEGORY';
 const SET_ENABLE_CATEGORIES: string = 'SET_ENABLE_CATEGORIES';
+const SET_CHECKBOX_DATA: string = 'SET_CHECKBOX_DATA';
 
 interface IState {
     type: string,
@@ -19,6 +20,10 @@ interface IState {
     category: string,
     enValue: string,
     enableCategories: Array<string>,
+    expression: boolean,
+    slang: boolean,
+    abuse: boolean,
+    abbreviation: boolean,
 };
 
 const initialState: IState = {
@@ -27,6 +32,10 @@ const initialState: IState = {
     category: '',
     enValue: '',
     enableCategories: [],
+    expression: false,
+    slang: false,
+    abuse: false,
+    abbreviation: false,
 };
 
 const create: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -44,6 +53,13 @@ const create: Reducer<IState, AnyAction> = (state = initialState, action) => {
             return { ...state, category: action.payload };
         case SET_ENABLE_CATEGORIES:
             return { ...state, enableCategories: action.payload };
+        case SET_CHECKBOX_DATA:
+            const { type, check } = action.payload;
+            if ([`expression`, `slang`, `abuse`, `abbreviation`].includes(type)) {
+                return { ...state, [ type ]: check };
+            }
+
+            return { ...state };
         default:
             return { ...state };
     }
@@ -51,11 +67,17 @@ const create: Reducer<IState, AnyAction> = (state = initialState, action) => {
 
 export default create;
 
+interface ISetCheckboxData {
+    type: string,
+    check: boolean,
+}
+
 export const setType = (type: string) => action<string>(SET_TYPE, type);
 export const setRuValue = (value: string) => action<string>(SET_RU_VALUE, value);
 export const setEnValue = (value: string) => action<string>(SET_EN_VALUE, value);
 export const setCategory = (category: string) => action<string>(SET_CATEGORY, category);
 export const setEnabledCategories = (categories: Array<string>) => action<Array<string>>(SET_ENABLE_CATEGORIES, categories);
+export const setCheckboxData = (type: string, check: boolean) => action<ISetCheckboxData>(SET_CHECKBOX_DATA, { type, check });
 
 export const createWordOrCategory = (type: string, params: object) => async (dispatch: AsyncDispatch) => {
     dispatch(showGlobalLoading());
@@ -67,10 +89,13 @@ export const createWordOrCategory = (type: string, params: object) => async (dis
         if (status) {
             dispatch(showGlobalAlert(AlertTypes.SUCCESS, `${ type.charAt(0).toUpperCase() + type.slice(1) } successfully save!`));
         } else {
-            const { message } = error;
+            let label = `Произошла ошибка при создании нового слова!`;
     
-            let label = `${ type.charAt(0).toUpperCase() + type.slice(1) } did not save!`;
-            message.includes(`Duplicate entry`) && (label += ` This ${ type } already exists!`);
+            if (error.message) {
+                const { message } = error;
+                label = `${ type.charAt(0).toUpperCase() + type.slice(1) } did not save!`;
+                message.includes(`Duplicate entry`) && (label += ` This ${ type } already exists!`);
+            }
 
             showErrorGlobalAlert(dispatch, label, error);
         }

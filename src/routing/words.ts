@@ -91,7 +91,10 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
 
 router.post(`/word`, async (req: Request, res: Response) => {
     const logic = async () : Promise<void> => {
-        await dbRequest(queries.words.createWord(req.body.ruValue, req.body.enValue));
+        await dbRequest(queries.words.createWord(
+            req.body.ruValue, req.body.enValue, req.body.expression,
+            req.body.slang, req.body.abuse, req.body.abbreviation
+        ));
 
         const [ rows ]: queryResultType = await dbRequest(queries.words.getLastAddedWord()); 
         

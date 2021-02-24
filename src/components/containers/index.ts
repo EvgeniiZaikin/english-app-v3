@@ -18,10 +18,12 @@ import PasswordInput from './password-input';
 import LoginInput from './login-input';
 import AuthLabel from './auth-label';
 import AuthForm from './auth-form';
+import CreateCheckboxsGroup from './create-checkboxs-group';
 
 export default {
     AuthForm,
     AuthLabel,
+    CreateCheckboxsGroup,
     MainLayout,
     GlobalAlert,
     GlobalLoading,
