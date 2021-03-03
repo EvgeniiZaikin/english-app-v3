@@ -5,23 +5,23 @@ import { action } from '@rootReducer';
 export const TOGGLE_NAVIGATION_FULLSIZE = 'TOGGLE_NAVIGATION_FULLSIZE';
 
 interface IState {
-    fullsize: boolean,
-};
+  fullsize: boolean;
+}
 
 const initialState: IState = {
-    fullsize: false,
+  fullsize: false,
 };
 
-const navigation: Reducer<IState, AnyAction> = (state = initialState, action) : IState => {
-    switch (action.type) {
-        case HYDRATE:
-            const hydrateState = action.payload.navigation;
-            return { ...hydrateState };
-        case TOGGLE_NAVIGATION_FULLSIZE:
-            return { ...state, fullsize: action.payload };
-        default:
-            return { ...state };
-    }
+const navigation: Reducer<IState, AnyAction> = (state = initialState, action): IState => {
+  switch (action.type) {
+    case HYDRATE:
+      const hydrateState = action.payload.navigation;
+      return { ...hydrateState };
+    case TOGGLE_NAVIGATION_FULLSIZE:
+      return { ...state, fullsize: action.payload };
+    default:
+      return { ...state };
+  }
 };
 
 export default navigation;

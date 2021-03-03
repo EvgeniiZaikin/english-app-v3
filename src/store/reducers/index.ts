@@ -9,21 +9,21 @@ import repeat from './repeat';
 import auth from './auth';
 
 export default combineReducers({
-    navigation,
-    theme,
-    create,
-    globalLoading,
-    globalAlert,
-    search,
-    repeat,
-    auth,
+  navigation,
+  theme,
+  create,
+  globalLoading,
+  globalAlert,
+  search,
+  repeat,
+  auth,
 });
 
 interface IAction<P> {
-    type: string,
-    payload?: P | null,
-};
+  type: string;
+  payload?: P | null;
+}
 
 export function action<P>(type: string, payload: P | null = null): IAction<P> {
-    return { type, payload };
+  return { type, payload };
 }

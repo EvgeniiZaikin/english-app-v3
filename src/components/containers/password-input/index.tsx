@@ -13,49 +13,51 @@ import { Dispatch } from 'redux';
 import { setPassword, toggleShowPassword } from '@reducers/auth';
 
 interface IProps {
-    password: string,
-    showPassword: boolean,
-    changePassword: (value: string) => void,
-    toggleVisiblePassword: () => void,
-};
+  password: string;
+  showPassword: boolean;
+  changePassword: (value: string) => void;
+  toggleVisiblePassword: () => void;
+}
 
-const passwordInput: FC<IProps> = ({ password, showPassword, changePassword, toggleVisiblePassword }) : ReactElement => {
-    const passwordHandler = (event: ChangeEvent<HTMLInputElement>) => changePassword(event.target.value);
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
+const passwordInput: FC<IProps> = ({ password, showPassword, changePassword, toggleVisiblePassword }): ReactElement => {
+  const passwordHandler = (event: ChangeEvent<HTMLInputElement>) => changePassword(event.target.value);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
 
-    return (
-        <FormControl>
-            <InputLabel htmlFor="standard-adornment-password">Пароль</InputLabel>
-            <Input
-                id="standard-adornment-password"
-                type={ showPassword ? 'text' : 'password' }
-                value={ password }
-                onChange={ passwordHandler }
-                endAdornment={
-                    <InputAdornment position="end">
-                        <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={ toggleVisiblePassword }
-                            onMouseDown={ handleMouseDownPassword }
-                        >
-                            { showPassword ? <Visibility /> : <VisibilityOff /> }
-                        </IconButton>
-                    </InputAdornment>
-                }
-            />
-        </FormControl>
-    );
+  return (
+    <FormControl>
+      <InputLabel htmlFor="standard-adornment-password">Пароль</InputLabel>
+      <Input
+        id="standard-adornment-password"
+        type={showPassword ? 'text' : 'password'}
+        value={password}
+        onChange={passwordHandler}
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton
+              aria-label="toggle password visibility"
+              onClick={toggleVisiblePassword}
+              onMouseDown={handleMouseDownPassword}
+            >
+              {showPassword ? <Visibility /> : <VisibilityOff />}
+            </IconButton>
+          </InputAdornment>
+        }
+      />
+    </FormControl>
+  );
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { auth: { password, showPassword } } = state;
-    return { password, showPassword };
+  const {
+    auth: { password, showPassword },
+  } = state;
+  return { password, showPassword };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-    const changePassword = (password: string) => dispatch(setPassword(password));
-    const toggleVisiblePassword = () => dispatch(toggleShowPassword());
-    return { changePassword, toggleVisiblePassword };
+  const changePassword = (password: string) => dispatch(setPassword(password));
+  const toggleVisiblePassword = () => dispatch(toggleShowPassword());
+  return { changePassword, toggleVisiblePassword };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(passwordInput);

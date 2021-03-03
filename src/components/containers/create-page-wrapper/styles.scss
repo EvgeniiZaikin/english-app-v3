@@ -1,64 +1,64 @@
 @import '@defaultStyles';
 
 .layout__container {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
 }
 
 .layout__top {
-    display: block;
+  display: block;
 }
 
 .layout__divider {
-    border: none;
-    height: 1px;
-    margin: 0;
-    flex-shrink: 0;
-    background-color: rgba(0, 0, 0, 0.12);
-    margin-bottom: 14px;
+  border: none;
+  height: 1px;
+  margin: 0;
+  flex-shrink: 0;
+  background-color: rgba(0, 0, 0, 0.12);
+  margin-bottom: 14px;
 }
 
 .layout__wrap {
-    width: $default-width;
+  width: $default-width;
 }
 
 .layout__values {
-    display: block;
+  display: block;
 }
 
 .layout__save {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .layout__spacer {
-    height: 66.2px;
+  height: 66.2px;
 }
 
 @media screen and (max-height: 415px) {
-    .layout__wrap {
-        width: 80vw;
-    }
+  .layout__wrap {
+    width: 80vw;
+  }
 
-    .layout__top {
-        display: flex;
-    }    
+  .layout__top {
+    display: flex;
+  }
 
-    .layout__divider {
-        display: none;
-    }
+  .layout__divider {
+    display: none;
+  }
 
-    .layout__values {
-        display: flex;
-    }
+  .layout__values {
+    display: flex;
+  }
 
-    .layout__save {
-        margin-top: 25px;
-    }
+  .layout__save {
+    margin-top: 25px;
+  }
 
-    .layout__spacer {
-        height: 72.2px;
-    }
+  .layout__spacer {
+    height: 72.2px;
+  }
 }

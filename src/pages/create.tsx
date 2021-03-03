@@ -8,30 +8,30 @@ import { AxiosResponse } from '@utils/types';
 import { getHost } from '@utils/functions';
 
 interface ICategory {
-    category_id: number,
-    category_label: string,
-    categoru_count_views: number,
-};
+  category_id: number;
+  category_label: string;
+  categoru_count_views: number;
+}
 
-const createPage: NextPage = () : ReactElement => (
-    <Containers.MainLayout>
-        <Containers.CreatePageWrapper />
-    </Containers.MainLayout>
+const createPage: NextPage = (): ReactElement => (
+  <Containers.MainLayout>
+    <Containers.CreatePageWrapper />
+  </Containers.MainLayout>
 );
 
-createPage.getInitialProps = async ({ req, store } : NextPageContext) => {
-    try {
-        const host: string = getHost(req);
+createPage.getInitialProps = async ({ req, store }: NextPageContext) => {
+  try {
+    const host: string = getHost(req);
 
-        const { data }: AxiosResponse = await axios.get(`${ host }/api/categories/categories`);
-        const categories: Array<string> = data.result.map((item: ICategory) => item.category_label);
-        
-        store.dispatch(setEnabledCategories(categories));
-    } catch (error: any) {
-        console.log(error);
-    }
+    const { data }: AxiosResponse = await axios.get(`${host}/api/categories/categories`);
+    const categories: Array<string> = data.result.map((item: ICategory) => item.category_label);
 
-    return {};
+    store.dispatch(setEnabledCategories(categories));
+  } catch (error: any) {
+    console.log(error);
+  }
+
+  return {};
 };
 
 export default connect()(createPage);

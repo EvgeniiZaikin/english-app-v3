@@ -1,12 +1,12 @@
 @import '@defaultStyles';
 
 .info__container {
-    width: $default-width;
-    height: 400px;
-    overflow-y: scroll;
+  width: $default-width;
+  height: 400px;
+  overflow-y: scroll;
 }
 
 .info__subtitle {
-    text-decoration: underline;
-    font-weight: bold;
+  text-decoration: underline;
+  font-weight: bold;
 }

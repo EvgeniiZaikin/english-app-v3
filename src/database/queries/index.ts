@@ -5,9 +5,9 @@ import users from './users';
 import usersWords from './users-words';
 
 export default {
-    categories,
-    categoriesWordsBunch,
-    words,
-    users,
-    usersWords,
+  categories,
+  categoriesWordsBunch,
+  words,
+  users,
+  usersWords,
 };

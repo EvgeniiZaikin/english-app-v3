@@ -1,14 +1,14 @@
 @import '@defaultStyles';
 
 .container {
-    display: flex;
-    flex-direction: column;
-    width: $default-width;
+  display: flex;
+  flex-direction: column;
+  width: $default-width;
 }
 
-.authPageWrapper__label{
-    display: flex;
-    width: $default-width;
-    justify-content: center;
-    margin: 10px 0;
+.authPageWrapper__label {
+  display: flex;
+  width: $default-width;
+  justify-content: center;
+  margin: 10px 0;
 }

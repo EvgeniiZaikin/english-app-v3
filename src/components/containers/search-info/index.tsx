@@ -8,36 +8,34 @@ import { connect } from 'react-redux';
 import { reducersState } from '@store';
 
 interface IProps {
-    ruValue: string,
-    enValue: string,
-    category: string,
-};
+  ruValue: string;
+  enValue: string;
+  category: string;
+}
 
-const searchInfo: FC<IProps> = ({ ruValue, enValue, category }) : ReactElement => {
-    return (
-        <div className={ searchWordInfo__container }>
-            <List>
-                <ListItem disableGutters={ true }>
-                    <ListItemText 
-                        style={{ fontWeight: 'bold' }} 
-                        primary={ ruValue } 
-                        secondary={ category } 
-                    />
-                </ListItem>
-            </List>
-            <Divider />
-            <List>
-                <ListItem disableGutters={ true }>
-                    <ListItemText primary={ enValue } />
-                </ListItem>
-            </List>
-        </div>
-    );
+const searchInfo: FC<IProps> = ({ ruValue, enValue, category }): ReactElement => {
+  return (
+    <div className={searchWordInfo__container}>
+      <List>
+        <ListItem disableGutters={true}>
+          <ListItemText style={{ fontWeight: 'bold' }} primary={ruValue} secondary={category} />
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        <ListItem disableGutters={true}>
+          <ListItemText primary={enValue} />
+        </ListItem>
+      </List>
+    </div>
+  );
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { search: { ruValue, enValue, category } } = state;
-    return { ruValue, enValue, category };
+  const {
+    search: { ruValue, enValue, category },
+  } = state;
+  return { ruValue, enValue, category };
 };
 
 export default connect(mapStateToProps)(searchInfo);

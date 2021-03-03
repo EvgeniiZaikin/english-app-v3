@@ -1,10 +1,10 @@
 {
-    "dev": {
-      "host": "localhost",
-      "user": "root",
-      "password" : "UndeadKarsak26071993",
-      "database": "english-app",
-      "driver": "mysql",
-      "multipleStatements": true
-    }
+  "dev": {
+    "host": "localhost",
+    "user": "root",
+    "password": "UndeadKarsak26071993",
+    "database": "english-app",
+    "driver": "mysql",
+    "multipleStatements": true
+  }
 }

@@ -6,19 +6,19 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import Containers from '@containers';
 
-const AuthForm: FC = () : ReactElement => {
-    const [ remember, setRemember ] = useState<boolean>(false);
-    const changeRemember = () => setRemember(!remember);
+const AuthForm: FC = (): ReactElement => {
+  const [remember, setRemember] = useState<boolean>(false);
+  const changeRemember = () => setRemember(!remember);
 
-    const checkbox = <Checkbox checked={ remember } onChange={ changeRemember } name="checkedB" color="primary" />
-    
-    return (
-        <div>
-            <Containers.LoginInput />
-            <Containers.PasswordInput />
-            <FormControlLabel control={ checkbox } label="Запомнить" />
-        </div>
-    )
+  const checkbox = <Checkbox checked={remember} onChange={changeRemember} name="checkedB" color="primary" />;
+
+  return (
+    <div>
+      <Containers.LoginInput />
+      <Containers.PasswordInput />
+      <FormControlLabel control={checkbox} label="Запомнить" />
+    </div>
+  );
 };
 
 export default connect()(AuthForm);

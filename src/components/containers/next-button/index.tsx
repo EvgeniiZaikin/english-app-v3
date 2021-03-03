@@ -9,48 +9,48 @@ import { AnyAction } from 'redux';
 import { setRepeatWordData } from '@reducers/repeat';
 
 const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#008000',
-        contrastText: '#fff',
-      },
+  palette: {
+    primary: {
+      main: '#008000',
+      contrastText: '#fff',
     },
+  },
 });
 
 interface IProps {
-    disabled: boolean,
-    isAuth: boolean,
-    userId: number | null,
-    appTheme: string,
-    nextWord: (userId: number | null, isAuth: boolean) => void,
-};
+  disabled: boolean;
+  isAuth: boolean;
+  userId: number | null;
+  appTheme: string;
+  nextWord: (userId: number | null, isAuth: boolean) => void;
+}
 
-const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, appTheme }) : ReactElement => {
-    return (
-        <ThemeProvider theme={ theme }>
-            <Presentations.Button 
-                click={ () => nextWord(userId, isAuth) }
-                disabled={ disabled }
-                icon={ <NavigateNextIcon /> }
-                title={ `Далее` }
-                theme={ appTheme }
-            />
-        </ThemeProvider>
-    );
+const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, appTheme }): ReactElement => {
+  return (
+    <ThemeProvider theme={theme}>
+      <Presentations.Button
+        click={() => nextWord(userId, isAuth)}
+        disabled={disabled}
+        icon={<NavigateNextIcon />}
+        title={`Далее`}
+        theme={appTheme}
+      />
+    </ThemeProvider>
+  );
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { 
-        repeat: { finished },
-        auth: { isAuth, userId },
-        theme: { theme },
-    } = state;
-    return { disabled: !finished, isAuth, userId, appTheme: theme };
+  const {
+    repeat: { finished },
+    auth: { isAuth, userId },
+    theme: { theme },
+  } = state;
+  return { disabled: !finished, isAuth, userId, appTheme: theme };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
-    const nextWord = (userId: number | null, isAuth: boolean) => dispatch(setRepeatWordData(userId, isAuth));
-    return { nextWord };
+  const nextWord = (userId: number | null, isAuth: boolean) => dispatch(setRepeatWordData(userId, isAuth));
+  return { nextWord };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(nextButton);

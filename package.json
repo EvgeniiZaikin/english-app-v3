@@ -13,7 +13,8 @@
     "create-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate create %NAME%",
     "apply-db-migrations": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate up",
     "cancel-db-migration": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate down",
-    "reset-db-migrations": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate reset"
+    "reset-db-migrations": "cd ./src/database && node ../../node_modules/db-migrate/bin/db-migrate reset",
+    "format": "prettier --write src/**/*.{ts,tsx,scss,css,json}"
   },
   "keywords": [],
   "author": "",
@@ -46,6 +47,7 @@
     "@zeit/next-typescript": "^1.1.1",
     "db-migrate": "^0.11.11",
     "db-migrate-mysql": "^2.1.1",
+    "prettier": "^2.2.1",
     "ts-node": "^9.1.1",
     "typed-css-modules-webpack-plugin": "^0.2.0",
     "typed-scss-modules": "^3.4.0",

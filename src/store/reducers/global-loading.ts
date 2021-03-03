@@ -6,25 +6,25 @@ const SHOW_GLOBAL_LOADING: string = 'SHOW_GLOBAL_LOADING';
 const HIDE_GLOBAL_LOADING: string = 'HIDE_GLOBAL_LOADING';
 
 interface IState {
-    show: boolean,
-};
+  show: boolean;
+}
 
 const initialState: IState = {
-    show: false,
+  show: false,
 };
 
 const globalLoading: Reducer<IState, AnyAction> = (state = initialState, action) => {
-    switch (action.type) {
-        case HYDRATE:
-            const hydrateState = action.payload.globalLoading;
-            return { ...hydrateState };
-        case SHOW_GLOBAL_LOADING:
-            return { ...state, show: true };
-        case HIDE_GLOBAL_LOADING:
-            return { ...state, show: false };
-        default:
-            return { ...state };
-    }
+  switch (action.type) {
+    case HYDRATE:
+      const hydrateState = action.payload.globalLoading;
+      return { ...hydrateState };
+    case SHOW_GLOBAL_LOADING:
+      return { ...state, show: true };
+    case HIDE_GLOBAL_LOADING:
+      return { ...state, show: false };
+    default:
+      return { ...state };
+  }
 };
 
 export default globalLoading;

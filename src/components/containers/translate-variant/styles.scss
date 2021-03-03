@@ -1,49 +1,49 @@
 .translateVariant__button {
-    border: none;
-    padding: 15px 0;
-    cursor: pointer;
-    width: 100%;
-    box-shadow: 5px 5px 5px -7px rgba(0, 0, 0, .3), -5px 5px 5px -7px rgba(0, 0, 0, .3);
-    transition: all .2s ease;
+  border: none;
+  padding: 15px 0;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 5px 5px 5px -7px rgba(0, 0, 0, 0.3), -5px 5px 5px -7px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
 }
 
 .translateVariant__button_light {
-    background-color: white !important;
-    color: black !important;
+  background-color: white !important;
+  color: black !important;
 }
 
 .translateVariant__button_dark {
-    background-color: black !important;
-    color: #e2e2e2 !important;
+  background-color: black !important;
+  color: #e2e2e2 !important;
 }
 
 .translateVariant__button:hover {
-    background-color: rgba(0, 0, 0, .3) !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .translateVariant__button:disabled {
-    cursor: not-allowed;
-    background-color: rgba(0, 0, 0, .3);
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .translateVariant__button_neutral {
-    background: transparent;
-    color: black;
+  background: transparent;
+  color: black;
 }
 
 .translateVariant__button_success {
-    background: green !important;
-    color: #e2e2e2;
+  background: green !important;
+  color: #e2e2e2;
 }
 
 .translateVariant__button_error {
-    background: darkred !important;
-    color: #e2e2e2;
+  background: darkred !important;
+  color: #e2e2e2;
 }
 
 @media screen and (max-height: 415px) {
-    .translateVariant__button {
-        padding: 15px 5px;
-        margin: 0 5px;
-    }
+  .translateVariant__button {
+    padding: 15px 5px;
+    margin: 0 5px;
+  }
 }

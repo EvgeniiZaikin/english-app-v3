@@ -5,23 +5,23 @@ import { action } from '@rootReducer';
 export const SET_APP_THEME = 'SET_APP_THEME';
 
 interface IState {
-    theme: string,
-};
+  theme: string;
+}
 
 const initialState: IState = {
-    theme: 'light',
+  theme: 'light',
 };
 
-const theme: Reducer<IState, AnyAction> = (state = initialState, action) : IState => {
-    switch (action.type) {
-        case HYDRATE:
-            const hydrateState = action.payload.theme;
-            return { ...hydrateState };
-        case SET_APP_THEME:
-            return { ...state, theme: action.payload };
-        default:
-            return { ...state };
-    }
+const theme: Reducer<IState, AnyAction> = (state = initialState, action): IState => {
+  switch (action.type) {
+    case HYDRATE:
+      const hydrateState = action.payload.theme;
+      return { ...hydrateState };
+    case SET_APP_THEME:
+      return { ...state, theme: action.payload };
+    default:
+      return { ...state };
+  }
 };
 
 export default theme;

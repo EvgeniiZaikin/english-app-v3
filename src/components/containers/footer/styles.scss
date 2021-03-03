@@ -1,33 +1,33 @@
 @import '@defaultStyles';
 
 .footer_light {
-    transition: all .3s ease;
-    position: absolute;
-    width: 100vw;
-    background-color: $light-secondary-background;
-    padding-top: 4px;
-    color: $light-secondary-color;
+  transition: all 0.3s ease;
+  position: absolute;
+  width: 100vw;
+  background-color: $light-secondary-background;
+  padding-top: 4px;
+  color: $light-secondary-color;
 }
 
 .footer_dark {
-    transition: all .3s ease;
-    position: absolute;
-    width: 100vw;
-    background-color: black;
-    padding-top: 4px;
-    color: $dark-theme-color;
+  transition: all 0.3s ease;
+  position: absolute;
+  width: 100vw;
+  background-color: black;
+  padding-top: 4px;
+  color: $dark-theme-color;
 }
 
 .layout__footer {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
 }
 
 .layout__footer_hide {
-    bottom: -62px;
+  bottom: -62px;
 }
 
 .layout__footer_show {
-    bottom: 0px;
+  bottom: 0px;
 }

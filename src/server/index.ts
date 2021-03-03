@@ -11,31 +11,31 @@ const handle = app.getRequestHandler();
 const port = process.env.PORT || 3000;
 
 (async () => {
-    try {
-        await app.prepare();
-        const server = express();
+  try {
+    await app.prepare();
+    const server = express();
 
-        server.use(bodyParser.urlencoded({ extended: false }));
-        server.use(bodyParser.json());
+    server.use(bodyParser.urlencoded({ extended: false }));
+    server.use(bodyParser.json());
 
-        server.use('/api/words', routing.words);
-        server.use('/api/categories', routing.categories);
-        server.use('/api/users', routing.users);
-        server.use('/api/users-words', routing.usersWords);
+    server.use('/api/words', routing.words);
+    server.use('/api/categories', routing.categories);
+    server.use('/api/users', routing.users);
+    server.use('/api/users-words', routing.usersWords);
 
-        server.get('*', (req: Request, res: Response) => {
-            return handle(req, res);
-        });
+    server.get('*', (req: Request, res: Response) => {
+      return handle(req, res);
+    });
 
-        server.listen(port, (error?: any) => {
-            if (error) {
-                throw error;
-            } else {
-                console.log(`Server successfully start!`);
-            }
-        })
-    } catch (error: any) {
-        console.log(error);
-        process.exit(1);
-    }
+    server.listen(port, (error?: any) => {
+      if (error) {
+        throw error;
+      } else {
+        console.log(`Server successfully start!`);
+      }
+    });
+  } catch (error: any) {
+    console.log(error);
+    process.exit(1);
+  }
 })();

@@ -1,5 +1,5 @@
 export default {
-    post: (wordId: number, category: string) => `
+  post: (wordId: number, category: string) => `
         INSERT INTO categories_words_bunch (
             bunch_category_id,
             bunch_word_id
@@ -10,9 +10,9 @@ export default {
                 FROM 
                     categories 
                 WHERE 
-                    category_label = '${ category }'
+                    category_label = '${category}'
             ),
-            ${ wordId }
+            ${wordId}
         )
     `,
 };

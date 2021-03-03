@@ -1,38 +1,38 @@
 @import '@defaultStyles';
 
 .repeatPage_container {
-    width: $default-width;
-    box-sizing: border-box;
+  width: $default-width;
+  box-sizing: border-box;
 }
 
 .repeatPage__wordCard {
-    margin-bottom: 50px;
-    display: flex;
-    align-items: center;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .repeatPage__variants {
-    display: block;
+  display: block;
 }
 
 .repeatPage__nextButton {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 @media screen and (max-height: 415px) {
-    .repeatPage_container {
-        width: 80vw;
-    }
+  .repeatPage_container {
+    width: 80vw;
+  }
 
-    .repeatPage__wordCard {
-        margin-bottom: 25px;
-    }
+  .repeatPage__wordCard {
+    margin-bottom: 25px;
+  }
 
-    .repeatPage__variants {
-        display: flex;
-    }
+  .repeatPage__variants {
+    display: flex;
+  }
 
-    .repeatPage__nextButton {
-        margin-top: 25px;
-    }
+  .repeatPage__nextButton {
+    margin-top: 25px;
+  }
 }

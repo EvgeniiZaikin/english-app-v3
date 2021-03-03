@@ -6,36 +6,36 @@ const SHOW_GLOBAL_ALERT: string = 'SHOW_GLOBAL_ALERT';
 const HIDE_GLOBAL_ALERT: string = 'HIDE_GLOBAL_ALERT';
 
 export enum AlertTypes {
-    SUCCESS = 'success',
-    INFO = 'info',
-    WARNING = 'warning',
-    ERROR = 'error',
-};
+  SUCCESS = 'success',
+  INFO = 'info',
+  WARNING = 'warning',
+  ERROR = 'error',
+}
 
 interface IState {
-    show: boolean,
-    text: string,
-    type: AlertTypes,
-};
+  show: boolean;
+  text: string;
+  type: AlertTypes;
+}
 
 const initialState: IState = {
-    show: false,
-    text: '',
-    type: AlertTypes.INFO,
+  show: false,
+  text: '',
+  type: AlertTypes.INFO,
 };
 
 const globalAlert: Reducer<IState, AnyAction> = (state = initialState, action) => {
-    switch (action.type) {
-        case HYDRATE:
-            const hydrateState = action.payload.globalAlert;
-            return { ...hydrateState };
-        case SHOW_GLOBAL_ALERT:
-            return { ...state, show: true, text: action.payload.text, type: action.payload.type };
-        case HIDE_GLOBAL_ALERT:
-            return { ...state, show: false };
-        default:
-            return { ...state };
-    }
+  switch (action.type) {
+    case HYDRATE:
+      const hydrateState = action.payload.globalAlert;
+      return { ...hydrateState };
+    case SHOW_GLOBAL_ALERT:
+      return { ...state, show: true, text: action.payload.text, type: action.payload.type };
+    case HIDE_GLOBAL_ALERT:
+      return { ...state, show: false };
+    default:
+      return { ...state };
+  }
 };
 
 export default globalAlert;
@@ -44,13 +44,13 @@ export const showGlobalAlert = (type: AlertTypes, text: string) => action<object
 export const hideGlobalAlert = () => action(HIDE_GLOBAL_ALERT);
 
 export const delayHideGlobalAlert = (dispatch: Function, delay: number): void => {
-    setTimeout(() => {
-        dispatch(hideGlobalAlert());  
-    }, delay);
+  setTimeout(() => {
+    dispatch(hideGlobalAlert());
+  }, delay);
 };
 
 export const showErrorGlobalAlert = (dispatch: Dispatch, message: string, error?: any): void => {
-    dispatch(showGlobalAlert(AlertTypes.ERROR, message));
-    error && console.log(error);
-    delayHideGlobalAlert(dispatch, 1500);
+  dispatch(showGlobalAlert(AlertTypes.ERROR, message));
+  error && console.log(error);
+  delayHideGlobalAlert(dispatch, 1500);
 };

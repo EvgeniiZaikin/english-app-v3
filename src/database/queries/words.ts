@@ -1,8 +1,12 @@
 export default {
-    createWord: (
-        ruValue: string, enValue: string, expression: boolean, 
-        slang: boolean, abuse: boolean, abbreviation: boolean
-    ) : string => `
+  createWord: (
+    ruValue: string,
+    enValue: string,
+    expression: boolean,
+    slang: boolean,
+    abuse: boolean,
+    abbreviation: boolean
+  ): string => `
         INSERT INTO words (
             word_ru_value,
             word_en_value,
@@ -11,23 +15,23 @@ export default {
             word_is_abuse,
             word_is_abbreviation
         ) VALUES (
-            '${ ruValue }',
-            '${ enValue }',
-            ${ expression },
-            ${ slang },
-            ${ abuse },
-            ${ abbreviation }
+            '${ruValue}',
+            '${enValue}',
+            ${expression},
+            ${slang},
+            ${abuse},
+            ${abbreviation}
         );
     `,
 
-    getLastAddedWord: () : string => `
+  getLastAddedWord: (): string => `
         SELECT *
         FROM words
         ORDER BY word_id DESC
         LIMIT 1
     `,
 
-    getWordByValue: (ruValue: string, enValue: string) : string => `
+  getWordByValue: (ruValue: string, enValue: string): string => `
         SELECT
             w.word_ru_value,
             w.word_en_value,
@@ -37,14 +41,14 @@ export default {
             INNER JOIN categories_words_bunch AS cwb ON w.word_id = cwb.bunch_word_id
             INNER JOIN categories AS cat ON cwb.bunch_category_id = cat.category_id
         WHERE
-            w.word_ru_value = '${ ruValue }'
-            OR w.word_en_value = '${ enValue }';
+            w.word_ru_value = '${ruValue}'
+            OR w.word_en_value = '${enValue}';
     `,
 
-    getGuessWords: (count: number, excludeValues: Array<string> = []) : string => {
-        const values: string = excludeValues.map((item: string) => `'${ item }'`).join(',');
+  getGuessWords: (count: number, excludeValues: Array<string> = []): string => {
+    const values: string = excludeValues.map((item: string) => `'${item}'`).join(',');
 
-        return `
+    return `
             SELECT 
                 w.word_id AS "wordId",
                 w.word_ru_value AS "ruValue",
@@ -54,30 +58,28 @@ export default {
                 words AS w
                 LEFT JOIN categories_words_bunch AS cwb ON w.word_id = cwb.bunch_word_id
                 LEFT JOIN categories AS cat ON cwb.bunch_category_id = cat.category_id
-            ${ 
-                excludeValues.length ? `WHERE w.word_ru_value NOT IN (${ values })` : '' 
-            }
+            ${excludeValues.length ? `WHERE w.word_ru_value NOT IN (${values})` : ''}
             ORDER BY 
                 w.word_count_views, 
                 w.word_count_success_guesses 
-            LIMIT ${ count };
-        `
-    },
+            LIMIT ${count};
+        `;
+  },
 
-    updateWord: (id: number, ruValue: string, enValue: string, incrementViews: boolean, success: boolean) : string => {
-        const count_success_guesses : string = success ? 'word_count_success_guesses + 1' : 'word_count_success_guesses';
-        const count_views : string = incrementViews ? 'word_count_views + 1' : 'word_count_views';
+  updateWord: (id: number, ruValue: string, enValue: string, incrementViews: boolean, success: boolean): string => {
+    const count_success_guesses: string = success ? 'word_count_success_guesses + 1' : 'word_count_success_guesses';
+    const count_views: string = incrementViews ? 'word_count_views + 1' : 'word_count_views';
 
-        return `
+    return `
             UPDATE 
                 words
             SET
-                word_ru_value = '${ ruValue }',
-                word_en_value = '${ enValue }',
-                word_count_views = ${ count_views },
-                word_count_success_guesses = ${ count_success_guesses }
+                word_ru_value = '${ruValue}',
+                word_en_value = '${enValue}',
+                word_count_views = ${count_views},
+                word_count_success_guesses = ${count_success_guesses}
             WHERE
-                word_id = ${ id }
+                word_id = ${id}
         `;
-    },
+  },
 };

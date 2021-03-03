@@ -7,38 +7,36 @@ import '../assets/styles/reset.scss';
 import '../assets/styles/global.scss';
 
 class MyApp extends App<AppInitialProps> {
-    public static getInitialProps = async ({Component, ctx}: AppContext) => {
-        return {
-            pageProps: {
-                ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
-                pathname: ctx.pathname,
-            },
-        };
+  public static getInitialProps = async ({ Component, ctx }: AppContext) => {
+    return {
+      pageProps: {
+        ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
+        pathname: ctx.pathname,
+      },
     };
+  };
 
-    public render() {
-        const {Component, pageProps} = this.props;
+  public render() {
+    const { Component, pageProps } = this.props;
 
-        return (
-            <>
-                <Head>
-                    <meta 
-                        name="viewport" 
-                        content={
-                            `width=device-width, minimum-scale=1.0, initial-scale=1.0, 
-                            maximum-scale=1.0, user-scalable=no, viewport-fit=cover`
-                        } 
-                    />
-                </Head>
+    return (
+      <>
+        <Head>
+          <meta
+            name="viewport"
+            content={`width=device-width, minimum-scale=1.0, initial-scale=1.0, 
+                            maximum-scale=1.0, user-scalable=no, viewport-fit=cover`}
+          />
+        </Head>
 
-                <Component {...pageProps} />
+        <Component {...pageProps} />
 
-                <Containers.GlobalAlert />
-                <Containers.GlobalLoading />
-                <Containers.AuthLabel />
-            </>
-        );
-    }
+        <Containers.GlobalAlert />
+        <Containers.GlobalLoading />
+        <Containers.AuthLabel />
+      </>
+    );
+  }
 }
 
 export default wrapper.withRedux(MyApp);

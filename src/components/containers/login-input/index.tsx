@@ -12,39 +12,37 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
 interface IProps {
-    login: string,
-    changeLogin: (value: string) => void,
-};
+  login: string;
+  changeLogin: (value: string) => void;
+}
 
-const loginInput: FC<IProps> = ({ login, changeLogin }) : ReactElement => {
-    const loginHandler = (event: React.ChangeEvent<HTMLInputElement>) => changeLogin(event.target.value);
+const loginInput: FC<IProps> = ({ login, changeLogin }): ReactElement => {
+  const loginHandler = (event: React.ChangeEvent<HTMLInputElement>) => changeLogin(event.target.value);
 
-    const adornment = 
-        <InputAdornment position="end" style={{ paddingRight: '12px' }}>
-            <AccountCircle />
-        </InputAdornment>;
+  const adornment = (
+    <InputAdornment position="end" style={{ paddingRight: '12px' }}>
+      <AccountCircle />
+    </InputAdornment>
+  );
 
-    return (
-        <FormControl>
-            <InputLabel htmlFor="standard-adornment-password">Логин</InputLabel>
-            <Input
-                value={ login }
-                onChange={ loginHandler }
-                endAdornment={ adornment }
-            />
-        </FormControl>
-        
-    );
+  return (
+    <FormControl>
+      <InputLabel htmlFor="standard-adornment-password">Логин</InputLabel>
+      <Input value={login} onChange={loginHandler} endAdornment={adornment} />
+    </FormControl>
+  );
 };
 
 const mapStateToProps = (state: reducersState) => {
-    const { auth: { login } } = state;
-    return { login };
+  const {
+    auth: { login },
+  } = state;
+  return { login };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-    const changeLogin = (login: string) => dispatch(setLogin(login));
-    return { changeLogin };
+  const changeLogin = (login: string) => dispatch(setLogin(login));
+  return { changeLogin };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(loginInput);

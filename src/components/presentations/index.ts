@@ -9,13 +9,13 @@ import HelperLabel from './helper-label';
 import InfoText from './info-text';
 
 export default {
-    NavigationItem,
-    Button,
-    Input,
-    RadioButtons,
-    Select,
-    WordCard,
-    SearchPageWrapper,
-    HelperLabel,
-    InfoText,
+  NavigationItem,
+  Button,
+  Input,
+  RadioButtons,
+  Select,
+  WordCard,
+  SearchPageWrapper,
+  HelperLabel,
+  InfoText,
 };

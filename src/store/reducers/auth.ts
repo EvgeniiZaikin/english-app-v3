@@ -17,67 +17,67 @@ const SHOW_AUTH_FORM: string = 'SHOW_AUTH_FORM';
 const HIDE_AUTH_FORM: string = 'HIDE_AUTH_FORM';
 
 interface IState {
-    userId: number | null,
-    login: string,
-    password: string,
-    showPassword: boolean,
-    isAuth: boolean,
-    showAuthForm: boolean,
-    isAuthProcess: boolean,
-    isRegProcess: boolean,
-};
+  userId: number | null;
+  login: string;
+  password: string;
+  showPassword: boolean;
+  isAuth: boolean;
+  showAuthForm: boolean;
+  isAuthProcess: boolean;
+  isRegProcess: boolean;
+}
 
 const initialState: IState = {
-    userId: null,
-    login: '',
-    password: '',
-    showPassword: false,
-    isAuth: false,
-    showAuthForm: false,
-    isAuthProcess: false,
-    isRegProcess: false,
+  userId: null,
+  login: '',
+  password: '',
+  showPassword: false,
+  isAuth: false,
+  showAuthForm: false,
+  isAuthProcess: false,
+  isRegProcess: false,
 };
 
 const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
-    switch (action.type) {
-        case HYDRATE:
-            const hydrateState = action.payload.auth;
-            return { ...hydrateState };
-        case SET_LOGIN:
-            return { ...state, login: action.payload };
-        case SET_PASSWORD:
-            return { ...state, password: action.payload };
-        case SET_USER_ID:
-            return { ...state, userId: action.payload };
-        case TOGGLE_SHOW_PASSWORD:
-            return { ...state, showPassword: !state.showPassword };
-        case LOGIN:
-            return { ...state, isAuth: true };
-        case LOGOUT:
-            return { 
-                ...state, 
-                isAuth: false,
-                userId: null,
-                login: '',
-                password: '',
-            };
-        case SHOW_AUTH_FORM:
-            return { 
-                ...state, 
-                showAuthForm: true,
-                isAuthProcess: action.payload === 'auth',
-                isRegProcess: action.payload === 'reg',
-            };   
-        case HIDE_AUTH_FORM: 
-            return { 
-                ...state, 
-                showAuthForm: false,
-                isAuthProcess: false,
-                isRegProcess: false,
-            };
-        default:
-            return { ...state };
-    }
+  switch (action.type) {
+    case HYDRATE:
+      const hydrateState = action.payload.auth;
+      return { ...hydrateState };
+    case SET_LOGIN:
+      return { ...state, login: action.payload };
+    case SET_PASSWORD:
+      return { ...state, password: action.payload };
+    case SET_USER_ID:
+      return { ...state, userId: action.payload };
+    case TOGGLE_SHOW_PASSWORD:
+      return { ...state, showPassword: !state.showPassword };
+    case LOGIN:
+      return { ...state, isAuth: true };
+    case LOGOUT:
+      return {
+        ...state,
+        isAuth: false,
+        userId: null,
+        login: '',
+        password: '',
+      };
+    case SHOW_AUTH_FORM:
+      return {
+        ...state,
+        showAuthForm: true,
+        isAuthProcess: action.payload === 'auth',
+        isRegProcess: action.payload === 'reg',
+      };
+    case HIDE_AUTH_FORM:
+      return {
+        ...state,
+        showAuthForm: false,
+        isAuthProcess: false,
+        isRegProcess: false,
+      };
+    default:
+      return { ...state };
+  }
 };
 
 export default auth;
@@ -91,60 +91,65 @@ export const logoutUser = () => action(LOGOUT);
 export const showAuthForm = (type: string) => action(SHOW_AUTH_FORM, type);
 export const hideAuthForm = () => action(HIDE_AUTH_FORM);
 
-const loginAction = (auth: boolean, login: string, password: string) => async (dispatch: AsyncDispatch) : Promise<boolean> => {
-    const authData = {
-        url: '/api/users/authorization',
-        successMessage: 'Вы успешно авторизированы!',
-        errorMessage: 'Ошибка при авторизации пользователя!',
-        detailErrorMessage: (error: any) => `Ошибка при авторизации пользователя: ${ error }`,
-    };
+const loginAction = (auth: boolean, login: string, password: string) => async (
+  dispatch: AsyncDispatch
+): Promise<boolean> => {
+  const authData = {
+    url: '/api/users/authorization',
+    successMessage: 'Вы успешно авторизированы!',
+    errorMessage: 'Ошибка при авторизации пользователя!',
+    detailErrorMessage: (error: any) => `Ошибка при авторизации пользователя: ${error}`,
+  };
 
-    const regData = {
-        url: '/api/users/registration',
-        successMessage: 'Пользователь успешно зарегистрирован и авторизирован!',
-        errorMessage: 'Ошибка при регистрации пользователя!',
-        detailErrorMessage: (error: any) => `Ошибка при регистрации пользователя: ${ error }`,
-    };
+  const regData = {
+    url: '/api/users/registration',
+    successMessage: 'Пользователь успешно зарегистрирован и авторизирован!',
+    errorMessage: 'Ошибка при регистрации пользователя!',
+    detailErrorMessage: (error: any) => `Ошибка при регистрации пользователя: ${error}`,
+  };
 
-    const data = auth ? authData : regData;
+  const data = auth ? authData : regData;
 
-    let success = true;
-    
-    dispatch(showGlobalLoading());
+  let success = true;
 
-    try {
-        if (!login || !password) {
-            success = false;
-            showErrorGlobalAlert(dispatch, `Логин или Пароль не заполнены!`);
-        } else {
-            const { data: { status, result, error } }: { data: IResponse } = await axios.post(data.url, {
-                login, password,
-            });
-    
-            if (status) {
-                dispatch(showGlobalAlert(AlertTypes.SUCCESS, data.successMessage));
+  dispatch(showGlobalLoading());
 
-                const [ user ] = result;
-                const { user_id, user_login, user_password } = user;
-                dispatch(setUserId(user_id));
-                dispatch(setLogin(user_login));
-                dispatch(setPassword(user_password));
-                dispatch(loginUser());
-            } else {
-                showErrorGlobalAlert(dispatch, data.detailErrorMessage(error), error);
-                success = false;
-            }
-        }
+  try {
+    if (!login || !password) {
+      success = false;
+      showErrorGlobalAlert(dispatch, `Логин или Пароль не заполнены!`);
+    } else {
+      const {
+        data: { status, result, error },
+      }: { data: IResponse } = await axios.post(data.url, {
+        login,
+        password,
+      });
 
-        delayHideGlobalAlert(dispatch, 2000);
-    } catch (error: any) {
-        showErrorGlobalAlert(dispatch, data.errorMessage, error);
+      if (status) {
+        dispatch(showGlobalAlert(AlertTypes.SUCCESS, data.successMessage));
+
+        const [user] = result;
+        const { user_id, user_login, user_password } = user;
+        dispatch(setUserId(user_id));
+        dispatch(setLogin(user_login));
+        dispatch(setPassword(user_password));
+        dispatch(loginUser());
+      } else {
+        showErrorGlobalAlert(dispatch, data.detailErrorMessage(error), error);
         success = false;
+      }
     }
 
-    dispatch(hideGlobalLoading());
-    dispatch(hideAuthForm());
-    return success;
+    delayHideGlobalAlert(dispatch, 2000);
+  } catch (error: any) {
+    showErrorGlobalAlert(dispatch, data.errorMessage, error);
+    success = false;
+  }
+
+  dispatch(hideGlobalLoading());
+  dispatch(hideAuthForm());
+  return success;
 };
 
 export const registration = (login: string, password: string) => loginAction(false, login, password);

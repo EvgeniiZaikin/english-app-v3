@@ -1,8 +1,8 @@
 export default {
-    getGuessWords: (userId: number | string, count: number, excludeValues: Array<string> = []) : string => {
-        const values: string = excludeValues.map((item: string) => `'${ item }'`).join(',');
-        
-        return `
+  getGuessWords: (userId: number | string, count: number, excludeValues: Array<string> = []): string => {
+    const values: string = excludeValues.map((item: string) => `'${item}'`).join(',');
+
+    return `
             SELECT 
                 w.word_id AS "wordId",
                 w.word_ru_value AS "ruValue",
@@ -15,54 +15,52 @@ export default {
                 words AS w
                 LEFT JOIN categories_words_bunch AS cwb ON w.word_id = cwb.bunch_word_id
                 LEFT JOIN categories AS cat ON cwb.bunch_category_id = cat.category_id
-                LEFT JOIN users_words AS uw ON w.word_id = uw.word_id AND uw.user_id = ${ userId }
-            ${ 
-                excludeValues.length ? `WHERE w.word_ru_value NOT IN (${ values })` : '' 
-            }
+                LEFT JOIN users_words AS uw ON w.word_id = uw.word_id AND uw.user_id = ${userId}
+            ${excludeValues.length ? `WHERE w.word_ru_value NOT IN (${values})` : ''}
             ORDER BY
                 views,
                 success
-            LIMIT ${ count };
+            LIMIT ${count};
         `;
-    },
+  },
 
-    updateWord: (userId: number, wordId: number, incrementViews: boolean, success: boolean): string => {
-        const count_success_guesses: string = `user_word_count_success_guesses${ success ? ` + 1` : `` }`;
-        const count_views: string = `user_word_count_views${ incrementViews ? ` + 1` : `` }`;
+  updateWord: (userId: number, wordId: number, incrementViews: boolean, success: boolean): string => {
+    const count_success_guesses: string = `user_word_count_success_guesses${success ? ` + 1` : ``}`;
+    const count_views: string = `user_word_count_views${incrementViews ? ` + 1` : ``}`;
 
-        return `
+    return `
             UPDATE 
                 users_words
             SET
-                user_word_count_views = ${ count_views },
-                user_word_count_success_guesses = ${ count_success_guesses }
+                user_word_count_views = ${count_views},
+                user_word_count_success_guesses = ${count_success_guesses}
             WHERE
-                word_id = ${ wordId }
-                AND user_id = ${ userId }
+                word_id = ${wordId}
+                AND user_id = ${userId}
         `;
-    },
+  },
 
-    getUserWord: (userId: number, wordId: number): string => {
-        return `
+  getUserWord: (userId: number, wordId: number): string => {
+    return `
             SELECT
                 *
             FROM
                 users_words
             WHERE
-                word_id = ${ wordId }
-                AND user_id = ${ userId } 
+                word_id = ${wordId}
+                AND user_id = ${userId} 
         `;
-    },
+  },
 
-    addUserWord: (userId: number, wordId: number): string => {
-        return `
+  addUserWord: (userId: number, wordId: number): string => {
+    return `
             INSERT INTO users_words (
                 user_id,
                 word_id
             ) VALUES (
-                ${ userId },
-                ${ wordId }
+                ${userId},
+                ${wordId}
             )
         `;
-    },
+  },
 };

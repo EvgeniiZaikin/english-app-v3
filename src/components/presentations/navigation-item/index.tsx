@@ -8,68 +8,68 @@ import CloseIcon from '@material-ui/icons/Close';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import InfoIcon from '@material-ui/icons/Info';
-import { SvgIconProps } from "@material-ui/core/SvgIcon";
+import { SvgIconProps } from '@material-ui/core/SvgIcon';
 
 import { navitem__container, navitem__label } from './styles.scss';
 
 interface IProps {
-    action: Function,
-    type?: string,
-};
- 
-const navigationItem: FunctionComponent<IProps> = ({ action, type }) : ReactElement => {
-    let elem: React.ReactElement<SvgIconProps>;
-    let text: string;
-    
-    switch (type) {
-        case 'auth':
-            elem = <TransferWithinAStationIcon />;
-            text = `Авторизация`;
-            break;
-        case 'logout':
-            elem = <TransferWithinAStationIcon />;
-            text = `Выйти`;
-            break;
-        case 'repeat':
-            elem = <SchoolIcon />;
-            text = `Повторять`;
-            break;
-        case 'create':
-            elem = <AddIcon />;
-            text = `Создать`;
-            break;
-        case 'more':
-            elem = <MoreHorizIcon />;
-            text = `Ещё`;
-            break;
-        case 'search':
-            elem = <SearchIcon />;
-            text = `Поиск`;
-            break;
-        case 'close':
-            elem = <CloseIcon />;
-            text = `Закрыть`;
-            break;
-        case 'theme':
-            elem = <Brightness4Icon />;
-            text = `Тема`;
-            break;
-        case 'info':
-            elem = <InfoIcon />
-            text = `Информация`;
-            break;
-        default:
-            elem = <HomeIcon />;
-            text = ` Не определенно`;
-            break;
-    }
+  action: Function;
+  type?: string;
+}
 
-    return (
-        <div className={ navitem__container } onClick={ () => action() }>
-            { elem }
-            <span className={ navitem__label }>{ text }</span>
-        </div>
-    );
+const navigationItem: FunctionComponent<IProps> = ({ action, type }): ReactElement => {
+  let elem: React.ReactElement<SvgIconProps>;
+  let text: string;
+
+  switch (type) {
+    case 'auth':
+      elem = <TransferWithinAStationIcon />;
+      text = `Авторизация`;
+      break;
+    case 'logout':
+      elem = <TransferWithinAStationIcon />;
+      text = `Выйти`;
+      break;
+    case 'repeat':
+      elem = <SchoolIcon />;
+      text = `Повторять`;
+      break;
+    case 'create':
+      elem = <AddIcon />;
+      text = `Создать`;
+      break;
+    case 'more':
+      elem = <MoreHorizIcon />;
+      text = `Ещё`;
+      break;
+    case 'search':
+      elem = <SearchIcon />;
+      text = `Поиск`;
+      break;
+    case 'close':
+      elem = <CloseIcon />;
+      text = `Закрыть`;
+      break;
+    case 'theme':
+      elem = <Brightness4Icon />;
+      text = `Тема`;
+      break;
+    case 'info':
+      elem = <InfoIcon />;
+      text = `Информация`;
+      break;
+    default:
+      elem = <HomeIcon />;
+      text = ` Не определенно`;
+      break;
+  }
+
+  return (
+    <div className={navitem__container} onClick={() => action()}>
+      {elem}
+      <span className={navitem__label}>{text}</span>
+    </div>
+  );
 };
 
 export default navigationItem;
