@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { setEnabledCategories } from '@reducers/create';
 import { AxiosResponse } from '@utils/types';
-import { getHost } from '@utils/functions';
+import { getHost, printLog } from '@utils/functions';
 
 interface ICategory {
   category_id: number;
@@ -27,8 +27,8 @@ createPage.getInitialProps = async ({ req, store }: NextPageContext) => {
     const categories: Array<string> = data.result.map((item: ICategory) => item.category_label);
 
     store.dispatch(setEnabledCategories(categories));
-  } catch (error: any) {
-    console.log(error);
+  } catch (error: unknown) {
+    printLog((error as Error).toString());
   }
 
   return {};

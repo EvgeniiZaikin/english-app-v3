@@ -1,4 +1,4 @@
-export default {
+const queries = {
   getGuessWords: (userId: number | string, count: number, excludeValues: Array<string> = []): string => {
     const values: string = excludeValues.map((item: string) => `'${item}'`).join(',');
 
@@ -25,15 +25,15 @@ export default {
   },
 
   updateWord: (userId: number, wordId: number, incrementViews: boolean, success: boolean): string => {
-    const count_success_guesses: string = `user_word_count_success_guesses${success ? ` + 1` : ``}`;
-    const count_views: string = `user_word_count_views${incrementViews ? ` + 1` : ``}`;
+    const countSuccessGuesses: string = `user_word_count_success_guesses${success ? ` + 1` : ``}`;
+    const countViews: string = `user_word_count_views${incrementViews ? ` + 1` : ``}`;
 
     return `
             UPDATE 
                 users_words
             SET
-                user_word_count_views = ${count_views},
-                user_word_count_success_guesses = ${count_success_guesses}
+                user_word_count_views = ${countViews},
+                user_word_count_success_guesses = ${countSuccessGuesses}
             WHERE
                 word_id = ${wordId}
                 AND user_id = ${userId}
@@ -64,3 +64,5 @@ export default {
         `;
   },
 };
+
+export default queries;

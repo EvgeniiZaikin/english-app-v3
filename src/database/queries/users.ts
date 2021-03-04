@@ -1,4 +1,4 @@
-export default {
+const queries = {
   addUser: (login: string, password: string) => `
         INSERT INTO users (
             user_login, 
@@ -28,3 +28,5 @@ export default {
             AND user_password = '${password}'
     `,
 };
+
+export default queries;

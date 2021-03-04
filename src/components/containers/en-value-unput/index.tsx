@@ -16,8 +16,8 @@ const enValueInput: FC<IProps> = ({ enValue, setValue }): ReactElement => {
       change={(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setValue(event.target.value)}
       defaultValue={enValue}
       errorCondition={!enValue}
-      label={`EN значение`}
-      placeholder={`EN значение`}
+      label="EN значение"
+      placeholder="EN значение"
     />
   );
 };

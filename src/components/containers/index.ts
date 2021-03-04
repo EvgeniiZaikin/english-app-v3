@@ -20,7 +20,7 @@ import AuthLabel from './auth-label';
 import AuthForm from './auth-form';
 import CreateCheckboxsGroup from './create-checkboxs-group';
 
-export default {
+const containers = {
   AuthForm,
   AuthLabel,
   CreateCheckboxsGroup,
@@ -43,3 +43,5 @@ export default {
   PasswordInput,
   LoginInput,
 };
+
+export default containers;

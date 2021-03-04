@@ -1,38 +1,40 @@
+import { ResultSetHeader, OkPacket, RowDataPacket, FieldPacket } from 'mysql2';
+import { Response } from 'express';
+
 import words from './words';
 import categories from './categories';
 import users from './users';
 import usersWords from './users-words';
-
-import { ResultSetHeader, OkPacket, RowDataPacket, FieldPacket } from 'mysql2';
 import connection from '../database';
-import { Response } from 'express';
 
-export default {
+const routing = {
   words,
   categories,
   users,
   usersWords,
 };
 
-export type queryResultType = [
+export default routing;
+
+export type TQueryResult = [
   RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader,
   FieldPacket[]
 ];
-export type rowsType = RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader | Array<object>;
-export type resultType = rowsType | string | null;
+export type TRows = RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader | Array<object>;
+export type TResult = TRows | string | null;
 
-export const dbRequest = async (query: string): Promise<queryResultType> => {
-  const result: queryResultType = await connection.promise().query(query);
+export const dbRequest = async (query: string): Promise<TQueryResult> => {
+  const result: TQueryResult = await connection.promise().query(query);
   return result;
 };
 
 export interface IResponse {
   status: boolean;
-  result: resultType;
-  error: any;
+  result: TResult;
+  error: unknown;
 }
 
-export const successResponse = (result: resultType = null): IResponse => {
+export const successResponse = (result: TResult = null): IResponse => {
   return {
     status: true,
     result,
@@ -40,7 +42,7 @@ export const successResponse = (result: resultType = null): IResponse => {
   };
 };
 
-export const badResponse = (error: any): IResponse => {
+export const badResponse = (error: unknown): IResponse => {
   return {
     status: false,
     result: null,
@@ -48,11 +50,11 @@ export const badResponse = (error: any): IResponse => {
   };
 };
 
-export const endpoint = async (res: Response, logic: Function): Promise<Response<any>> => {
+export const endpoint = async (res: Response, logic: Function): Promise<Response<unknown>> => {
   try {
-    const data: resultType = await logic();
+    const data: TResult = await logic();
     return res.send(successResponse(data));
-  } catch (error: any) {
-    return res.send(badResponse(error.toString()));
+  } catch (error: unknown) {
+    return res.send(badResponse((error as Error).toString()));
   }
 };

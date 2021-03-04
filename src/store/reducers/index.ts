@@ -24,6 +24,6 @@ interface IAction<P> {
   payload?: P | null;
 }
 
-export function action<P>(type: string, payload: P | null = null): IAction<P> {
+export function getAction<P>(type: string, payload: P | null = null): IAction<P> {
   return { type, payload };
 }

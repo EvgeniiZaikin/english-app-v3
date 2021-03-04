@@ -42,7 +42,9 @@ const saveButton: FC<IProps> = ({
   abuse,
   abbreviation,
 }): ReactElement => {
-  const disabled: boolean = type === `word` ? !ruValue || !category || !enValue : type === `category` ? !ruValue : true;
+  let disabled: boolean = true;
+  if (type === `word`) disabled = !ruValue || !category || !enValue;
+  if (type === `category`) disabled = !ruValue;
 
   const save = () => {
     try {
@@ -56,14 +58,14 @@ const saveButton: FC<IProps> = ({
         abuse,
         abbreviation,
       });
-    } catch (error) {
+    } catch (error: unknown) {
       alert('Something was wrong!');
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Presentations.Button click={save} disabled={disabled} icon={<SaveIcon />} title={`Сохранить`} theme={appTheme} />
+      <Presentations.Button click={save} disabled={disabled} icon={<SaveIcon />} title="Сохранить" theme={appTheme} />
     </ThemeProvider>
   );
 };

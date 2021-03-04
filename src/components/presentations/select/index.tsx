@@ -3,6 +3,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import uniqid from 'uniqid';
 
 interface IProps {
   title: string;
@@ -25,8 +26,8 @@ const select: React.FunctionComponent<IProps> = ({
     <InputLabel htmlFor="age-native-simple">{title}</InputLabel>
     <Select native value={value} onChange={change}>
       <option aria-label="None" value="" />
-      {options.map((value: string, index: number) => (
-        <option key={index} value={value}>
+      {options.map((item: string) => (
+        <option key={uniqid()} value={item}>
           {value}
         </option>
       ))}

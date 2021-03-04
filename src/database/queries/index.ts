@@ -4,10 +4,12 @@ import words from './words';
 import users from './users';
 import usersWords from './users-words';
 
-export default {
+const queries = {
   categories,
   categoriesWordsBunch,
   words,
   users,
   usersWords,
 };
+
+export default queries;

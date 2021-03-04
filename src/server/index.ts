@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import next from 'next';
 import bodyParser from 'body-parser';
 
+import { printLog } from '../utils/functions';
+
 import '../database';
 import routing from '../routing';
 
@@ -27,15 +29,15 @@ const port = process.env.PORT || 3000;
       return handle(req, res);
     });
 
-    server.listen(port, (error?: any) => {
+    server.listen(port, (error?: unknown) => {
       if (error) {
         throw error;
       } else {
-        console.log(`Server successfully start!`);
+        printLog(`Server successfully start!`);
       }
     });
-  } catch (error: any) {
-    console.log(error);
+  } catch (error: unknown) {
+    printLog((error as Error).toString());
     process.exit(1);
   }
 })();

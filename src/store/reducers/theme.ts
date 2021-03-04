@@ -1,6 +1,6 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { action } from '@rootReducer';
+import { getAction } from '@rootReducer';
 
 export const SET_APP_THEME = 'SET_APP_THEME';
 
@@ -15,8 +15,7 @@ const initialState: IState = {
 const theme: Reducer<IState, AnyAction> = (state = initialState, action): IState => {
   switch (action.type) {
     case HYDRATE:
-      const hydrateState = action.payload.theme;
-      return { ...hydrateState };
+      return { ...action.payload.theme };
     case SET_APP_THEME:
       return { ...state, theme: action.payload };
     default:
@@ -26,4 +25,4 @@ const theme: Reducer<IState, AnyAction> = (state = initialState, action): IState
 
 export default theme;
 
-export const setAppTheme = (theme: string) => action<string>(SET_APP_THEME, theme);
+export const setAppTheme = (appTheme: string) => getAction<string>(SET_APP_THEME, appTheme);

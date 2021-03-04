@@ -1,11 +1,14 @@
-import { ChangeEvent, FC, ReactElement, FocusEvent } from 'react';
-import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import { searchInput__container } from './styles.scss';
-import { reducersState } from '@store';
-import { AnyAction } from 'redux';
-import { setSearchData } from '@reducers/search';
 import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
+import { ChangeEvent, FC, ReactElement, FocusEvent } from 'react';
+
+import TextField from '@material-ui/core/TextField';
+
+import { reducersState } from '@store';
+import { setSearchData } from '@reducers/search';
+
+import { searchInput__container } from './styles.scss';
 
 type ChangeInput = ChangeEvent<HTMLInputElement>;
 type FocusInput = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
@@ -17,16 +20,12 @@ interface IProps {
 let timer: null | NodeJS.Timeout = null;
 
 const onInput: Function = (event: ChangeInput, changeData: Function) => {
-  console.log(event.target.value);
-
   timer && clearTimeout(timer);
-  console.log('start');
+
   event.target.value &&
     (timer = setTimeout(() => {
-      console.log('Axios query!');
       changeData(event.target.value);
     }, 1000));
-  console.log('end');
 };
 
 const onBlur = () => {
@@ -36,7 +35,6 @@ const onBlur = () => {
 const onFocus = (event: FocusInput, changeData: Function) => {
   event.target.value &&
     (timer = setTimeout(() => {
-      console.log('Axios query!');
       changeData(event.target.value);
     }, 1000));
 };

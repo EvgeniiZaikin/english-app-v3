@@ -1,12 +1,13 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
-import Containers from '@containers';
+
 import { setRepeatWordInfo } from '@reducers/repeat';
 import { reducersState } from '@store';
 import { AxiosResponse } from '@utils/types';
-import { getHost } from '@utils/functions';
+import { getHost, printLog } from '@utils/functions';
+import Containers from '@containers';
 
 const repeatPage: NextPage = (): ReactElement => {
   return (
@@ -25,10 +26,9 @@ repeatPage.getInitialProps = async ({ req, store }: NextPageContext<reducersStat
 
     const { data }: AxiosResponse = await axios.get(url);
     const { status, result, error } = data;
-    console.log(result, status, error);
 
     if (!result.length) {
-      console.log(`Empty result from server!`);
+      printLog(`Empty result from server!`);
       return {};
     }
 
@@ -38,8 +38,8 @@ repeatPage.getInitialProps = async ({ req, store }: NextPageContext<reducersStat
     } else {
       throw new Error(`Status get words is false! Error: ${error}`);
     }
-  } catch (error: any) {
-    console.log(error);
+  } catch (error: unknown) {
+    printLog((error as Error).toString());
   }
 
   return {};

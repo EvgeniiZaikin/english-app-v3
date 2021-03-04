@@ -1,9 +1,7 @@
-import mysql from 'mysql2';
-import { Connection } from 'mysql2';
+import mysql, { Connection } from 'mysql2';
+import { printLog } from '../utils/functions';
 
-let connection: Connection;
-
-connection = mysql.createConnection({
+const connection: Connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'UndeadKarsak26071993',
@@ -11,7 +9,7 @@ connection = mysql.createConnection({
 });
 
 connection
-  ? console.log(`Create connection with database successfully init`)
-  : console.log(`Error with create connection to database:`);
+  ? printLog(`Create connection with database successfully init`)
+  : printLog(`Error with create connection to database:`);
 
 export default connection;

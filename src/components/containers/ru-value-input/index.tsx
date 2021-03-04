@@ -1,9 +1,10 @@
 import { ChangeEvent, FC, ReactElement } from 'react';
-import Presentations from '@presentations';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
 import { Dispatch } from 'redux';
+
+import { reducersState } from '@store';
 import { setRuValue } from '@reducers/create';
+import Presentations from '@presentations';
 
 interface IProps {
   ruValue: string;
@@ -16,8 +17,8 @@ const ruValueInput: FC<IProps> = ({ ruValue, setValue }): ReactElement => {
       change={(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setValue(event.target.value)}
       defaultValue={ruValue}
       errorCondition={!ruValue}
-      label={`RU значение`}
-      placeholder={`RU значение`}
+      label="RU значение"
+      placeholder="RU значение"
     />
   );
 };

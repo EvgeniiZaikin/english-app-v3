@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from 'express';
-import { queryResultType, dbRequest, endpoint } from './index';
+import { TQueryResult, dbRequest, endpoint } from './index';
 import queries from '../database/queries';
 
 interface IGuessWord {
@@ -14,7 +14,7 @@ const router: Router = express.Router();
 
 router.get(`/guess-word`, async (req: Request, res: Response) => {
   const logic = async (): Promise<object[]> => {
-    const [rows]: queryResultType = await dbRequest(queries.usersWords.getGuessWords(req.query.userId as string, 4));
+    const [rows]: TQueryResult = await dbRequest(queries.usersWords.getGuessWords(req.query.userId as string, 4));
     const basicWords = rows as [IGuessWord];
 
     const { ruValue, wordId, category, enValue } = basicWords[0];
@@ -33,7 +33,7 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
 
     if (isRepeatValue) {
       const values: Array<string> = basicWords.map((item: IGuessWord) => item.ruValue);
-      const [rows]: queryResultType = await dbRequest(queries.words.getGuessWords(countRepeatValues, values));
+      const [rows]: TQueryResult = await dbRequest(queries.words.getGuessWords(countRepeatValues, values));
       guessWords.push(...(rows as [IGuessWord]));
     }
 
@@ -57,7 +57,7 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
 
 router.get(`/user-word`, async (req: Request, res: Response) => {
   const logic = async (): Promise<Array<boolean>> => {
-    const [rows]: queryResultType = await dbRequest(
+    const [rows]: TQueryResult = await dbRequest(
       queries.usersWords.getUserWord((req.query.userId as unknown) as number, (req.query.id as unknown) as number)
     );
 

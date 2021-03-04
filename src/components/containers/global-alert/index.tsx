@@ -1,10 +1,12 @@
 import { ReactElement, FC } from 'react';
 import Alert, { Color } from '@material-ui/lab/Alert';
-import { alert__container } from './styles.scss';
+
 import { connect } from 'react-redux';
 import Collapse from '@material-ui/core/Collapse';
 import { reducersState } from '@store';
 import { AlertTypes } from '@reducers/global-alert';
+
+import { alert__container } from './styles.scss';
 
 interface IProps {
   show: boolean;

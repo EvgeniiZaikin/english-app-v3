@@ -8,7 +8,7 @@ import SearchPageWrapper from './search-page-wrapper';
 import HelperLabel from './helper-label';
 import InfoText from './info-text';
 
-export default {
+const presentations = {
   NavigationItem,
   Button,
   Input,
@@ -19,3 +19,5 @@ export default {
   HelperLabel,
   InfoText,
 };
+
+export default presentations;

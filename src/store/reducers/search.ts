@@ -1,11 +1,13 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { action } from '@rootReducer';
 import axios from 'axios';
-import { showGlobalAlert, AlertTypes, delayHideGlobalAlert, showErrorGlobalAlert } from './global-alert';
+
+import { getAction } from '@rootReducer';
 import { AsyncDispatch } from '@utils/types';
-import { hideGlobalLoading, showGlobalLoading } from './global-loading';
 import { sleep } from '@utils/functions';
+
+import { showErrorGlobalAlert } from './global-alert';
+import { hideGlobalLoading, showGlobalLoading } from './global-loading';
 
 export const SET_SEARCH_INFO: string = 'SET_SEARCH_INFO';
 export const RESET_SEARCH_INFO: string = 'RESET_SEARCH_INFO';
@@ -25,11 +27,14 @@ const initialState: IState = {
 const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
   switch (action.type) {
     case HYDRATE:
-      const hydrateState = action.payload.search;
-      return { ...hydrateState };
+      return { ...action.payload.search };
     case SET_SEARCH_INFO:
-      const { ruValue, enValue, category } = action.payload;
-      return { ...state, ruValue, enValue, category };
+      return {
+        ...state,
+        ruValue: action.payload.ruValue,
+        enValue: action.payload.enValue,
+        category: action.payload.category,
+      };
     case RESET_SEARCH_INFO:
       return {
         ...state,
@@ -44,8 +49,8 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
 
 export default search;
 
-export const setSearchInfo = (info: IState) => action<IState>(SET_SEARCH_INFO, info);
-export const resetSearchInfo = () => action(RESET_SEARCH_INFO);
+export const setSearchInfo = (info: IState) => getAction<IState>(SET_SEARCH_INFO, info);
+export const resetSearchInfo = () => getAction(RESET_SEARCH_INFO);
 
 export const setSearchData = (ruValue: string, enValue: string) => async (dispatch: AsyncDispatch) => {
   dispatch(showGlobalLoading());
@@ -64,7 +69,7 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
       dispatch(resetSearchInfo());
       throw new Error(`Status search word is false! Error: ${error.toString()}`);
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     showErrorGlobalAlert(dispatch, `Can not search word!`, error);
   }
 

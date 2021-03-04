@@ -1,5 +1,9 @@
 import React, { FC, ReactElement } from 'react';
 import Containers from '@containers';
+
+import { connect } from 'react-redux';
+import { reducersState } from '@store';
+
 import {
   layout__container,
   layout__wrap,
@@ -9,14 +13,12 @@ import {
   layout__top,
   layout__spacer,
 } from './styles.scss';
-import { connect } from 'react-redux';
-import { reducersState } from '@store';
 
 interface IProps {
   type: string;
 }
 
-const Spacer = () => <div className={layout__spacer}></div>;
+const Spacer = () => <div className={layout__spacer} />;
 
 const createPageWrapper: FC<IProps> = ({ type }): ReactElement => {
   return (

@@ -1,12 +1,12 @@
 import { Reducer, AnyAction, Dispatch } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { action } from '@rootReducer';
+import { getAction } from '@rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
 import { reducersState } from '@store';
-import { showGlobalLoading, hideGlobalLoading } from './global-loading';
-import { showErrorGlobalAlert } from './global-alert';
 import axios from 'axios';
 import { IResponse } from '@utils/interfaces';
+import { showGlobalLoading, hideGlobalLoading } from './global-loading';
+import { showErrorGlobalAlert } from './global-alert';
 
 const SET_REPEAT_WORD_INFO: string = 'SET_REPEAT_WORD_INFO';
 const FINISH_REPEAT_WORD: string = 'FINISH_REPEAT_WORD';
@@ -36,8 +36,7 @@ const initialState: IState = {
 const repeat: Reducer<IState, AnyAction> = (state = initialState, action) => {
   switch (action.type) {
     case HYDRATE:
-      const hydrateState = action.payload.repeat;
-      return { ...hydrateState };
+      return { ...action.payload.repeat };
     case SET_REPEAT_WORD_INFO:
       return { ...state, ...action.payload };
     case FINISH_REPEAT_WORD:
@@ -53,10 +52,10 @@ const repeat: Reducer<IState, AnyAction> = (state = initialState, action) => {
 
 export default repeat;
 
-export const setRepeatWordInfo = (data: object) => action<object>(SET_REPEAT_WORD_INFO, data);
-export const finishRepeatWord = () => action(FINISH_REPEAT_WORD);
-export const setRepeatWordStatus = (status: boolean) => action<boolean>(SET_REPEAT_WORD_STATUS, status);
-export const resetRepeatWordInfo = () => action(RESET_REPEAT_WORD_INFO);
+export const setRepeatWordInfo = (data: object) => getAction<object>(SET_REPEAT_WORD_INFO, data);
+export const finishRepeatWord = () => getAction(FINISH_REPEAT_WORD);
+export const setRepeatWordStatus = (status: boolean) => getAction<boolean>(SET_REPEAT_WORD_STATUS, status);
+export const resetRepeatWordInfo = () => getAction(RESET_REPEAT_WORD_INFO);
 
 export const setRepeatWordData = (userId: number | null, isAuth: boolean) => async (
   dispatch: ThunkDispatch<reducersState, void, AnyAction>
@@ -77,7 +76,7 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean) => asy
     } else {
       throw new Error(`Status get words is false! Error: ${error}`);
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     showErrorGlobalAlert(dispatch, `Can not get guess word!`, error);
   }
 
@@ -95,46 +94,60 @@ interface IUpdateWordParams {
 }
 
 export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispatch) => {
+  const updateWord = async () => {
+    let isUpdated = true;
+
+    const data: IResponse = await axios.put(`/api/words/word`, params);
+    if (!data.status || data.error) {
+      isUpdated = false;
+      showErrorGlobalAlert(dispatch, `Word did not update!`, data.error);
+    }
+
+    return isUpdated;
+  };
+
+  const getUserWord = async () => {
+    const data: IResponse = await axios.get(`/api/users-words/user-word`, {
+      params: {
+        userId: params.userId,
+        id: params.id,
+      },
+    });
+
+    (!data.status || data.error) && showErrorGlobalAlert(dispatch, `User word did not update!`, data.error);
+
+    return !!data.result.length;
+  };
+
+  const updateUserWord = async () => {
+    const data: IResponse = await axios.put(`/api/users-words/user-word`, params);
+    (!data.status || data.error) && showErrorGlobalAlert(dispatch, `User word did not update!`, data.error);
+  };
+
+  const createUserWord = async () => {
+    let isCreated: boolean = true;
+
+    const data: IResponse = await axios.post(`/api/users-words/user-word`, params);
+    if (!data.status || data.error) {
+      isCreated = false;
+      showErrorGlobalAlert(dispatch, `User word did not create!`, data.error);
+    }
+
+    return isCreated;
+  };
+
   try {
-    const {
-      data: { status, error },
-    }: { data: IResponse } = await axios.put(`/api/words/word`, params);
-
-    if (!status || error) showErrorGlobalAlert(dispatch, `Word did not update!`, error);
-    else {
-      if (params.isAuth && params.userId) {
-        const {
-          data: { status, result, error },
-        }: { data: IResponse } = await axios.get(`/api/users-words/user-word`, {
-          params: {
-            userId: params.userId,
-            id: params.id,
-          },
-        });
-        if (!status || error) {
-          showErrorGlobalAlert(dispatch, `User word did not update!`, error);
-        }
-        if (result[0]) {
-          const {
-            data: { status, error },
-          }: { data: IResponse } = await axios.put(`/api/users-words/user-word`, params);
-          (!status || error) && showErrorGlobalAlert(dispatch, `User word did not update!`, error);
-        } else {
-          const {
-            data: { status, error },
-          }: { data: IResponse } = await axios.post(`/api/users-words/user-word`, params);
-
-          if (!status || error) showErrorGlobalAlert(dispatch, `User word did not create!`, error);
-          else {
-            const {
-              data: { status, error },
-            }: { data: IResponse } = await axios.put(`/api/users-words/user-word`, params);
-            (!status || error) && showErrorGlobalAlert(dispatch, `User word did not update!`, error);
-          }
-        }
+    const isUpdated = await updateWord();
+    if (isUpdated && params.isAuth && params.userId) {
+      const isExists = await getUserWord();
+      if (isExists) {
+        await updateUserWord();
+      } else {
+        const isUserWordCreated = await createUserWord();
+        if (isUserWordCreated) await updateUserWord();
       }
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     showErrorGlobalAlert(dispatch, `Word did not update!`, error);
   }
 };

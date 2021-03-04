@@ -1,9 +1,11 @@
 import { IncomingMessage } from 'http';
 
+const isBrowser = () => typeof window !== 'undefined';
+
 export function getHost(req: IncomingMessage | undefined): string {
   let host: string = '';
 
-  if (process.browser) host = window.location.origin;
+  if (isBrowser()) host = window.location.origin;
   else if (req) host = `http://${req.headers.host}`;
   else {
     throw new Error(`Can not get request object!`);
@@ -14,4 +16,9 @@ export function getHost(req: IncomingMessage | undefined): string {
 
 export async function sleep(delay: number) {
   await new Promise((resolve) => setTimeout(resolve, delay));
+}
+
+export function printLog(message: string) {
+  if (isBrowser()) window.console.log(message);
+  else global.console.log(message);
 }

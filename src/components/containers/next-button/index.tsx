@@ -32,7 +32,7 @@ const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, appTheme }
         click={() => nextWord(userId, isAuth)}
         disabled={disabled}
         icon={<NavigateNextIcon />}
-        title={`Далее`}
+        title="Далее"
         theme={appTheme}
       />
     </ThemeProvider>
@@ -43,9 +43,9 @@ const mapStateToProps = (state: reducersState) => {
   const {
     repeat: { finished },
     auth: { isAuth, userId },
-    theme: { theme },
+    theme: { theme: appTheme },
   } = state;
-  return { disabled: !finished, isAuth, userId, appTheme: theme };
+  return { disabled: !finished, isAuth, userId, appTheme };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {

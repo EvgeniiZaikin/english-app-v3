@@ -1,6 +1,6 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { action } from '@rootReducer';
+import { getAction } from '@rootReducer';
 
 export const TOGGLE_NAVIGATION_FULLSIZE = 'TOGGLE_NAVIGATION_FULLSIZE';
 
@@ -15,8 +15,7 @@ const initialState: IState = {
 const navigation: Reducer<IState, AnyAction> = (state = initialState, action): IState => {
   switch (action.type) {
     case HYDRATE:
-      const hydrateState = action.payload.navigation;
-      return { ...hydrateState };
+      return { ...action.payload.navigation };
     case TOGGLE_NAVIGATION_FULLSIZE:
       return { ...state, fullsize: action.payload };
     default:
@@ -26,4 +25,4 @@ const navigation: Reducer<IState, AnyAction> = (state = initialState, action): I
 
 export default navigation;
 
-export const toggleNavigationFullsize = (fullsize: boolean) => action<boolean>(TOGGLE_NAVIGATION_FULLSIZE, fullsize);
+export const toggleNavigationFullsize = (fullsize: boolean) => getAction<boolean>(TOGGLE_NAVIGATION_FULLSIZE, fullsize);

@@ -1,6 +1,6 @@
 import { Reducer, AnyAction } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { action } from '@rootReducer';
+import { getAction } from '@rootReducer';
 
 const SHOW_GLOBAL_LOADING: string = 'SHOW_GLOBAL_LOADING';
 const HIDE_GLOBAL_LOADING: string = 'HIDE_GLOBAL_LOADING';
@@ -16,8 +16,7 @@ const initialState: IState = {
 const globalLoading: Reducer<IState, AnyAction> = (state = initialState, action) => {
   switch (action.type) {
     case HYDRATE:
-      const hydrateState = action.payload.globalLoading;
-      return { ...hydrateState };
+      return { ...action.payload.globalLoading };
     case SHOW_GLOBAL_LOADING:
       return { ...state, show: true };
     case HIDE_GLOBAL_LOADING:
@@ -29,5 +28,5 @@ const globalLoading: Reducer<IState, AnyAction> = (state = initialState, action)
 
 export default globalLoading;
 
-export const showGlobalLoading = () => action(SHOW_GLOBAL_LOADING);
-export const hideGlobalLoading = () => action(HIDE_GLOBAL_LOADING);
+export const showGlobalLoading = () => getAction(SHOW_GLOBAL_LOADING);
+export const hideGlobalLoading = () => getAction(HIDE_GLOBAL_LOADING);

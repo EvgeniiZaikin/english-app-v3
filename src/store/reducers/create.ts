@@ -1,11 +1,13 @@
 import { Reducer, AnyAction } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { action } from '@rootReducer';
-import { showGlobalLoading, hideGlobalLoading } from './global-loading';
-import { showGlobalAlert, delayHideGlobalAlert, AlertTypes, showErrorGlobalAlert } from './global-alert';
+import { getAction } from '@rootReducer';
+
 import { IResponse } from '@utils/interfaces';
 import axios from 'axios';
 import { AsyncDispatch } from '@utils/types';
+
+import { showGlobalLoading, hideGlobalLoading } from './global-loading';
+import { showGlobalAlert, delayHideGlobalAlert, AlertTypes, showErrorGlobalAlert } from './global-alert';
 
 const SET_TYPE: string = 'SET_TYPE';
 const SET_RU_VALUE: string = 'SET_RU_VALUE';
@@ -41,8 +43,7 @@ const initialState: IState = {
 const create: Reducer<IState, AnyAction> = (state = initialState, action) => {
   switch (action.type) {
     case HYDRATE:
-      const hydrateState = action.payload.create;
-      return { ...hydrateState };
+      return { ...action.payload.create };
     case SET_TYPE:
       return { ...state, type: action.payload };
     case SET_RU_VALUE:
@@ -72,14 +73,14 @@ interface ISetCheckboxData {
   check: boolean;
 }
 
-export const setType = (type: string) => action<string>(SET_TYPE, type);
-export const setRuValue = (value: string) => action<string>(SET_RU_VALUE, value);
-export const setEnValue = (value: string) => action<string>(SET_EN_VALUE, value);
-export const setCategory = (category: string) => action<string>(SET_CATEGORY, category);
+export const setType = (type: string) => getAction<string>(SET_TYPE, type);
+export const setRuValue = (value: string) => getAction<string>(SET_RU_VALUE, value);
+export const setEnValue = (value: string) => getAction<string>(SET_EN_VALUE, value);
+export const setCategory = (category: string) => getAction<string>(SET_CATEGORY, category);
 export const setEnabledCategories = (categories: Array<string>) =>
-  action<Array<string>>(SET_ENABLE_CATEGORIES, categories);
+  getAction<Array<string>>(SET_ENABLE_CATEGORIES, categories);
 export const setCheckboxData = (type: string, check: boolean) =>
-  action<ISetCheckboxData>(SET_CHECKBOX_DATA, { type, check });
+  getAction<ISetCheckboxData>(SET_CHECKBOX_DATA, { type, check });
 
 export const createWordOrCategory = (type: string, params: object) => async (dispatch: AsyncDispatch) => {
   dispatch(showGlobalLoading());
@@ -97,8 +98,8 @@ export const createWordOrCategory = (type: string, params: object) => async (dis
     } else {
       let label = `Произошла ошибка при создании нового слова!`;
 
-      if (error.message) {
-        const { message } = error;
+      if ((error as Error).message) {
+        const { message } = error as Error;
         label = `${type.charAt(0).toUpperCase() + type.slice(1)} did not save!`;
         message.includes(`Duplicate entry`) && (label += ` This ${type} already exists!`);
       }
@@ -107,7 +108,7 @@ export const createWordOrCategory = (type: string, params: object) => async (dis
     }
 
     delayHideGlobalAlert(dispatch, 1500);
-  } catch (error: any) {
+  } catch (error: unknown) {
     showErrorGlobalAlert(dispatch, `Error with save ${type}!`, error);
   }
 

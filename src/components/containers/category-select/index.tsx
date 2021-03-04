@@ -14,12 +14,12 @@ interface IProps {
 const categorySelect: FC<IProps> = ({ category, enableCategories, chooseCategory }): ReactElement => {
   return (
     <Presentations.Select
-      title={`Категория`}
+      title="Категория"
       value={category}
       change={(event: ChangeEvent<{ name?: string | undefined; value: unknown }>) => chooseCategory(event.target.value)}
       options={enableCategories}
       error={!category}
-      helperText={`Выберите категорию`}
+      helperText="Выберите категорию"
     />
   );
 };

@@ -1,16 +1,15 @@
 import { FC, ReactElement } from 'react';
 import { connect } from 'react-redux';
-
-import { container, authPageWrapper__label } from './styles.scss';
-import Button from '@material-ui/core/Button';
-
-import Presentations from '@presentations';
-import Containers from '@containers';
-import { reducersState } from '@store';
 import { NextRouter, withRouter } from 'next/router';
+import Button from '@material-ui/core/Button';
 
 import { AsyncDispatch } from '@utils/types';
 import { registration, authorization, showAuthForm, logoutUser } from '@reducers/auth';
+import { reducersState } from '@store';
+import Presentations from '@presentations';
+import Containers from '@containers';
+
+import { container, authPageWrapper__label } from './styles.scss';
 
 interface IProps {
   showAuthForm: boolean;
@@ -39,21 +38,17 @@ const authPageWrapper: FC<IProps> = ({
   isAuth,
   logout,
 }): ReactElement => {
-  const authUser = showAuthForm
-    ? async () => {
-        const success: boolean = await doAuth(login, password);
-        success && router.push('/repeat');
-      }
-    : () => showForm('auth');
+  const openLoginForm = (type: 'auth' | 'reg') => showForm(type);
+  const doLogin = async (type: 'auth' | 'reg') => {
+    const action = type === 'auth' ? doAuth : doRegistration;
+    const success: boolean = await action(login, password);
+    success && router.push('/repeat');
+  };
 
-  const regUser = showAuthForm
-    ? async () => {
-        const success: boolean = await doRegistration(login, password);
-        success && router.push('/repeat');
-      }
-    : () => showForm('reg');
+  const authUser = showAuthForm ? doLogin('auth') : openLoginForm('auth');
+  const regUser = showAuthForm ? doLogin('reg') : openLoginForm('reg');
 
-  const logoutUser = () => {
+  const exit = () => {
     logout();
     router.push('/repeat');
   };
@@ -87,7 +82,7 @@ const authPageWrapper: FC<IProps> = ({
       ) : null}
 
       {!showAuthForm ? (
-        <Button variant="contained" onClick={logoutUser}>
+        <Button variant="contained" onClick={exit}>
           Анонимно
         </Button>
       ) : null}
