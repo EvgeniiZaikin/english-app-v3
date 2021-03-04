@@ -39,11 +39,11 @@ const footerBlock: FC<IProps> = ({
     `;
 
   const loginUser = () => router.push('/');
-  const logoutUser = () => {
+  const exitAuth = () => {
     logout();
     router.push('/');
   };
-  const authAction = isAuth ? logoutUser : loginUser;
+  const authAction = isAuth ? exitAuth : loginUser;
 
   return (
     <footer className={footerClass}>

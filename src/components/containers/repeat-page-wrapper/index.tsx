@@ -1,14 +1,17 @@
 import { ReactElement, FC, Fragment } from 'react';
+import { connect } from 'react-redux';
+import uniqid from 'uniqid';
+
+import Presentations from '@presentations';
+import Containers from '@containers';
+import { reducersState } from '@store';
+
 import {
   repeatPage_container,
   repeatPage__wordCard,
   repeatPage__nextButton,
   repeatPage__variants,
 } from './styles.scss';
-import { connect } from 'react-redux';
-import Presentations from '@presentations';
-import Containers from '@containers';
-import { reducersState } from '@store';
 
 interface IProps {
   word: string;
@@ -26,9 +29,9 @@ const repeatPageWrapper: FC<IProps> = ({ word, category, enValues, theme }): Rea
             <Presentations.WordCard theme={theme} word={word} category={category} />
           </div>
           <div className={repeatPage__variants}>
-            {enValues.map((variant: string, index: number) => {
+            {enValues.map((variant: string) => {
               return (
-                <Fragment key={index}>
+                <Fragment key={uniqid()}>
                   <Containers.TranslateVariant value={variant} />
                 </Fragment>
               );

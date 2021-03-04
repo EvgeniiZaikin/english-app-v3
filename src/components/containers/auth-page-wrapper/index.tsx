@@ -4,7 +4,7 @@ import { NextRouter, withRouter } from 'next/router';
 import Button from '@material-ui/core/Button';
 
 import { AsyncDispatch } from '@utils/types';
-import { registration, authorization, showAuthForm, logoutUser } from '@reducers/auth';
+import { registration, authorization, showAuthForm as showAuthFormAction, logoutUser } from '@reducers/auth';
 import { reducersState } from '@store';
 import Presentations from '@presentations';
 import Containers from '@containers';
@@ -100,7 +100,7 @@ const mapStateToProps = (state: reducersState) => {
 const mapDispatchToProps = (dispatch: AsyncDispatch) => {
   const doRegistration = (login: string, password: string): Promise<boolean> => dispatch(registration(login, password));
   const doAuth = (login: string, password: string): Promise<boolean> => dispatch(authorization(login, password));
-  const showForm = (type: string) => dispatch(showAuthForm(type));
+  const showForm = (type: string) => dispatch(showAuthFormAction(type));
   const logout = () => dispatch(logoutUser());
 
   return { doRegistration, doAuth, showForm, logout };

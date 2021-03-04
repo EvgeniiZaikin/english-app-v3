@@ -1,4 +1,10 @@
 import { ReactElement, FC, useState } from 'react';
+import { connect } from 'react-redux';
+import { reducersState } from '@store';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { finishRepeatWord, IUpdateWordParams, setRepeatWordStatus, updateWord } from '@reducers/repeat';
+
 import {
   translateVariant__button,
   translateVariant__button_neutral,
@@ -7,11 +13,6 @@ import {
   translateVariant__button_light,
   translateVariant__button_dark,
 } from './styles.scss';
-import { connect } from 'react-redux';
-import { reducersState } from '@store';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { finishRepeatWord, setRepeatWordStatus, updateWord } from '@reducers/repeat';
 
 interface IProps {
   value: string;
@@ -70,7 +71,7 @@ const translateVariant: FC<IProps> = ({
   };
 
   return (
-    <button disabled={finished} className={classes} onClick={click}>
+    <button type="button" disabled={finished} className={classes} onClick={click}>
       {value}
     </button>
   );
@@ -88,7 +89,7 @@ const mapStateToProps = (state: reducersState) => {
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
   const openNextButton = () => dispatch(finishRepeatWord());
   const setGuessedWordStatus = (guessed: boolean) => dispatch(setRepeatWordStatus(guessed));
-  const updateGuessedWord = (params: object) => dispatch(updateWord(params));
+  const updateGuessedWord = (params: IUpdateWordParams) => dispatch(updateWord(params));
 
   return {
     openNextButton,

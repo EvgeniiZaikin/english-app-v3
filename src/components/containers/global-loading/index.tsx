@@ -1,9 +1,11 @@
 import { FC, ReactElement } from 'react';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { backdrop__container } from './styles.scss';
+
 import { connect } from 'react-redux';
 import { reducersState } from '@store';
+
+import { backdrop__container } from './styles.scss';
 
 interface IProps {
   show: boolean;

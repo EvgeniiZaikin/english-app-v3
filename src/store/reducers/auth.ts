@@ -91,7 +91,7 @@ export const logoutUser = () => getAction(LOGOUT);
 export const showAuthForm = (type: string) => getAction(SHOW_AUTH_FORM, type);
 export const hideAuthForm = () => getAction(HIDE_AUTH_FORM);
 
-const loginAction = (auth: boolean, login: string, password: string) => async (
+const loginAction = (isAuth: boolean, login: string, password: string) => async (
   dispatch: AsyncDispatch
 ): Promise<boolean> => {
   const authData = {
@@ -108,7 +108,7 @@ const loginAction = (auth: boolean, login: string, password: string) => async (
     detailErrorMessage: (error: unknown) => `Ошибка при регистрации пользователя: ${error}`,
   };
 
-  const data = auth ? authData : regData;
+  const data = isAuth ? authData : regData;
 
   let success = true;
 

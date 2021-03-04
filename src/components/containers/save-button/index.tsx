@@ -73,9 +73,9 @@ const saveButton: FC<IProps> = ({
 const mapStateToProps = (state: reducersState) => {
   const {
     create: { type, ruValue, enValue, category, expression, slang, abuse, abbreviation },
-    theme: { theme },
+    theme: { theme: appTheme },
   } = state;
-  return { type, ruValue, enValue, category, appTheme: theme, expression, slang, abuse, abbreviation };
+  return { type, ruValue, enValue, category, appTheme, expression, slang, abuse, abbreviation };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {

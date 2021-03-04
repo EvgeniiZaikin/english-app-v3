@@ -83,7 +83,7 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean) => asy
   dispatch(hideGlobalLoading());
 };
 
-interface IUpdateWordParams {
+export interface IUpdateWordParams {
   id: number;
   ruValue: string;
   enValue: string;
@@ -94,7 +94,7 @@ interface IUpdateWordParams {
 }
 
 export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispatch) => {
-  const updateWord = async () => {
+  const innerUpdateWord = async () => {
     let isUpdated = true;
 
     const data: IResponse = await axios.put(`/api/words/word`, params);
@@ -137,7 +137,7 @@ export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispat
   };
 
   try {
-    const isUpdated = await updateWord();
+    const isUpdated = await innerUpdateWord();
     if (isUpdated && params.isAuth && params.userId) {
       const isExists = await getUserWord();
       if (isExists) {

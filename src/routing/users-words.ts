@@ -21,11 +21,11 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
 
     let isRepeatValue: boolean = false;
     let countRepeatValues: number = 0;
-    let guessWords: Array<IGuessWord> = [basicWords[0]];
+    const guessWords: Array<IGuessWord> = [basicWords[0]];
     for (let i = 1; i < basicWords.length; i++) {
       if (basicWords[i].ruValue === ruValue) {
         isRepeatValue = true;
-        countRepeatValues++;
+        countRepeatValues += 1;
       } else {
         guessWords.push(basicWords[i]);
       }
