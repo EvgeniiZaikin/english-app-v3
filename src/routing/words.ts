@@ -14,6 +14,10 @@ interface IFoundedWord {
   word_ru_value: string;
   word_en_value: string;
   category_label: string;
+  isExpression: boolean;
+  isSlang: boolean;
+  isAbuse: boolean;
+  isAbbreviation: boolean;
 }
 
 interface IGuessWord {
@@ -33,13 +37,25 @@ router.get(`/word`, async (req: Request, res: Response) => {
   const logic = async (): Promise<object[]> => {
     const query: string = queries.words.getWordByValue(req.query.ruValue as string, req.query.enValue as string);
     const [rows]: TQueryResult = await dbRequest(query);
-    const { word_ru_value: ruValue, word_en_value: enValue, category_label: category } = (rows as [IFoundedWord])[0];
+    const {
+      word_ru_value: ruValue,
+      word_en_value: enValue,
+      category_label: category,
+      isExpression,
+      isSlang,
+      isAbuse,
+      isAbbreviation,
+    } = (rows as [IFoundedWord])[0];
 
     const result: Array<object> = [
       {
         ruValue,
         enValue,
         category,
+        isExpression,
+        isSlang,
+        isAbuse,
+        isAbbreviation,
       },
     ];
 

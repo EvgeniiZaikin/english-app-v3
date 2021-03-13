@@ -35,6 +35,10 @@ const queries = {
         SELECT
             w.word_ru_value,
             w.word_en_value,
+            w.word_is_expression as "isExpression",
+            w.word_is_slang as "isSlang",
+            w.word_is_abuse as "isAbuse",
+            w.word_is_abbreviation as "isAbbreviation",
             cat.category_label
         FROM
             words AS w

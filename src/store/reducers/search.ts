@@ -16,12 +16,20 @@ interface IState {
   ruValue: string;
   enValue: string;
   category: string;
+  isExpression: boolean;
+  isSlang: boolean;
+  isAbuse: boolean;
+  isAbbreviation: boolean;
 }
 
 const initialState: IState = {
   ruValue: 'Слово не определено',
   enValue: 'Translate is not define',
   category: 'Категория не определена',
+  isExpression: false,
+  isSlang: false,
+  isAbuse: false,
+  isAbbreviation: false,
 };
 
 const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -34,13 +42,14 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
         ruValue: action.payload.ruValue,
         enValue: action.payload.enValue,
         category: action.payload.category,
+        isExpression: action.payload.isExpression,
+        isSlang: action.payload.isSlang,
+        isAbuse: action.payload.isAbuse,
+        isAbbreviation: action.payload.isAbbreviation,
       };
     case RESET_SEARCH_INFO:
       return {
-        ...state,
-        ruValue: 'Слово не определено',
-        enValue: 'Translate is not define',
-        category: 'Категория не определена',
+        ...initialState,
       };
     default:
       return { ...state };
