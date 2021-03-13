@@ -7,6 +7,7 @@ import WordCard from './word-card';
 import SearchPageWrapper from './search-page-wrapper';
 import HelperLabel from './helper-label';
 import InfoText from './info-text';
+import WordsTypesChips from './words-types-chips';
 
 const presentations = {
   NavigationItem,
@@ -18,6 +19,7 @@ const presentations = {
   SearchPageWrapper,
   HelperLabel,
   InfoText,
+  WordsTypesChips,
 };
 
 export default presentations;
