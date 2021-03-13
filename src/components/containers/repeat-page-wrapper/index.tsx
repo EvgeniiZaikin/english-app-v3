@@ -18,15 +18,36 @@ interface IProps {
   category: string;
   enValues: Array<string>;
   theme: string;
+  isExpression: boolean;
+  isSlang: boolean;
+  isAbuse: boolean;
+  isAbbreviation: boolean;
 }
 
-const repeatPageWrapper: FC<IProps> = ({ word, category, enValues, theme }): ReactElement => {
+const repeatPageWrapper: FC<IProps> = ({
+  word,
+  category,
+  enValues,
+  theme,
+  isExpression,
+  isSlang,
+  isAbuse,
+  isAbbreviation,
+}): ReactElement => {
   return (
     <>
       {word.length ? (
         <div className={repeatPage_container}>
           <div className={repeatPage__wordCard}>
-            <Presentations.WordCard theme={theme} word={word} category={category} />
+            <Presentations.WordCard
+              theme={theme}
+              word={word}
+              category={category}
+              isExpression={isExpression}
+              isSlang={isSlang}
+              isAbuse={isAbuse}
+              isAbbreviation={isAbbreviation}
+            />
           </div>
           <div className={repeatPage__variants}>
             {enValues.map((variant: string) => {
@@ -50,10 +71,10 @@ const repeatPageWrapper: FC<IProps> = ({ word, category, enValues, theme }): Rea
 
 const mapStateToProps = (state: reducersState) => {
   const {
-    repeat: { word, category, enValues },
+    repeat: { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation },
     theme: { theme },
   } = state;
-  return { word, category, enValues, theme };
+  return { word, category, enValues, theme, isExpression, isSlang, isAbuse, isAbbreviation };
 };
 
 export default connect(mapStateToProps)(repeatPageWrapper);

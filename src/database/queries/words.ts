@@ -53,6 +53,10 @@ const queries = {
                 w.word_id AS "wordId",
                 w.word_ru_value AS "ruValue",
                 w.word_en_value AS "enValue",
+                w.word_is_expression as "isExpression",
+                w.word_is_slang as "isSlang",
+                w.word_is_abuse as "isAbuse",
+                w.word_is_abbreviation as "isAbbreviation",
                 cat.category_label AS "category"
             FROM 
                 words AS w

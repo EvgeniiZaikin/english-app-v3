@@ -21,6 +21,10 @@ interface IState {
   enValues: Array<string>;
   guessed: boolean;
   finished: boolean;
+  isExpression: boolean;
+  isSlang: boolean;
+  isAbuse: boolean;
+  isAbbreviation: boolean;
 }
 
 const initialState: IState = {
@@ -31,6 +35,10 @@ const initialState: IState = {
   enValues: [],
   guessed: false,
   finished: false,
+  isExpression: false,
+  isSlang: false,
+  isAbuse: false,
+  isAbbreviation: false,
 };
 
 const repeat: Reducer<IState, AnyAction> = (state = initialState, action) => {
