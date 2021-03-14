@@ -20,6 +20,7 @@ interface IState {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 const initialState: IState = {
@@ -30,6 +31,7 @@ const initialState: IState = {
   isSlang: false,
   isAbuse: false,
   isAbbreviation: false,
+  transcription: null,
 };
 
 const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -46,6 +48,7 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
         isSlang: action.payload.isSlang,
         isAbuse: action.payload.isAbuse,
         isAbbreviation: action.payload.isAbbreviation,
+        transcription: action.payload.transcription,
       };
     case RESET_SEARCH_INFO:
       return {

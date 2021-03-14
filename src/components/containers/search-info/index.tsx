@@ -18,6 +18,7 @@ interface IProps {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 const searchInfo: FC<IProps> = ({
@@ -28,6 +29,7 @@ const searchInfo: FC<IProps> = ({
   isSlang,
   isAbuse,
   isAbbreviation,
+  transcription,
 }): ReactElement => {
   return (
     <div className={searchWordInfo__container}>
@@ -45,7 +47,10 @@ const searchInfo: FC<IProps> = ({
       <Divider />
       <List>
         <ListItem disableGutters={true}>
-          <ListItemText primary={enValue} />
+          <ListItemText
+            primary={enValue}
+            secondary={transcription ? `[${transcription}]` : `Транскрипция не указана`}
+          />
         </ListItem>
       </List>
     </div>
@@ -54,9 +59,9 @@ const searchInfo: FC<IProps> = ({
 
 const mapStateToProps = (state: reducersState) => {
   const {
-    search: { ruValue, enValue, category, isExpression, isSlang, isAbuse, isAbbreviation },
+    search: { ruValue, enValue, category, isExpression, isSlang, isAbuse, isAbbreviation, transcription },
   } = state;
-  return { ruValue, enValue, category, isExpression, isSlang, isAbuse, isAbbreviation };
+  return { ruValue, enValue, category, isExpression, isSlang, isAbuse, isAbbreviation, transcription };
 };
 
 export default connect(mapStateToProps)(searchInfo);

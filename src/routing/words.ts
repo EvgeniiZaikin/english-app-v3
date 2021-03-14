@@ -18,6 +18,7 @@ interface IFoundedWord {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 interface IGuessWord {
@@ -46,6 +47,7 @@ router.get(`/word`, async (req: Request, res: Response) => {
       isSlang,
       isAbuse,
       isAbbreviation,
+      transcription,
     } = (rows as [IFoundedWord])[0];
 
     const result: Array<object> = [
@@ -57,6 +59,7 @@ router.get(`/word`, async (req: Request, res: Response) => {
         isSlang,
         isAbuse,
         isAbbreviation,
+        transcription,
       },
     ];
 
