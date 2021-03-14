@@ -2,7 +2,7 @@
 
 .footer_light {
   transition: all 0.3s ease;
-  position: absolute;
+  position: fixed;
   width: 100vw;
   background-color: $light-secondary-background;
   padding-top: 4px;
