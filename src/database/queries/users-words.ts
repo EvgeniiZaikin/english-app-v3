@@ -20,7 +20,9 @@ const queries = {
                 LEFT JOIN categories_words_bunch AS cwb ON w.word_id = cwb.bunch_word_id
                 LEFT JOIN categories AS cat ON cwb.bunch_category_id = cat.category_id
                 LEFT JOIN users_words AS uw ON w.word_id = uw.word_id AND uw.user_id = ${userId}
-            ${excludeValues.length ? `WHERE w.word_ru_value NOT IN (${values})` : ''}
+            WHERE
+                (w.last_show_datetime IS NULL OR w.last_show_datetime < NOW() - INTERVAL 5 MINUTE)
+                ${excludeValues.length ? ` AND w.word_ru_value NOT IN (${values})` : ''}
             ORDER BY
                 views,
                 success

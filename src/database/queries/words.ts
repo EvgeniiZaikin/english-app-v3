@@ -66,7 +66,9 @@ const queries = {
                 words AS w
                 LEFT JOIN categories_words_bunch AS cwb ON w.word_id = cwb.bunch_word_id
                 LEFT JOIN categories AS cat ON cwb.bunch_category_id = cat.category_id
-            ${excludeValues.length ? `WHERE w.word_ru_value NOT IN (${values})` : ''}
+            WHERE
+                (w.last_show_datetime IS NULL OR w.last_show_datetime < NOW() - INTERVAL 5 MINUTE)
+                ${excludeValues.length ? ` AND w.word_ru_value NOT IN (${values})` : ''}
             ORDER BY 
                 w.word_count_views, 
                 w.word_count_success_guesses 
@@ -85,7 +87,8 @@ const queries = {
                 word_ru_value = '${ruValue}',
                 word_en_value = '${enValue}',
                 word_count_views = ${countViews},
-                word_count_success_guesses = ${countSuccessGuesses}
+                word_count_success_guesses = ${countSuccessGuesses},
+                last_show_datetime = NOW()
             WHERE
                 word_id = ${id}
         `;
