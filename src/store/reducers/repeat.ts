@@ -117,7 +117,7 @@ export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispat
   };
 
   const getUserWord = async () => {
-    const data: IResponse = await axios.get(`/api/users-words/user-word`, {
+    const { data }: { data: IResponse } = await axios.get(`/api/users-words/user-word`, {
       params: {
         userId: params.userId,
         id: params.id,
@@ -125,8 +125,7 @@ export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispat
     });
 
     (!data.status || data.error) && showErrorGlobalAlert(dispatch, `User word did not update!`, data.error);
-
-    return !!data.result.length;
+    return data.result[0];
   };
 
   const updateUserWord = async () => {
