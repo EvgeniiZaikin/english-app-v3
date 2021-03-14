@@ -11,6 +11,7 @@ const queries = {
                 w.word_is_slang as "isSlang",
                 w.word_is_abuse as "isAbuse",
                 w.word_is_abbreviation as "isAbbreviation",
+                w.transcription,
                 cat.category_label AS "category",
                 uw.user_word_id AS "userWordId",
                 COALESCE(uw.user_word_count_views, w.word_count_views) AS "views",

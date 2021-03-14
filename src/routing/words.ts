@@ -29,6 +29,7 @@ interface IGuessWord {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 const router: Router = express.Router();
@@ -72,7 +73,17 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
 
     if (!basicWords.length) return [];
 
-    const { ruValue, wordId, category, enValue, isExpression, isSlang, isAbuse, isAbbreviation } = basicWords[0];
+    const {
+      ruValue,
+      wordId,
+      category,
+      enValue,
+      isExpression,
+      isSlang,
+      isAbuse,
+      isAbbreviation,
+      transcription,
+    } = basicWords[0];
 
     let isRepeatValue: boolean = false;
     let countRepeatValues: number = 0;
@@ -105,6 +116,7 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
         isSlang,
         isAbuse,
         isAbbreviation,
+        transcription,
       },
     ];
 

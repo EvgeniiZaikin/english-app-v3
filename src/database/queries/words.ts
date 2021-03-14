@@ -61,6 +61,7 @@ const queries = {
                 w.word_is_slang as "isSlang",
                 w.word_is_abuse as "isAbuse",
                 w.word_is_abbreviation as "isAbbreviation",
+                w.transcription,
                 cat.category_label AS "category"
             FROM 
                 words AS w

@@ -25,6 +25,7 @@ interface IState {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 const initialState: IState = {
@@ -39,6 +40,7 @@ const initialState: IState = {
   isSlang: false,
   isAbuse: false,
   isAbbreviation: false,
+  transcription: null,
 };
 
 const repeat: Reducer<IState, AnyAction> = (state = initialState, action) => {

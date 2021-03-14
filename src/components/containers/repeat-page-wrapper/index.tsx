@@ -22,6 +22,7 @@ interface IProps {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 const repeatPageWrapper: FC<IProps> = ({
@@ -33,6 +34,7 @@ const repeatPageWrapper: FC<IProps> = ({
   isSlang,
   isAbuse,
   isAbbreviation,
+  transcription,
 }): ReactElement => {
   return (
     <>
@@ -47,6 +49,7 @@ const repeatPageWrapper: FC<IProps> = ({
               isSlang={isSlang}
               isAbuse={isAbuse}
               isAbbreviation={isAbbreviation}
+              transcription={transcription}
             />
           </div>
           <div className={repeatPage__variants}>
@@ -71,10 +74,10 @@ const repeatPageWrapper: FC<IProps> = ({
 
 const mapStateToProps = (state: reducersState) => {
   const {
-    repeat: { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation },
+    repeat: { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation, transcription },
     theme: { theme },
   } = state;
-  return { word, category, enValues, theme, isExpression, isSlang, isAbuse, isAbbreviation };
+  return { word, category, enValues, theme, isExpression, isSlang, isAbuse, isAbbreviation, transcription };
 };
 
 export default connect(mapStateToProps)(repeatPageWrapper);

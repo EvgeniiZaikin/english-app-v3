@@ -7,6 +7,7 @@ import {
   wordCard__category,
   wordCard__container_dark,
   wordCard__container_light,
+  wordCard__transcription,
 } from './styles.scss';
 
 interface IProps {
@@ -17,6 +18,7 @@ interface IProps {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 const wordCard: FC<IProps> = ({
@@ -27,6 +29,7 @@ const wordCard: FC<IProps> = ({
   isSlang,
   isAbuse,
   isAbbreviation,
+  transcription,
 }): ReactElement => {
   const containerTheme: string = theme === 'light' ? wordCard__container_light : wordCard__container_dark;
 
@@ -39,6 +42,7 @@ const wordCard: FC<IProps> = ({
         isAbbreviation={isAbbreviation}
       />
       <p className={wordCard__word}>{word}</p>
+      <p className={wordCard__transcription}>{transcription ? `[${transcription}]` : `Транскрипция не указана`}</p>
       <p className={wordCard__category}>{category}</p>
     </div>
   );
