@@ -30,7 +30,7 @@ const Chips: FC<IChipsProps> = ({ isExpression, isSlang, isAbuse, isAbbreviation
       {isExpression ? <ChipItem label="Выражение" /> : null}
       {isSlang ? <ChipItem label="Сленг" /> : null}
       {isAbuse ? <ChipItem label="Мат" /> : null}
-      {isAbbreviation ? <ChipItem label="Выражение" /> : null}
+      {isAbbreviation ? <ChipItem label="Сокращение" /> : null}
     </>
   );
 };

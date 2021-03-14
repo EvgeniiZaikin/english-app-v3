@@ -8,6 +8,11 @@ interface IGuessWord {
   enValue: string;
   category: string | null;
   userWordId: number;
+  isExpression: boolean;
+  isSlang: boolean;
+  isAbuse: boolean;
+  isAbbreviation: boolean;
+  transcription: string | null;
 }
 
 const router: Router = express.Router();
@@ -17,7 +22,17 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
     const [rows]: TQueryResult = await dbRequest(queries.usersWords.getGuessWords(req.query.userId as string, 4));
     const basicWords = rows as [IGuessWord];
 
-    const { ruValue, wordId, category, enValue } = basicWords[0];
+    const {
+      ruValue,
+      wordId,
+      category,
+      enValue,
+      isExpression,
+      isSlang,
+      isAbuse,
+      isAbbreviation,
+      transcription,
+    } = basicWords[0];
 
     let isRepeatValue: boolean = false;
     let countRepeatValues: number = 0;
@@ -46,6 +61,11 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
         category: category || `Без категории`,
         rightEnValue: enValue,
         enValues,
+        isExpression,
+        isSlang,
+        isAbuse,
+        isAbbreviation,
+        transcription,
       },
     ];
 

@@ -45,8 +45,8 @@ const authPageWrapper: FC<IProps> = ({
     success && router.push('/repeat');
   };
 
-  const authUser = showAuthForm ? doLogin('auth') : openLoginForm('auth');
-  const regUser = showAuthForm ? doLogin('reg') : openLoginForm('reg');
+  const authUser = showAuthForm ? doLogin.bind(null, 'auth') : openLoginForm.bind(null, 'auth');
+  const regUser = showAuthForm ? doLogin.bind(null, 'reg') : openLoginForm.bind(null, 'reg');
 
   const exit = () => {
     logout();
