@@ -138,7 +138,8 @@ router.post(`/word`, async (req: Request, res: Response) => {
         req.body.expression,
         req.body.slang,
         req.body.abuse,
-        req.body.abbreviation
+        req.body.abbreviation,
+        req.body.transcription
       )
     );
 

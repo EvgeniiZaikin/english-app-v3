@@ -5,7 +5,8 @@ const queries = {
     expression: boolean,
     slang: boolean,
     abuse: boolean,
-    abbreviation: boolean
+    abbreviation: boolean,
+    transcription: string
   ): string => `
         INSERT INTO words (
             word_ru_value,
@@ -13,14 +14,16 @@ const queries = {
             word_is_expression,
             word_is_slang,
             word_is_abuse,
-            word_is_abbreviation
+            word_is_abbreviation,
+            transcription
         ) VALUES (
             '${ruValue}',
             '${enValue}',
             ${expression},
             ${slang},
             ${abuse},
-            ${abbreviation}
+            ${abbreviation},
+            '${transcription}'
         );
     `,
 

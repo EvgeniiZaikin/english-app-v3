@@ -28,6 +28,7 @@ interface IProps {
   slang: boolean;
   abuse: boolean;
   abbreviation: boolean;
+  transcription: string;
 }
 
 const saveButton: FC<IProps> = ({
@@ -41,6 +42,7 @@ const saveButton: FC<IProps> = ({
   slang,
   abuse,
   abbreviation,
+  transcription,
 }): ReactElement => {
   let disabled: boolean = true;
   if (type === `word`) disabled = !ruValue || !category || !enValue;
@@ -57,6 +59,7 @@ const saveButton: FC<IProps> = ({
         slang,
         abuse,
         abbreviation,
+        transcription,
       });
     } catch (error: unknown) {
       alert('Something was wrong!');
@@ -72,10 +75,10 @@ const saveButton: FC<IProps> = ({
 
 const mapStateToProps = (state: reducersState) => {
   const {
-    create: { type, ruValue, enValue, category, expression, slang, abuse, abbreviation },
+    create: { type, ruValue, enValue, category, expression, slang, abuse, abbreviation, transcription },
     theme: { theme: appTheme },
   } = state;
-  return { type, ruValue, enValue, category, appTheme, expression, slang, abuse, abbreviation };
+  return { type, ruValue, enValue, category, appTheme, expression, slang, abuse, abbreviation, transcription };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {

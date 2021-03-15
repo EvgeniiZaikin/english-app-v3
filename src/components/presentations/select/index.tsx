@@ -28,7 +28,7 @@ const select: React.FunctionComponent<IProps> = ({
       <option aria-label="None" value="" />
       {options.map((item: string) => (
         <option key={uniqid()} value={item}>
-          {value}
+          {item}
         </option>
       ))}
     </Select>

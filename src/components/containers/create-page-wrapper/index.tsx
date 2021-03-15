@@ -32,6 +32,7 @@ const createPageWrapper: FC<IProps> = ({ type }): ReactElement => {
         <div className={layout__values}>
           <Containers.RuValueInput />
           {type === `word` ? <Containers.EnValueInput /> : <Spacer />}
+          {type === `word` ? <Containers.TranscriptionInput /> : <Spacer />}
         </div>
         {type === `word` ? (
           <Containers.CreateCheckboxsGroup />

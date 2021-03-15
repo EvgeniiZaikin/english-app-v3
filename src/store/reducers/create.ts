@@ -15,6 +15,7 @@ const SET_EN_VALUE: string = 'SET_EN_VALUE';
 const SET_CATEGORY: string = 'SET_CATEGORY';
 const SET_ENABLE_CATEGORIES: string = 'SET_ENABLE_CATEGORIES';
 const SET_CHECKBOX_DATA: string = 'SET_CHECKBOX_DATA';
+const SET_TRANSCRIPTION: string = 'SET_TRANSCRIPTION';
 
 interface IState {
   type: string;
@@ -26,6 +27,7 @@ interface IState {
   slang: boolean;
   abuse: boolean;
   abbreviation: boolean;
+  transcription: string;
 }
 
 const initialState: IState = {
@@ -38,6 +40,7 @@ const initialState: IState = {
   slang: false,
   abuse: false,
   abbreviation: false,
+  transcription: '',
 };
 
 const create: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -61,6 +64,8 @@ const create: Reducer<IState, AnyAction> = (state = initialState, action) => {
       }
 
       return { ...state };
+    case SET_TRANSCRIPTION:
+      return { ...state, transcription: action.payload };
     default:
       return { ...state };
   }
@@ -81,6 +86,7 @@ export const setEnabledCategories = (categories: Array<string>) =>
   getAction<Array<string>>(SET_ENABLE_CATEGORIES, categories);
 export const setCheckboxData = (type: string, check: boolean) =>
   getAction<ISetCheckboxData>(SET_CHECKBOX_DATA, { type, check });
+export const setTranscription = (transcription: string) => getAction<string>(SET_TRANSCRIPTION, transcription);
 
 export const createWordOrCategory = (type: string, params: object) => async (dispatch: AsyncDispatch) => {
   dispatch(showGlobalLoading());

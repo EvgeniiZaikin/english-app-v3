@@ -19,6 +19,7 @@ import LoginInput from './login-input';
 import AuthLabel from './auth-label';
 import AuthForm from './auth-form';
 import CreateCheckboxsGroup from './create-checkboxs-group';
+import TranscriptionInput from './transcription-input';
 
 const containers = {
   AuthForm,
@@ -42,6 +43,7 @@ const containers = {
   AuthPageWrapper,
   PasswordInput,
   LoginInput,
+  TranscriptionInput,
 };
 
 export default containers;
