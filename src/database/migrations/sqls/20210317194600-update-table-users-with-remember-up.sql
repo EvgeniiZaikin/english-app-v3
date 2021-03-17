@@ -1,0 +1,2 @@
+ALTER TABLE users
+ADD COLUMN user_is_remember BOOLEAN NOT NULL DEFAULT false;
