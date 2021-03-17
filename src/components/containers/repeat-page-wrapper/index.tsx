@@ -4,7 +4,7 @@ import uniqid from 'uniqid';
 
 import Presentations from '@presentations';
 import Containers from '@containers';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 
 import {
   repeatPage_container,
@@ -72,7 +72,7 @@ const repeatPageWrapper: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     repeat: { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation, transcription },
     theme: { theme },

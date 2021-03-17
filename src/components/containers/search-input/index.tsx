@@ -5,7 +5,7 @@ import { ChangeEvent, FC, ReactElement, FocusEvent } from 'react';
 
 import TextField from '@material-ui/core/TextField';
 
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { setSearchData } from '@reducers/search';
 
 import { searchInput__container } from './styles.scss';
@@ -55,7 +55,7 @@ const searchWordInput: FC<IProps> = ({ search }): ReactElement => {
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
   const search = (value: string) => dispatch(setSearchData(value, value));
   return { search };
 };

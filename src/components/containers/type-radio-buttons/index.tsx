@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, ReactElement } from 'react';
 import Presentations from '@presentations';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { Dispatch } from 'redux';
 import { setType } from '@reducers/create';
 
@@ -20,7 +20,7 @@ const typeRadioButtons: FC<IProps> = ({ setCreateType, type }): ReactElement => 
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     create: { type },
   } = state;

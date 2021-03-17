@@ -6,7 +6,7 @@ import { Divider } from '@material-ui/core';
 
 import Presentations from '@presentations';
 import { setAppTheme } from '@reducers/theme';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 
 interface IProps {
   appTheme: string;
@@ -45,7 +45,7 @@ const SettingsPageWrapper: FC<IProps> = ({ appTheme, toggleAppTheme }): ReactEle
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     theme: { theme },
   } = state;

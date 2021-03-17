@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, ReactElement } from 'react';
 import Presentations from '@presentations';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { Dispatch } from 'redux';
 import { setCategory } from '@reducers/create';
 
@@ -24,7 +24,7 @@ const categorySelect: FC<IProps> = ({ category, enableCategories, chooseCategory
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     create: { category, enableCategories },
   } = state;

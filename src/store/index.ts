@@ -3,7 +3,7 @@ import { MakeStore, createWrapper } from 'next-redux-wrapper';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
-export type reducersState = ReturnType<typeof reducers>;
+export type ReducersState = ReturnType<typeof reducers>;
 
-export const makeStore: MakeStore<reducersState> = () => createStore(reducers, applyMiddleware(thunk));
-export const wrapper = createWrapper<reducersState>(makeStore, { debug: true });
+export const makeStore: MakeStore<ReducersState> = () => createStore(reducers, applyMiddleware(thunk));
+export const wrapper = createWrapper<ReducersState>(makeStore, { debug: true });

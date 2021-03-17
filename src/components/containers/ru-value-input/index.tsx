@@ -2,7 +2,7 @@ import { ChangeEvent, FC, ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { setRuValue } from '@reducers/create';
 import Presentations from '@presentations';
 
@@ -23,7 +23,7 @@ const ruValueInput: FC<IProps> = ({ ruValue, setValue }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     create: { ruValue },
   } = state;

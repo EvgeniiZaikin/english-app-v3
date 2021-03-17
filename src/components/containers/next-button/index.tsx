@@ -3,7 +3,7 @@ import Presentations from '@presentations';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { setRepeatWordData } from '@reducers/repeat';
@@ -39,7 +39,7 @@ const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, appTheme }
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     repeat: { finished },
     auth: { isAuth, userId },
@@ -48,7 +48,7 @@ const mapStateToProps = (state: reducersState) => {
   return { disabled: !finished, isAuth, userId, appTheme };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
   const nextWord = (userId: number | null, isAuth: boolean) => dispatch(setRepeatWordData(userId, isAuth));
   return { nextWord };
 };

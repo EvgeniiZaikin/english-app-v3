@@ -1,4 +1,4 @@
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { ReactElement, FC } from 'react';
 import { connect } from 'react-redux';
 import { label__container, label__text_light, label__text_dark } from './styles.scss';
@@ -19,7 +19,7 @@ const AuthLabel: FC<IProps> = ({ isAuth, login, theme }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     auth: { isAuth, login },
     theme: { theme },

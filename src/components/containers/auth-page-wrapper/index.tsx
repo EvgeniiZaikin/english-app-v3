@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 import { AsyncDispatch } from '@utils/types';
 import { registration, authorization, showAuthForm as showAuthFormAction, logoutUser } from '@reducers/auth';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import Presentations from '@presentations';
 import Containers from '@containers';
 
@@ -45,8 +45,8 @@ const authPageWrapper: FC<IProps> = ({
     success && router.push('/repeat');
   };
 
-  const authUser = showAuthForm ? doLogin.bind(null, 'auth') : openLoginForm.bind(null, 'auth');
-  const regUser = showAuthForm ? doLogin.bind(null, 'reg') : openLoginForm.bind(null, 'reg');
+  const authUser = showAuthForm ? () => doLogin('auth') : () => openLoginForm('auth');
+  const regUser = showAuthForm ? () => doLogin('reg') : () => openLoginForm('reg');
 
   const exit = () => {
     logout();
@@ -90,7 +90,7 @@ const authPageWrapper: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     auth: { showAuthForm, login, password, isAuthProcess, isRegProcess, isAuth },
   } = state;

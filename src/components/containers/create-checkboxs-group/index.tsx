@@ -1,7 +1,7 @@
 import { ReactElement, FC } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { Dispatch } from 'redux';
 import { setCheckboxData } from '@reducers/create';
 import { checkboxs__container, checkboxs__checkbox, checkboxs__wrapper, checkboxs__label } from './styles.scss';
@@ -44,7 +44,7 @@ const checkboxs: FC<IProps> = ({ expression, slang, abuse, abbreviation, setData
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     create: { expression, slang, abuse, abbreviation },
   } = state;

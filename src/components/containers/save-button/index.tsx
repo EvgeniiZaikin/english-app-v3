@@ -3,10 +3,11 @@ import Presentations from '@presentations';
 import SaveIcon from '@material-ui/icons/Save';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { AnyAction } from 'redux';
 import { createWordOrCategory } from '@reducers/create';
 import { ThunkDispatch } from 'redux-thunk';
+import { printLog } from '@utils/functions';
 
 const theme = createMuiTheme({
   palette: {
@@ -62,7 +63,7 @@ const saveButton: FC<IProps> = ({
         transcription,
       });
     } catch (error: unknown) {
-      alert('Something was wrong!');
+      printLog('Something was wrong with save!', error);
     }
   };
 
@@ -73,7 +74,7 @@ const saveButton: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     create: { type, ruValue, enValue, category, expression, slang, abuse, abbreviation, transcription },
     theme: { theme: appTheme },
@@ -81,7 +82,7 @@ const mapStateToProps = (state: reducersState) => {
   return { type, ruValue, enValue, category, appTheme, expression, slang, abuse, abbreviation, transcription };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
   const create = (type: string, params: object) => dispatch(createWordOrCategory(type, params));
   return { create };
 };

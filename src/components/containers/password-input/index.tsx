@@ -8,7 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { Dispatch } from 'redux';
 import { setPassword, toggleShowPassword } from '@reducers/auth';
 
@@ -47,7 +47,7 @@ const passwordInput: FC<IProps> = ({ password, showPassword, changePassword, tog
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     auth: { password, showPassword },
   } = state;

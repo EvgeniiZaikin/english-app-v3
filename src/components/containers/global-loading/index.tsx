@@ -3,7 +3,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 
 import { backdrop__container } from './styles.scss';
 
@@ -21,7 +21,7 @@ const globalLoading: FC<IProps> = ({ show }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     globalLoading: { show },
   } = state;

@@ -1,6 +1,6 @@
 import express, { Router, Request, Response } from 'express';
 import queries from '../database/queries';
-import { dbRequest, endpoint, TQueryResult } from './index';
+import { dbRequest, endpoint, TQueryResult } from './helpers';
 
 const router: Router = express.Router();
 
@@ -18,8 +18,8 @@ router.post(`/registration`, async (req: Request, res: Response) => {
     } else {
       await dbRequest(queries.users.addUser(req.body.login, req.body.password));
 
-      const [rows]: TQueryResult = await dbRequest(queries.users.authUser(req.body.login, req.body.password));
-      const users = rows as Array<IUser>;
+      const result: TQueryResult = await dbRequest(queries.users.authUser(req.body.login, req.body.password));
+      const users = result[0] as Array<IUser>;
 
       return users;
     }
@@ -33,10 +33,10 @@ router.post('/authorization', async (req: Request, res: Response) => {
     const query: string = queries.users.authUser(req.body.login, req.body.password);
     const [rows]: TQueryResult = await dbRequest(query);
     const result = rows as Array<IUser>;
-    if (result.length) {
-      return result;
-    } else {
+    if (!result.length) {
       throw new Error(`User with this login or password not found!`);
+    } else {
+      return result;
     }
   };
 

@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 import Containers from '@containers';
 
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 
 import {
   layout__container,
@@ -50,7 +50,7 @@ const createPageWrapper: FC<IProps> = ({ type }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     create: { type },
   } = state;

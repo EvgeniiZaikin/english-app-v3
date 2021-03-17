@@ -2,11 +2,10 @@ import { FC, ReactElement } from 'react';
 import Presentations from '@presentations';
 
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { NextRouter, withRouter } from 'next/router';
 import { Dispatch } from 'redux';
 import { toggleNavigationFullsize } from '@reducers/navigation';
-import { setAppTheme } from '@reducers/theme';
 import { logoutUser } from '@reducers/auth';
 
 import styles, { layout__footer } from './styles.scss';
@@ -16,7 +15,6 @@ interface IProps {
   appTheme: string;
   isAuth: boolean;
   router: NextRouter;
-  toggleAppTheme: Function;
   openNavigation: Function;
   hideNavigation: Function;
   logout: Function;
@@ -27,7 +25,6 @@ const footerBlock: FC<IProps> = ({
   appTheme,
   isAuth,
   router,
-  toggleAppTheme,
   openNavigation,
   hideNavigation,
   logout,
@@ -63,7 +60,7 @@ const footerBlock: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     navigation: { fullsize },
     theme: { theme },
@@ -78,15 +75,12 @@ const mapStateToProps = (state: reducersState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  const toggleAppTheme = (theme: string) => dispatch(setAppTheme(theme === 'dark' ? 'light' : 'dark'));
-
   const openNavigation = () => dispatch(toggleNavigationFullsize(true));
   const hideNavigation = () => dispatch(toggleNavigationFullsize(false));
 
   const logout = () => dispatch(logoutUser());
 
   return {
-    toggleAppTheme,
     openNavigation,
     hideNavigation,
     logout,

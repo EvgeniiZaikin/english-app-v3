@@ -7,7 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Presentations from '@presentations';
 
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { searchWordInfo__container } from './styles.scss';
 
 interface IProps {
@@ -57,7 +57,7 @@ const searchInfo: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     search: { ruValue, enValue, category, isExpression, isSlang, isAbuse, isAbbreviation, transcription },
   } = state;

@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from 'express';
-import { TQueryResult, dbRequest, endpoint } from './index';
+import { TQueryResult, dbRequest, endpoint } from './helpers';
 import queries from '../database/queries';
 
 interface IWord {
@@ -94,7 +94,7 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
     for (let i = 1; i < basicWords.length; i++) {
       if (basicWords[i].ruValue === ruValue) {
         isRepeatValue = true;
-        countRepeatValues++;
+        countRepeatValues += 1;
       } else {
         guessWords.push(basicWords[i]);
       }
@@ -102,8 +102,8 @@ router.get(`/guess-word`, async (_: Request, res: Response) => {
 
     if (isRepeatValue) {
       const values: Array<string> = basicWords.map((item: IGuessWord) => item.ruValue);
-      const [rows]: TQueryResult = await dbRequest(queries.words.getGuessWords(countRepeatValues, values));
-      guessWords.push(...(rows as [IGuessWord]));
+      const words: TQueryResult = await dbRequest(queries.words.getGuessWords(countRepeatValues, values));
+      guessWords.push(...(words[0] as [IGuessWord]));
     }
 
     const enValues: Array<string> = guessWords.map((item: IGuessWord) => item.enValue).sort(() => 0.5 - Math.random());

@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactElement } from 'react';
 import Containers from '@containers';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 
 import styles, { layout__container, layout__content } from './styles.scss';
 
@@ -20,7 +20,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ children, appTheme }): ReactEl
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     theme: { theme },
   } = state;

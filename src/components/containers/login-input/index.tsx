@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { Dispatch } from 'redux';
 import { setLogin } from '@reducers/auth';
 
@@ -33,7 +33,7 @@ const loginInput: FC<IProps> = ({ login, changeLogin }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     auth: { login },
   } = state;

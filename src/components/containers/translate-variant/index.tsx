@@ -1,6 +1,6 @@
 import { ReactElement, FC, useState } from 'react';
 import { connect } from 'react-redux';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { finishRepeatWord, IUpdateWordParams, setRepeatWordStatus, updateWord } from '@reducers/repeat';
@@ -28,7 +28,7 @@ interface IProps {
   userId: number | null;
 }
 
-const translateVariant: FC<IProps> = ({
+const TranslateVariant: FC<IProps> = ({
   value,
   rightEnValue,
   wordId,
@@ -54,8 +54,8 @@ const translateVariant: FC<IProps> = ({
   const click = () => {
     const guessed: boolean = value === rightEnValue;
 
-    const style: string = guessed ? translateVariant__button_success : translateVariant__button_error;
-    setStyle(style);
+    const currentStyle: string = guessed ? translateVariant__button_success : translateVariant__button_error;
+    setStyle(currentStyle);
 
     openNextButton();
     setGuessedWordStatus(guessed);
@@ -77,7 +77,7 @@ const translateVariant: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: reducersState) => {
+const mapStateToProps = (state: ReducersState) => {
   const {
     repeat: { wordId, word, rightEnValue, finished },
     theme: { theme },
@@ -86,7 +86,7 @@ const mapStateToProps = (state: reducersState) => {
   return { wordId, wordRuValue: word, rightEnValue, finished, theme, isAuth, userId };
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyAction>) => {
+const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
   const openNextButton = () => dispatch(finishRepeatWord());
   const setGuessedWordStatus = (guessed: boolean) => dispatch(setRepeatWordStatus(guessed));
   const updateGuessedWord = (params: IUpdateWordParams) => dispatch(updateWord(params));
@@ -98,4 +98,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<reducersState, void, AnyActi
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translateVariant);
+export default connect(mapStateToProps, mapDispatchToProps)(TranslateVariant);
