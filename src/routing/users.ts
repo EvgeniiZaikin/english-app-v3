@@ -43,4 +43,13 @@ router.post('/authorization', async (req: Request, res: Response) => {
   await endpoint(res, logic);
 });
 
+router.put('/remember', async (req: Request, res: Response) => {
+  const logic = async (): Promise<void> => {
+    const { userId, remember } = req.body;
+    await dbRequest(queries.users.setUserRemember(userId, remember));
+  };
+
+  await endpoint(res, logic);
+});
+
 export default router;

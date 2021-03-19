@@ -4,16 +4,18 @@ import Grid from '@material-ui/core/Grid';
 
 interface IProps {
   checked: boolean;
-  color: string;
+  disabled?: boolean;
+  color: 'primary' | 'default' | 'secondary' | undefined;
   onClick: () => void;
 }
 
-const onOffSwitch: FC<IProps> = ({ checked, color, onClick }): ReactElement => {
+const onOffSwitch: FC<IProps> = ({ checked, disabled = false, color, onClick }): ReactElement => {
   return (
     <Grid component="label" container alignItems="center" spacing={1}>
       <Grid item>Off</Grid>
       <Grid item>
         <Switch
+          disabled={disabled}
           checked={checked}
           onChange={onClick}
           color={color}

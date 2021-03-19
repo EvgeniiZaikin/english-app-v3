@@ -27,6 +27,12 @@ const queries = {
             user_login = '${login}'
             AND user_password = '${password}'
     `,
+
+  setUserRemember: (userId: number, remember: boolean) => `
+        UPDATE users
+        SET user_is_remember = ${remember}
+        WHERE user_id = ${userId}
+    `,
 };
 
 export default queries;

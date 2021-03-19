@@ -1,25 +1,34 @@
 import { FC, ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import { Divider } from '@material-ui/core';
 
 import Presentations from '@presentations';
 import { setAppTheme } from '@reducers/theme';
 import { ReducersState } from '@store';
+import { setRemember } from '@reducers/settings';
+import { AsyncDispatch } from '@utils/types';
 
 interface IProps {
   appTheme: string;
+  isRemember: boolean;
+  userId: number | null;
   toggleAppTheme: (theme: string) => void;
+  toggleRemember: (userId: number, remember: boolean) => Promise<void>;
 }
 
-const SettingsPageWrapper: FC<IProps> = ({ appTheme, toggleAppTheme }): ReactElement => {
-  const [remember, toggleRemember] = useState<boolean>(false);
+const SettingsPageWrapper: FC<IProps> = ({
+  appTheme,
+  isRemember,
+  userId,
+  toggleAppTheme,
+  toggleRemember,
+}): ReactElement => {
   const [darkTheme, toggleDarkTheme] = useState<boolean>(false);
   const [abuse, toggleAbuse] = useState<boolean>(false);
 
   const handleRemember = () => {
-    toggleRemember(!remember);
+    userId && toggleRemember(userId, !isRemember);
   };
 
   const handleAppTheme = () => {
@@ -34,7 +43,7 @@ const SettingsPageWrapper: FC<IProps> = ({ appTheme, toggleAppTheme }): ReactEle
   return (
     <div>
       <div>Запомнить пользователя:</div>
-      <Presentations.OnOffSwitch checked={remember} color="primary" onClick={handleRemember} />
+      <Presentations.OnOffSwitch disabled={!userId} checked={isRemember} color="primary" onClick={handleRemember} />
       <Divider />
       <div>Тёмная тема:</div>
       <Presentations.OnOffSwitch checked={darkTheme} color="primary" onClick={handleAppTheme} />
@@ -47,19 +56,25 @@ const SettingsPageWrapper: FC<IProps> = ({ appTheme, toggleAppTheme }): ReactEle
 
 const mapStateToProps = (state: ReducersState) => {
   const {
+    auth: { userId },
     theme: { theme },
+    settings: { isRemember },
   } = state;
 
   return {
     appTheme: theme,
+    isRemember,
+    userId,
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: AsyncDispatch) => {
   const toggleAppTheme = (theme: string) => dispatch(setAppTheme(theme === 'dark' ? 'light' : 'dark'));
+  const toggleRemember = (userId: number, remember: boolean): Promise<void> => dispatch(setRemember(userId, remember));
 
   return {
     toggleAppTheme,
+    toggleRemember,
   };
 };
 

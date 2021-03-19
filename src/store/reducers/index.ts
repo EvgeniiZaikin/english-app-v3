@@ -7,6 +7,7 @@ import globalAlert from './global-alert';
 import search from './search';
 import repeat from './repeat';
 import auth from './auth';
+import settings from './settings';
 
 export default combineReducers({
   navigation,
@@ -17,6 +18,7 @@ export default combineReducers({
   search,
   repeat,
   auth,
+  settings,
 });
 
 interface IAction<P> {
