@@ -1,5 +1,6 @@
 import { FC, ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
 
 import { Divider } from '@material-ui/core';
 
@@ -28,6 +29,8 @@ const SettingsPageWrapper: FC<IProps> = ({
   const [abuse, toggleAbuse] = useState<boolean>(false);
 
   const handleRemember = () => {
+    userId && !isRemember && Cookies.set('remember', String(userId), { expires: 7 });
+    userId && isRemember && Cookies.remove('remember');
     userId && toggleRemember(userId, !isRemember);
   };
 

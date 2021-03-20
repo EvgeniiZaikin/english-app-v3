@@ -1,24 +1,12 @@
-import { FC, ReactElement, useState } from 'react';
-import { connect } from 'react-redux';
-
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import { FC, ReactElement } from 'react';
 
 import Containers from '@containers';
 
-const AuthForm: FC = (): ReactElement => {
-  const [remember, setRemember] = useState<boolean>(false);
-  const changeRemember = () => setRemember(!remember);
+const AuthForm: FC = (): ReactElement => (
+  <div>
+    <Containers.LoginInput />
+    <Containers.PasswordInput />
+  </div>
+);
 
-  const checkbox = <Checkbox checked={remember} onChange={changeRemember} name="checkedB" color="primary" />;
-
-  return (
-    <div>
-      <Containers.LoginInput />
-      <Containers.PasswordInput />
-      <FormControlLabel control={checkbox} label="Запомнить" />
-    </div>
-  );
-};
-
-export default connect()(AuthForm);
+export default AuthForm;

@@ -1,13 +1,39 @@
 import React from 'react';
 import Head from 'next/head';
 import App, { AppInitialProps, AppContext } from 'next/app';
+
 import { wrapper } from '@store';
 import Containers from '@containers';
 import '../assets/styles/reset.scss';
 import '../assets/styles/global.scss';
+import { getHost, printLog } from '@utils/functions';
+import { AxiosResponse } from '@utils/types';
+import axios from 'axios';
+import { loginUser, setLogin, setPassword, setUserId } from '@reducers/auth';
 
 class MyApp extends App<AppInitialProps> {
   public static getInitialProps = async ({ Component, ctx }: AppContext) => {
+    try {
+      const host: string = getHost(ctx.req);
+
+      if (ctx.req) {
+        const userId = ctx.req.cookies.remember;
+        const { data }: AxiosResponse = await axios.get(`${host}/api/users`, { params: { userId } });
+
+        if (data.status && data.result.length) {
+          const user = data.result[0];
+          ctx.store.dispatch(setUserId(user.user_id));
+          ctx.store.dispatch(setLogin(user.user_login));
+          ctx.store.dispatch(setPassword(user.user_password));
+          ctx.store.dispatch(loginUser());
+        } else {
+          printLog((data.error as Error).toString());
+        }
+      }
+    } catch (error: unknown) {
+      printLog((error as Error).toString());
+    }
+
     return {
       pageProps: {
         ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),

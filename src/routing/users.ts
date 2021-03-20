@@ -52,4 +52,19 @@ router.put('/remember', async (req: Request, res: Response) => {
   await endpoint(res, logic);
 });
 
+router.get('/', async (req: Request, res: Response) => {
+  const logic = async (): Promise<IUser[]> => {
+    const query: string = queries.users.getUserById(req.query.userId as string);
+    const [rows]: TQueryResult = await dbRequest(query);
+    const result = rows as Array<IUser>;
+    if (!result.length) {
+      throw new Error(`User with this id!`);
+    } else {
+      return result;
+    }
+  };
+
+  await endpoint(res, logic);
+});
+
 export default router;

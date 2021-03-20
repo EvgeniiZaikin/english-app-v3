@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import next from 'next';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 import { printLog } from '../utils/functions';
 
@@ -19,6 +20,7 @@ const port = process.env.PORT || 3000;
 
     server.use(bodyParser.urlencoded({ extended: false }));
     server.use(bodyParser.json());
+    server.use(cookieParser());
 
     server.use('/api/words', routing.words);
     server.use('/api/categories', routing.categories);

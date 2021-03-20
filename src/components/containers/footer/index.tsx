@@ -1,5 +1,6 @@
 import { FC, ReactElement } from 'react';
 import Presentations from '@presentations';
+import Cookies from 'js-cookie';
 
 import { connect } from 'react-redux';
 import { ReducersState } from '@store';
@@ -37,6 +38,7 @@ const footerBlock: FC<IProps> = ({
 
   const loginUser = () => router.push('/');
   const exitAuth = () => {
+    Cookies.remove('remember');
     logout();
     router.push('/');
   };

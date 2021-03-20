@@ -33,6 +33,12 @@ const queries = {
         SET user_is_remember = ${remember}
         WHERE user_id = ${userId}
     `,
+
+  getUserById: (userId: string | number) => `
+        SELECT *
+        FROM users
+        WHERE user_id = ${userId}
+    `,
 };
 
 export default queries;
