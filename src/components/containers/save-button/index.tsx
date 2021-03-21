@@ -24,7 +24,6 @@ interface IProps {
   category: string;
   enValue: string;
   create: Function;
-  appTheme: string;
   expression: boolean;
   slang: boolean;
   abuse: boolean;
@@ -38,7 +37,6 @@ const saveButton: FC<IProps> = ({
   category,
   enValue,
   create,
-  appTheme,
   expression,
   slang,
   abuse,
@@ -63,13 +61,13 @@ const saveButton: FC<IProps> = ({
         transcription,
       });
     } catch (error: unknown) {
-      printLog('Something was wrong with save!', error);
+      printLog(`Something was wrong with save! ${error}`);
     }
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Presentations.Button click={save} disabled={disabled} icon={<SaveIcon />} title="Сохранить" theme={appTheme} />
+      <Presentations.Button click={save} disabled={disabled} icon={<SaveIcon />} title="Сохранить" />
     </ThemeProvider>
   );
 };
@@ -77,9 +75,8 @@ const saveButton: FC<IProps> = ({
 const mapStateToProps = (state: ReducersState) => {
   const {
     create: { type, ruValue, enValue, category, expression, slang, abuse, abbreviation, transcription },
-    theme: { theme: appTheme },
   } = state;
-  return { type, ruValue, enValue, category, appTheme, expression, slang, abuse, abbreviation, transcription };
+  return { type, ruValue, enValue, category, expression, slang, abuse, abbreviation, transcription };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {

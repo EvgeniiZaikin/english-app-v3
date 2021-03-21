@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import navigation from './navigation';
-import theme from './theme';
 import create from './create';
 import globalLoading from './global-loading';
 import globalAlert from './global-alert';
@@ -11,7 +10,6 @@ import settings from './settings';
 
 export default combineReducers({
   navigation,
-  theme,
   create,
   globalLoading,
   globalAlert,

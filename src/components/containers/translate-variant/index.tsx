@@ -11,7 +11,6 @@ import {
   translateVariant__button_success,
   translateVariant__button_error,
   translateVariant__button_light,
-  translateVariant__button_dark,
 } from './styles.scss';
 
 interface IProps {
@@ -23,7 +22,6 @@ interface IProps {
   setGuessedWordStatus: Function;
   finished: boolean;
   updateGuessedWord: Function;
-  theme: string;
   isAuth: boolean;
   userId: number | null;
 }
@@ -37,7 +35,6 @@ const TranslateVariant: FC<IProps> = ({
   setGuessedWordStatus,
   finished,
   updateGuessedWord,
-  theme,
   isAuth,
   userId,
 }): ReactElement => {
@@ -48,7 +45,7 @@ const TranslateVariant: FC<IProps> = ({
         &nbsp;
         ${style}
         &nbsp;
-        ${theme === 'light' ? translateVariant__button_light : translateVariant__button_dark}
+        ${translateVariant__button_light}
     `;
 
   const click = () => {
@@ -80,10 +77,9 @@ const TranslateVariant: FC<IProps> = ({
 const mapStateToProps = (state: ReducersState) => {
   const {
     repeat: { wordId, word, rightEnValue, finished },
-    theme: { theme },
     auth: { isAuth, userId },
   } = state;
-  return { wordId, wordRuValue: word, rightEnValue, finished, theme, isAuth, userId };
+  return { wordId, wordRuValue: word, rightEnValue, finished, isAuth, userId };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {

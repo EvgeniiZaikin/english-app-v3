@@ -5,16 +5,8 @@
   flex-direction: column;
   margin-top: 56px;
   margin-bottom: 104px;
-}
-
-.layout__container_light {
   background-color: $light-theme-background;
   color: $light-theme-color;
-}
-
-.layout__container_dark {
-  background-color: $dark-theme-background;
-  color: $dark-theme-color;
 }
 
 .layout__content {

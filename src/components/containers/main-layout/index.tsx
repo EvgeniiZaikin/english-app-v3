@@ -1,33 +1,15 @@
 import { FunctionComponent, ReactElement } from 'react';
 import Containers from '@containers';
-import { connect } from 'react-redux';
-import { ReducersState } from '@store';
 
-import styles, { layout__container, layout__content } from './styles.scss';
+import { layout__container, layout__content } from './styles.scss';
 
-type LayoutProps = React.PropsWithChildren<{
-  appTheme: string;
-}>;
+type LayoutProps = React.PropsWithChildren<{}>;
 
-const Layout: FunctionComponent<LayoutProps> = ({ children, appTheme }): ReactElement => {
-  const containerStyle = styles[appTheme === `light` ? `layout__container_light` : `layout__container_dark`];
+const Layout: FunctionComponent<LayoutProps> = ({ children }): ReactElement => (
+  <div className={layout__container}>
+    <div className={layout__content}>{children}</div>
+    <Containers.Footer />
+  </div>
+);
 
-  return (
-    <div className={`${layout__container} ${containerStyle}`}>
-      <div className={layout__content}>{children}</div>
-      <Containers.Footer />
-    </div>
-  );
-};
-
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    theme: { theme },
-  } = state;
-
-  return {
-    appTheme: theme,
-  };
-};
-
-export default connect(mapStateToProps)(Layout);
+export default Layout;

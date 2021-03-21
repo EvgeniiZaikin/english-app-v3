@@ -4,15 +4,6 @@
   width: 100%;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.wordCard__container_dark {
-  background-color: black;
-  color: $dark-theme-color;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-.wordCard__container_light {
   background-color: $light-theme-background;
 }
 

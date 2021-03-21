@@ -1,6 +1,5 @@
 declare const styles: {
-  readonly "button_dark": string;
-  readonly "button_light": string;
+  readonly "button": string;
 };
 export = styles;
 

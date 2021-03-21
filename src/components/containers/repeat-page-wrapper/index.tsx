@@ -17,7 +17,6 @@ interface IProps {
   word: string;
   category: string;
   enValues: Array<string>;
-  theme: string;
   isExpression: boolean;
   isSlang: boolean;
   isAbuse: boolean;
@@ -29,7 +28,6 @@ const repeatPageWrapper: FC<IProps> = ({
   word,
   category,
   enValues,
-  theme,
   isExpression,
   isSlang,
   isAbuse,
@@ -42,7 +40,6 @@ const repeatPageWrapper: FC<IProps> = ({
         <div className={repeatPage_container}>
           <div className={repeatPage__wordCard}>
             <Presentations.WordCard
-              theme={theme}
               word={word}
               category={category}
               isExpression={isExpression}
@@ -75,9 +72,8 @@ const repeatPageWrapper: FC<IProps> = ({
 const mapStateToProps = (state: ReducersState) => {
   const {
     repeat: { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation, transcription },
-    theme: { theme },
   } = state;
-  return { word, category, enValues, theme, isExpression, isSlang, isAbuse, isAbbreviation, transcription };
+  return { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation, transcription };
 };
 
 export default connect(mapStateToProps)(repeatPageWrapper);

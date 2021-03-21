@@ -13,7 +13,6 @@ import styles, { layout__footer } from './styles.scss';
 
 interface IProps {
   fullNavigation: boolean;
-  appTheme: string;
   isAuth: boolean;
   router: NextRouter;
   openNavigation: Function;
@@ -23,7 +22,6 @@ interface IProps {
 
 const footerBlock: FC<IProps> = ({
   fullNavigation,
-  appTheme,
   isAuth,
   router,
   openNavigation,
@@ -33,7 +31,7 @@ const footerBlock: FC<IProps> = ({
   const footerClass: string = `
         ${styles[fullNavigation ? `layout__footer_show` : `layout__footer_hide`]}
         &nbsp;
-        ${styles[appTheme === 'light' ? `footer_light` : `footer_dark`]}
+        ${styles.footer__wrapper}
     `;
 
   const loginUser = () => router.push('/');
@@ -65,13 +63,11 @@ const footerBlock: FC<IProps> = ({
 const mapStateToProps = (state: ReducersState) => {
   const {
     navigation: { fullsize },
-    theme: { theme },
     auth: { isAuth },
   } = state;
 
   return {
     fullNavigation: fullsize,
-    appTheme: theme,
     isAuth,
   };
 };

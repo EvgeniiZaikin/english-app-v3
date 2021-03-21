@@ -1,21 +1,12 @@
 @import '@defaultStyles';
 
-.footer_light {
+.footer__wrapper {
   transition: all 0.3s ease;
   position: fixed;
   width: 100vw;
   background-color: $light-secondary-background;
   padding-top: 4px;
   color: $light-secondary-color;
-}
-
-.footer_dark {
-  transition: all 0.3s ease;
-  position: absolute;
-  width: 100vw;
-  background-color: black;
-  padding-top: 4px;
-  color: $dark-theme-color;
 }
 
 .layout__footer {
