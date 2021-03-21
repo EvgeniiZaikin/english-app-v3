@@ -2,7 +2,7 @@ import { Reducer, AnyAction, Dispatch } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
 import { getAction } from '@rootReducer';
 import { ThunkDispatch } from 'redux-thunk';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import axios from 'axios';
 import { IResponse } from '@utils/interfaces';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
@@ -68,7 +68,7 @@ export const setRepeatWordStatus = (status: boolean) => getAction<boolean>(SET_R
 export const resetRepeatWordInfo = () => getAction(RESET_REPEAT_WORD_INFO);
 
 export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbuse: boolean) => async (
-  dispatch: ThunkDispatch<reducersState, void, AnyAction>
+  dispatch: ThunkDispatch<ReducersState, void, AnyAction>
 ) => {
   dispatch(showGlobalLoading());
 

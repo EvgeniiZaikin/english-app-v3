@@ -11,6 +11,7 @@ import { AxiosResponse } from '@utils/types';
 import axios from 'axios';
 import { loginUser, setLogin, setPassword, setUserId } from '@reducers/auth';
 import { setUseAbuse } from '@reducers/settings';
+import nextCookies from 'next-cookies';
 
 class MyApp extends App<AppInitialProps> {
   public static getInitialProps = async ({ Component, ctx }: AppContext) => {
@@ -18,7 +19,7 @@ class MyApp extends App<AppInitialProps> {
       const host: string = getHost(ctx.req);
 
       if (ctx.req) {
-        const userId = ctx.req.cookies.remember;
+        const { userId } = nextCookies(ctx);
         const { data }: AxiosResponse = await axios.get(`${host}/api/users`, { params: { userId } });
 
         if (data.status && data.result.length) {
@@ -31,8 +32,8 @@ class MyApp extends App<AppInitialProps> {
           printLog((data.error as Error).toString());
         }
 
-        const useAbuse = !!ctx.req.cookies.useAbuse;
-        ctx.store.dispatch(setUseAbuse(useAbuse));
+        const { useAbuse } = nextCookies(ctx);
+        ctx.store.dispatch(setUseAbuse(useAbuse === 'true'));
       }
     } catch (error: unknown) {
       printLog((error as Error).toString());

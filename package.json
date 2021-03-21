@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node --project tsconfig.server.json src/server/index.ts",
     "build": "next build && tsc --project tsconfig.server.json",
-    "start": "NODE_ENV=production node dist/server/index.js",
+    "start": "cross-env NODE_ENV=production & node dist/server/index.js",
     "check": "npm run build && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1",
     "scss": "npx tsm src --nameFormat none",
@@ -27,11 +27,12 @@
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "js-cookie": "^2.2.1",
     "mysql2": "^2.2.5",
     "next": "^10.0.3",
+    "next-cookies": "^2.0.3",
     "next-redux-wrapper": "^6.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -42,7 +43,6 @@
     "uniqid": "^5.3.0"
   },
   "devDependencies": {
-    "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.9",
     "@types/js-cookie": "^2.2.6",
     "@types/mysql2": "github:types/mysql2",
