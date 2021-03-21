@@ -19,7 +19,10 @@ const router: Router = express.Router();
 
 router.get(`/guess-word`, async (req: Request, res: Response) => {
   const logic = async (): Promise<object[]> => {
-    const [rows]: TQueryResult = await dbRequest(queries.usersWords.getGuessWords(req.query.userId as string, 4));
+    const { useAbuse } = req.query;
+    const [rows]: TQueryResult = await dbRequest(
+      queries.usersWords.getGuessWords(req.query.userId as string, 4, useAbuse === 'true')
+    );
     const basicWords = rows as [IGuessWord];
 
     const {
@@ -48,7 +51,9 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
 
     if (isRepeatValue) {
       const values: Array<string> = basicWords.map((item: IGuessWord) => item.ruValue);
-      const words: TQueryResult = await dbRequest(queries.words.getGuessWords(countRepeatValues, values));
+      const words: TQueryResult = await dbRequest(
+        queries.words.getGuessWords(countRepeatValues, useAbuse === 'true', values)
+      );
       guessWords.push(...(words[0] as [IGuessWord]));
     }
 

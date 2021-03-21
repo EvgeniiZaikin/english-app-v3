@@ -53,7 +53,7 @@ const queries = {
             OR w.word_en_value = '${enValue}';
     `,
 
-  getGuessWords: (count: number, excludeValues: Array<string> = []): string => {
+  getGuessWords: (count: number, useAbuse: boolean, excludeValues: Array<string> = []): string => {
     const values: string = excludeValues.map((item: string) => `'${item}'`).join(',');
 
     return `
@@ -74,6 +74,7 @@ const queries = {
             WHERE
                 (w.last_show_datetime IS NULL OR w.last_show_datetime < NOW() - INTERVAL 5 MINUTE)
                 ${excludeValues.length ? ` AND w.word_ru_value NOT IN (${values})` : ''}
+                ${!useAbuse ? ` AND w.word_is_abuse = false` : ''}
             ORDER BY 
                 w.word_count_views, 
                 w.word_count_success_guesses 

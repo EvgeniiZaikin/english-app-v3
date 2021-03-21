@@ -10,6 +10,7 @@ import { getHost, printLog } from '@utils/functions';
 import { AxiosResponse } from '@utils/types';
 import axios from 'axios';
 import { loginUser, setLogin, setPassword, setUserId } from '@reducers/auth';
+import { setUseAbuse } from '@reducers/settings';
 
 class MyApp extends App<AppInitialProps> {
   public static getInitialProps = async ({ Component, ctx }: AppContext) => {
@@ -29,6 +30,9 @@ class MyApp extends App<AppInitialProps> {
         } else {
           printLog((data.error as Error).toString());
         }
+
+        const useAbuse = !!ctx.req.cookies.useAbuse;
+        ctx.store.dispatch(setUseAbuse(useAbuse));
       }
     } catch (error: unknown) {
       printLog((error as Error).toString());

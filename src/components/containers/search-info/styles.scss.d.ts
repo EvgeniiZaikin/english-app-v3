@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly searchWordInfo__container: string;
+  readonly "searchWordInfo__container": string;
 };
 export = styles;
+

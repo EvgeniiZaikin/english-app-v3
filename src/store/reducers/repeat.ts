@@ -67,7 +67,7 @@ export const finishRepeatWord = () => getAction(FINISH_REPEAT_WORD);
 export const setRepeatWordStatus = (status: boolean) => getAction<boolean>(SET_REPEAT_WORD_STATUS, status);
 export const resetRepeatWordInfo = () => getAction(RESET_REPEAT_WORD_INFO);
 
-export const setRepeatWordData = (userId: number | null, isAuth: boolean) => async (
+export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbuse: boolean) => async (
   dispatch: ThunkDispatch<reducersState, void, AnyAction>
 ) => {
   dispatch(showGlobalLoading());
@@ -79,7 +79,7 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean) => asy
 
     const {
       data: { status, result, error },
-    }: { data: IResponse } = await axios.get(url);
+    }: { data: IResponse } = await axios.get(url, { params: useAbuse });
     if (status && !error) {
       const [words] = result as Array<object>;
       dispatch(setRepeatWordInfo(words));

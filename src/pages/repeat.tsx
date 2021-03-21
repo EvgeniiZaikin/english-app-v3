@@ -4,7 +4,7 @@ import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
 
 import { setRepeatWordInfo } from '@reducers/repeat';
-import { reducersState } from '@store';
+import { ReducersState } from '@store';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';
 import Containers from '@containers';
@@ -17,14 +17,15 @@ const repeatPage: NextPage = (): ReactElement => {
   );
 };
 
-repeatPage.getInitialProps = async ({ req, store }: NextPageContext<reducersState>) => {
+repeatPage.getInitialProps = async ({ req, store }: NextPageContext<ReducersState>) => {
   try {
     const host: string = getHost(req);
 
     const { isAuth, userId } = store.getState().auth;
+    const { useAbuse } = store.getState().settings;
     const url: string = isAuth ? `${host}/api/users-words/guess-word?userId=${userId}` : `${host}/api/words/guess-word`;
 
-    const { data }: AxiosResponse = await axios.get(url);
+    const { data }: AxiosResponse = await axios.get(url, { params: { useAbuse } });
     const { status, result, error } = data;
 
     if (!result.length) {

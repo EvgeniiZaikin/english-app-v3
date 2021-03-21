@@ -22,14 +22,15 @@ interface IProps {
   isAuth: boolean;
   userId: number | null;
   appTheme: string;
-  nextWord: (userId: number | null, isAuth: boolean) => void;
+  useAbuse: boolean;
+  nextWord: (userId: number | null, isAuth: boolean, useAbuse: boolean) => void;
 }
 
-const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, appTheme }): ReactElement => {
+const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, appTheme, useAbuse }): ReactElement => {
   return (
     <ThemeProvider theme={theme}>
       <Presentations.Button
-        click={() => nextWord(userId, isAuth)}
+        click={() => nextWord(userId, isAuth, useAbuse)}
         disabled={disabled}
         icon={<NavigateNextIcon />}
         title="Далее"
@@ -44,12 +45,14 @@ const mapStateToProps = (state: ReducersState) => {
     repeat: { finished },
     auth: { isAuth, userId },
     theme: { theme: appTheme },
+    settings: { useAbuse },
   } = state;
-  return { disabled: !finished, isAuth, userId, appTheme };
+  return { disabled: !finished, isAuth, userId, appTheme, useAbuse };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
-  const nextWord = (userId: number | null, isAuth: boolean) => dispatch(setRepeatWordData(userId, isAuth));
+  const nextWord = (userId: number | null, isAuth: boolean, useAbuse: boolean) =>
+    dispatch(setRepeatWordData(userId, isAuth, useAbuse));
   return { nextWord };
 };
 

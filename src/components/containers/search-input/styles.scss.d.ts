@@ -1,4 +1,5 @@
 declare const styles: {
-  readonly searchInput__container: string;
+  readonly "searchInput__container": string;
 };
 export = styles;
+
