@@ -64,7 +64,6 @@ class MyApp extends App<AppInitialProps> {
 
         <Containers.GlobalAlert />
         <Containers.GlobalLoading />
-        <Containers.AuthLabel />
       </>
     );
   }

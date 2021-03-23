@@ -8,7 +8,7 @@ import SearchPageWrapper from './search-page-wrapper';
 import HelperLabel from './helper-label';
 import InfoText from './info-text';
 import WordsTypesChips from './words-types-chips';
-import OnOffSwitch from './on-off-switch';
+import SettingsBlock from './settings-block';
 
 const presentations = {
   NavigationItem,
@@ -21,7 +21,7 @@ const presentations = {
   HelperLabel,
   InfoText,
   WordsTypesChips,
-  OnOffSwitch,
+  SettingsBlock,
 };
 
 export default presentations;

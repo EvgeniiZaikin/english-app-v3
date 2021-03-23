@@ -5,7 +5,6 @@ import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
-import SettingsIcon from '@material-ui/icons/Settings';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import InfoIcon from '@material-ui/icons/Info';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
@@ -49,10 +48,6 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }): ReactEleme
     case 'close':
       elem = <CloseIcon />;
       text = `Закрыть`;
-      break;
-    case 'settings':
-      elem = <SettingsIcon />;
-      text = `Настройки`;
       break;
     case 'info':
       elem = <InfoIcon />;
