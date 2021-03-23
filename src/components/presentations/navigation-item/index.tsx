@@ -3,7 +3,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import SchoolIcon from '@material-ui/icons/School';
 import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import InfoIcon from '@material-ui/icons/Info';
@@ -40,10 +39,6 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }): ReactEleme
     case 'more':
       elem = <MoreHorizIcon />;
       text = `Ещё`;
-      break;
-    case 'search':
-      elem = <SearchIcon />;
-      text = `Поиск`;
       break;
     case 'close':
       elem = <CloseIcon />;

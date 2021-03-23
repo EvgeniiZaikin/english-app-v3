@@ -2,6 +2,8 @@ import { IncomingMessage } from 'http';
 
 const isBrowser = () => typeof window !== 'undefined';
 
+export const isDevelop = () => process.env.NODE_ENV !== 'production';
+
 export function getHost(req: IncomingMessage | undefined): string {
   let host: string = '';
 

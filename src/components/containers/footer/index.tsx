@@ -52,7 +52,6 @@ const footerBlock: FC<IProps> = ({
       </div>
       <div className={layout__footer}>
         <Presentations.NavigationItem type="info" action={() => router.push('/info')} />
-        <Presentations.NavigationItem type="search" action={() => router.push('/search')} />
         <Presentations.NavigationItem type="close" action={hideNavigation} />
       </div>
     </footer>

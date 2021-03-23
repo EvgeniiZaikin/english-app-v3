@@ -2,13 +2,12 @@ import express, { Request, Response } from 'express';
 import next from 'next';
 import bodyParser from 'body-parser';
 
-import { printLog } from '../utils/functions';
+import { printLog, isDevelop } from '../utils/functions';
 
 import '../database';
 import routing from '../routing';
 
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+const app = next({ dev: isDevelop() });
 const handle = app.getRequestHandler();
 const port = process.env.PORT || 3000;
 
