@@ -10,7 +10,7 @@ import { getHost, printLog } from '@utils/functions';
 import { AxiosResponse } from '@utils/types';
 import axios from 'axios';
 import { loginUser, setLogin, setPassword, setUserId } from '@reducers/auth';
-import { setUseAbuse } from '@reducers/settings';
+import { setUseAbuse, simpleSetRemember } from '@reducers/settings';
 import nextCookies from 'next-cookies';
 
 class MyApp extends App<AppInitialProps> {
@@ -19,20 +19,23 @@ class MyApp extends App<AppInitialProps> {
       const host: string = getHost(ctx.req);
 
       if (ctx.req) {
-        const { userId } = nextCookies(ctx);
-        const { data }: AxiosResponse = await axios.get(`${host}/api/users`, { params: { userId } });
+        const { remember, useAbuse } = nextCookies(ctx);
 
-        if (data.status && data.result.length) {
-          const user = data.result[0];
-          ctx.store.dispatch(setUserId(user.user_id));
-          ctx.store.dispatch(setLogin(user.user_login));
-          ctx.store.dispatch(setPassword(user.user_password));
-          ctx.store.dispatch(loginUser());
-        } else {
-          printLog((data.error as Error).toString());
+        if (remember) {
+          const { data }: AxiosResponse = await axios.get(`${host}/api/users`, { params: { userId: remember } });
+
+          if (data.status && data.result.length) {
+            const user = data.result[0];
+            ctx.store.dispatch(setUserId(user.user_id));
+            ctx.store.dispatch(setLogin(user.user_login));
+            ctx.store.dispatch(setPassword(user.user_password));
+            ctx.store.dispatch(loginUser());
+            ctx.store.dispatch(simpleSetRemember(true));
+          } else {
+            printLog((data.error as Error).toString());
+          }
         }
 
-        const { useAbuse } = nextCookies(ctx);
         ctx.store.dispatch(setUseAbuse(useAbuse === 'true'));
       }
     } catch (error: unknown) {

@@ -7,8 +7,10 @@ import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
+import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 
 import { ReducersState } from '@store';
+import { logoutUser as logoutUserAction } from '@reducers/auth';
 import { setRemember, setUseAbuse } from '@reducers/settings';
 import { AsyncDispatch } from '@utils/types';
 import Presentations from '@presentations';
@@ -24,6 +26,7 @@ interface IHeaderProps {
   useAbuse: boolean;
   toggleRemember(userId: number, remember: boolean): Promise<void>;
   toggleUseAbuse(useAbuse: boolean): void;
+  logout(): void;
 }
 
 const Header: FC<IHeaderProps> = ({
@@ -35,6 +38,7 @@ const Header: FC<IHeaderProps> = ({
   useAbuse,
   toggleRemember,
   toggleUseAbuse,
+  logout,
 }): ReactElement => {
   const [settingsAnchorElement, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -59,6 +63,15 @@ const Header: FC<IHeaderProps> = ({
     toggleUseAbuse(!useAbuse);
   };
 
+  const loginUser = () => router.push('/');
+  const logoutUser = () => {
+    Cookies.remove('remember');
+    userId && toggleRemember(userId, false);
+    logout();
+    router.push('/');
+  };
+  const authAction = isAuth ? logoutUser : loginUser;
+
   const settingsId = 'settings';
 
   return (
@@ -66,13 +79,13 @@ const Header: FC<IHeaderProps> = ({
       <AppBar position="static">
         <Toolbar>
           <IconButton
-            onClick={() => router.push('/')}
+            onClick={authAction}
             edge="start"
             className={header__auth}
             color="inherit"
             aria-label="open drawer"
           >
-            <AccountCircle />
+            {isAuth ? <TransferWithinAStationIcon /> : <AccountCircle />}
           </IconButton>
           <Typography variant="h6" noWrap>
             {isAuth ? login : 'Анонимный пользователь'}
@@ -120,10 +133,12 @@ const mapStateToProps = (state: ReducersState) => {
 const mapDispatchToProps = (dispatch: AsyncDispatch) => {
   const toggleRemember = (userId: number, remember: boolean): Promise<void> => dispatch(setRemember(userId, remember));
   const toggleUseAbuse = (useAbuse: boolean) => dispatch(setUseAbuse(useAbuse));
+  const logout = () => dispatch(logoutUserAction());
 
   return {
     toggleRemember,
     toggleUseAbuse,
+    logout,
   };
 };
 

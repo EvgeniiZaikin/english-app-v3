@@ -2,9 +2,6 @@ import { FunctionComponent, ReactElement } from 'react';
 import HomeIcon from '@material-ui/icons/Home';
 import SchoolIcon from '@material-ui/icons/School';
 import AddIcon from '@material-ui/icons/Add';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import CloseIcon from '@material-ui/icons/Close';
-import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 import InfoIcon from '@material-ui/icons/Info';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 
@@ -20,14 +17,6 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }): ReactEleme
   let text: string;
 
   switch (type) {
-    case 'auth':
-      elem = <TransferWithinAStationIcon />;
-      text = `Авторизация`;
-      break;
-    case 'logout':
-      elem = <TransferWithinAStationIcon />;
-      text = `Выйти`;
-      break;
     case 'repeat':
       elem = <SchoolIcon />;
       text = `Повторять`;
@@ -35,14 +24,6 @@ const navigationItem: FunctionComponent<IProps> = ({ action, type }): ReactEleme
     case 'create':
       elem = <AddIcon />;
       text = `Создать`;
-      break;
-    case 'more':
-      elem = <MoreHorizIcon />;
-      text = `Ещё`;
-      break;
-    case 'close':
-      elem = <CloseIcon />;
-      text = `Закрыть`;
       break;
     case 'info':
       elem = <InfoIcon />;

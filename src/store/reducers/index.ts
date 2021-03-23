@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import navigation from './navigation';
 import create from './create';
 import globalLoading from './global-loading';
 import globalAlert from './global-alert';
@@ -9,7 +8,6 @@ import auth from './auth';
 import settings from './settings';
 
 export default combineReducers({
-  navigation,
   create,
   globalLoading,
   globalAlert,

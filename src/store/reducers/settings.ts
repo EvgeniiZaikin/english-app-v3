@@ -38,6 +38,7 @@ const settings: Reducer<IState, AnyAction> = (state = initialState, action) => {
 export default settings;
 
 export const setUseAbuse = (useAbuse: boolean) => getAction<boolean>(SET_USE_ABUSE, useAbuse);
+export const simpleSetRemember = (remember: boolean) => getAction<boolean>(SET_REMEMBER, remember);
 
 export const setRemember = (userId: number, remember: boolean) => async (dispatch: AsyncDispatch): Promise<void> => {
   dispatch(showGlobalLoading());
@@ -47,7 +48,7 @@ export const setRemember = (userId: number, remember: boolean) => async (dispatc
 
     if (data.status) {
       dispatch(showGlobalAlert(AlertTypes.SUCCESS, `Авторизация пользователя сохранена!`));
-      dispatch(getAction<boolean>(SET_REMEMBER, remember));
+      dispatch(simpleSetRemember(remember));
     } else {
       showErrorGlobalAlert(dispatch, `Не удалось сохранить пользователя авторизированным!`, data.error);
     }
