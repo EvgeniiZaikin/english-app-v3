@@ -1,6 +1,6 @@
 @import '@defaultStyles';
 
-.container {
+.authPageWrapper__container {
   display: flex;
   flex-direction: column;
   width: $default-width;
@@ -10,5 +10,9 @@
   display: flex;
   width: $default-width;
   justify-content: center;
-  margin: 10px 0;
+  margin: 8px 0;
+}
+
+.authPageWrapper__authForm {
+  margin-bottom: 32px;
 }

@@ -4,49 +4,40 @@ import { NextRouter, withRouter } from 'next/router';
 import Button from '@material-ui/core/Button';
 
 import { AsyncDispatch } from '@utils/types';
-import { registration, authorization, showAuthForm as showAuthFormAction, logoutUser } from '@reducers/auth';
+import { registration, authorization, logoutUser } from '@reducers/auth';
 import { ReducersState } from '@store';
 import Presentations from '@presentations';
 import Containers from '@containers';
 
-import { container, authPageWrapper__label } from './styles.scss';
+import { authPageWrapper__container, authPageWrapper__label, authPageWrapper__authForm } from './styles.scss';
 
 interface IProps {
-  showAuthForm: boolean;
   login: string;
   password: string;
-  isAuthProcess: boolean;
-  isRegProcess: boolean;
   isAuth: boolean;
   doRegistration: (login: string, password: string) => Promise<boolean>;
   doAuth: (login: string, password: string) => Promise<boolean>;
-  showForm: Function;
   logout: Function;
   router: NextRouter;
 }
 
 const authPageWrapper: FC<IProps> = ({
-  showAuthForm,
   login,
   password,
   doRegistration,
   doAuth,
-  showForm,
   router,
-  isAuthProcess,
-  isRegProcess,
   isAuth,
   logout,
 }): ReactElement => {
-  const openLoginForm = (type: 'auth' | 'reg') => showForm(type);
   const doLogin = async (type: 'auth' | 'reg') => {
     const action = type === 'auth' ? doAuth : doRegistration;
     const success: boolean = await action(login, password);
     success && router.push('/repeat');
   };
 
-  const authUser = showAuthForm ? () => doLogin('auth') : () => openLoginForm('auth');
-  const regUser = showAuthForm ? () => doLogin('reg') : () => openLoginForm('reg');
+  const authUser = () => doLogin('auth');
+  const regUser = () => doLogin('reg');
 
   const exit = () => {
     logout();
@@ -54,56 +45,49 @@ const authPageWrapper: FC<IProps> = ({
   };
 
   return (
-    <div className={container}>
-      {showAuthForm ? <Containers.AuthForm /> : null}
+    <div className={authPageWrapper__container}>
+      <div className={authPageWrapper__authForm}>
+        <Containers.LoginInput />
+        <Containers.PasswordInput />
+      </div>
 
-      {!isAuth && (!showAuthForm || (showAuthForm && isAuthProcess)) ? (
-        <Button variant="contained" color="primary" onClick={authUser}>
-          Авторизация
-        </Button>
-      ) : null}
+      {!isAuth && (
+        <>
+          <Button variant="contained" color="primary" onClick={authUser}>
+            Авторизация
+          </Button>
+          <div className={authPageWrapper__label}>
+            <Presentations.HelperLabel text="или" />
+          </div>
+          <Button variant="contained" color="secondary" onClick={regUser}>
+            Регистрация
+          </Button>
+          <div className={authPageWrapper__label}>
+            <Presentations.HelperLabel text="или" />
+          </div>
+        </>
+      )}
 
-      {!isAuth && !showAuthForm ? (
-        <div className={authPageWrapper__label}>
-          <Presentations.HelperLabel text="или" />
-        </div>
-      ) : null}
-
-      {(!isAuth && !showAuthForm) || (showAuthForm && isRegProcess) ? (
-        <Button variant="contained" color="secondary" onClick={regUser}>
-          Регистрация
-        </Button>
-      ) : null}
-
-      {!isAuth && !showAuthForm ? (
-        <div className={authPageWrapper__label}>
-          <Presentations.HelperLabel text="или" />
-        </div>
-      ) : null}
-
-      {!showAuthForm ? (
-        <Button variant="contained" onClick={exit}>
-          Анонимно
-        </Button>
-      ) : null}
+      <Button variant="contained" onClick={exit}>
+        Анонимно
+      </Button>
     </div>
   );
 };
 
 const mapStateToProps = (state: ReducersState) => {
   const {
-    auth: { showAuthForm, login, password, isAuthProcess, isRegProcess, isAuth },
+    auth: { login, password, isAuth },
   } = state;
-  return { showAuthForm, login, password, isAuthProcess, isRegProcess, isAuth };
+  return { login, password, isAuth };
 };
 
 const mapDispatchToProps = (dispatch: AsyncDispatch) => {
   const doRegistration = (login: string, password: string): Promise<boolean> => dispatch(registration(login, password));
   const doAuth = (login: string, password: string): Promise<boolean> => dispatch(authorization(login, password));
-  const showForm = (type: string) => dispatch(showAuthFormAction(type));
   const logout = () => dispatch(logoutUser());
 
-  return { doRegistration, doAuth, showForm, logout };
+  return { doRegistration, doAuth, logout };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(authPageWrapper));

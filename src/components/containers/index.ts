@@ -16,13 +16,11 @@ import Footer from './footer';
 import AuthPageWrapper from './auth-page-wrapper';
 import PasswordInput from './password-input';
 import LoginInput from './login-input';
-import AuthForm from './auth-form';
 import CreateCheckboxsGroup from './create-checkboxs-group';
 import TranscriptionInput from './transcription-input';
 import Header from './header';
 
 const containers = {
-  AuthForm,
   CreateCheckboxsGroup,
   MainLayout,
   GlobalAlert,

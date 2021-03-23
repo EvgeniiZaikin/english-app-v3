@@ -1,8 +1,6 @@
 import { FC, ReactElement } from 'react';
 import { connect } from 'react-redux';
 
-import InputAdornment from '@material-ui/core/InputAdornment';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import { ReducersState } from '@store';
 import { Dispatch } from 'redux';
 import { setLogin } from '@reducers/auth';
@@ -19,16 +17,10 @@ interface IProps {
 const loginInput: FC<IProps> = ({ login, changeLogin }): ReactElement => {
   const loginHandler = (event: React.ChangeEvent<HTMLInputElement>) => changeLogin(event.target.value);
 
-  const adornment = (
-    <InputAdornment position="end" style={{ paddingRight: '12px' }}>
-      <AccountCircle />
-    </InputAdornment>
-  );
-
   return (
-    <FormControl>
+    <FormControl fullWidth>
       <InputLabel htmlFor="standard-adornment-password">Логин</InputLabel>
-      <Input value={login} onChange={loginHandler} endAdornment={adornment} />
+      <Input value={login} onChange={loginHandler} />
     </FormControl>
   );
 };

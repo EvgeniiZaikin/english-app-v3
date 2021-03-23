@@ -14,8 +14,6 @@ const SET_USER_ID: string = 'SET_USER_ID';
 const TOGGLE_SHOW_PASSWORD: string = 'TOGGLE_SHOW_PASSWORD';
 const LOGIN: string = 'LOGIN';
 const LOGOUT: string = 'LOGOUT';
-const SHOW_AUTH_FORM: string = 'SHOW_AUTH_FORM';
-const HIDE_AUTH_FORM: string = 'HIDE_AUTH_FORM';
 
 interface IState {
   userId: number | null;
@@ -23,9 +21,6 @@ interface IState {
   password: string;
   showPassword: boolean;
   isAuth: boolean;
-  showAuthForm: boolean;
-  isAuthProcess: boolean;
-  isRegProcess: boolean;
 }
 
 const initialState: IState = {
@@ -34,9 +29,6 @@ const initialState: IState = {
   password: '',
   showPassword: false,
   isAuth: false,
-  showAuthForm: false,
-  isAuthProcess: false,
-  isRegProcess: false,
 };
 
 const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
@@ -61,20 +53,6 @@ const auth: Reducer<IState, AnyAction> = (state = initialState, action) => {
         login: '',
         password: '',
       };
-    case SHOW_AUTH_FORM:
-      return {
-        ...state,
-        showAuthForm: true,
-        isAuthProcess: action.payload === 'auth',
-        isRegProcess: action.payload === 'reg',
-      };
-    case HIDE_AUTH_FORM:
-      return {
-        ...state,
-        showAuthForm: false,
-        isAuthProcess: false,
-        isRegProcess: false,
-      };
     default:
       return { ...state };
   }
@@ -88,8 +66,6 @@ export const setUserId = (userId: number) => getAction<number>(SET_USER_ID, user
 export const toggleShowPassword = () => getAction(TOGGLE_SHOW_PASSWORD);
 export const loginUser = () => getAction(LOGIN);
 export const logoutUser = () => getAction(LOGOUT);
-export const showAuthForm = (type: string) => getAction(SHOW_AUTH_FORM, type);
-export const hideAuthForm = () => getAction(HIDE_AUTH_FORM);
 
 const loginAction = (isAuth: boolean, login: string, password: string) => async (
   dispatch: AsyncDispatch
@@ -148,7 +124,6 @@ const loginAction = (isAuth: boolean, login: string, password: string) => async 
   }
 
   dispatch(hideGlobalLoading());
-  dispatch(hideAuthForm());
   return success;
 };
 

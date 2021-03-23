@@ -24,7 +24,7 @@ const passwordInput: FC<IProps> = ({ password, showPassword, changePassword, tog
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
 
   return (
-    <FormControl>
+    <FormControl fullWidth>
       <InputLabel htmlFor="standard-adornment-password">Пароль</InputLabel>
       <Input
         id="standard-adornment-password"
