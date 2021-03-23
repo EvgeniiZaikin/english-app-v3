@@ -1,6 +1,6 @@
 declare const styles: {
-  readonly "footer__wrapper": string;
-  readonly "layout__footer": string;
+  readonly "footer__container": string;
+  readonly "footer__item": string;
 };
 export = styles;
 

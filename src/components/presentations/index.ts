@@ -1,4 +1,3 @@
-import NavigationItem from './navigation-item';
 import Button from './button';
 import Input from './input';
 import RadioButtons from './radio-buttons';
@@ -11,7 +10,6 @@ import WordsTypesChips from './words-types-chips';
 import SettingsBlock from './settings-block';
 
 const presentations = {
-  NavigationItem,
   Button,
   Input,
   RadioButtons,

@@ -1,26 +1,53 @@
 import { FC, ReactElement } from 'react';
-import Presentations from '@presentations';
-
 import { NextRouter, withRouter } from 'next/router';
+import { connect } from 'react-redux';
 
-import { layout__footer, footer__wrapper } from './styles.scss';
+import { ReducersState } from '@store';
 
-interface IProps {
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import SchoolIcon from '@material-ui/icons/School';
+import AddIcon from '@material-ui/icons/Add';
+import InfoIcon from '@material-ui/icons/Info';
+
+import { footer__container, footer__item } from './styles.scss';
+
+interface IFooterProps {
   router: NextRouter;
+  itemIndex: number | null;
 }
 
-const footerBlock: FC<IProps> = ({ router }): ReactElement => {
+const Footer: FC<IFooterProps> = ({ router, itemIndex }): ReactElement => {
   return (
-    <footer className={footer__wrapper}>
-      <div className={layout__footer}>
-        <Presentations.NavigationItem type="repeat" action={() => router.push('/repeat')} />
-        <Presentations.NavigationItem type="create" action={() => router.push('/create')} />
-      </div>
-      <div className={layout__footer}>
-        <Presentations.NavigationItem type="info" action={() => router.push('/info')} />
-      </div>
-    </footer>
+    <BottomNavigation className={footer__container} value={itemIndex} showLabels>
+      <BottomNavigationAction
+        onClick={() => router.push('/repeat')}
+        className={footer__item}
+        label="Повторять"
+        icon={<SchoolIcon />}
+      />
+      <BottomNavigationAction
+        onClick={() => router.push('/create')}
+        className={footer__item}
+        label="Добавить"
+        icon={<AddIcon />}
+      />
+      <BottomNavigationAction
+        onClick={() => router.push('/info')}
+        className={footer__item}
+        label="Описание"
+        icon={<InfoIcon />}
+      />
+    </BottomNavigation>
   );
 };
 
-export default withRouter(footerBlock);
+const mapStateToProps = (state: ReducersState) => {
+  const {
+    footer: { itemIndex },
+  } = state;
+
+  return { itemIndex };
+};
+
+export default connect(mapStateToProps)(withRouter(Footer));

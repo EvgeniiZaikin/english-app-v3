@@ -6,6 +6,7 @@ import axios from 'axios';
 import { setEnabledCategories } from '@reducers/create';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';
+import { setFooterItemIndex } from '@reducers/footer';
 
 interface ICategory {
   category_id: number;
@@ -13,13 +14,13 @@ interface ICategory {
   categoru_count_views: number;
 }
 
-const createPage: NextPage = (): ReactElement => (
+const CreatePage: NextPage = (): ReactElement => (
   <Containers.MainLayout>
     <Containers.CreatePageWrapper />
   </Containers.MainLayout>
 );
 
-createPage.getInitialProps = async ({ req, store }: NextPageContext) => {
+CreatePage.getInitialProps = async ({ req, store }: NextPageContext) => {
   try {
     const host: string = getHost(req);
 
@@ -31,7 +32,9 @@ createPage.getInitialProps = async ({ req, store }: NextPageContext) => {
     printLog((error as Error).toString());
   }
 
+  store.dispatch(setFooterItemIndex(1));
+
   return {};
 };
 
-export default connect()(createPage);
+export default connect()(CreatePage);

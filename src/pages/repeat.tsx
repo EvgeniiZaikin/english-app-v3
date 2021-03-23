@@ -8,8 +8,9 @@ import { ReducersState } from '@store';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';
 import Containers from '@containers';
+import { setFooterItemIndex } from '@reducers/footer';
 
-const repeatPage: NextPage = (): ReactElement => {
+const RepeatPage: NextPage = (): ReactElement => {
   return (
     <Containers.MainLayout>
       <Containers.RepeatPageWrapper />
@@ -17,7 +18,7 @@ const repeatPage: NextPage = (): ReactElement => {
   );
 };
 
-repeatPage.getInitialProps = async ({ req, store }: NextPageContext<ReducersState>) => {
+RepeatPage.getInitialProps = async ({ req, store }: NextPageContext<ReducersState>) => {
   try {
     const host: string = getHost(req);
 
@@ -43,7 +44,9 @@ repeatPage.getInitialProps = async ({ req, store }: NextPageContext<ReducersStat
     printLog((error as Error).toString());
   }
 
+  store.dispatch(setFooterItemIndex(0));
+
   return {};
 };
 
-export default connect()(repeatPage);
+export default connect()(RepeatPage);

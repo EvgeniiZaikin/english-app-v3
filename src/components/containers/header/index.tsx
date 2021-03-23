@@ -76,7 +76,7 @@ const Header: FC<IHeaderProps> = ({
 
   return (
     <div className={header__wrapper}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             onClick={authAction}

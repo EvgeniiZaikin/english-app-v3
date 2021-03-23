@@ -1,17 +1,12 @@
 @import '@defaultStyles';
 
-.footer__wrapper {
-  transition: all 0.3s ease;
+.footer__container {
+  background-color: #3f51b5 !important;
   position: fixed;
-  width: 100vw;
-  background-color: $light-secondary-background;
-  padding-top: 4px;
-  color: $light-secondary-color;
   bottom: 0;
+  width: 100%;
 }
 
-.layout__footer {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
+.footer__item {
+  color: #fff !important;
 }

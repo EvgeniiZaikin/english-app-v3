@@ -1,10 +1,13 @@
 import React, { ReactElement } from 'react';
-import { NextPage } from 'next';
+import { connect } from 'react-redux';
+import { NextPage, NextPageContext } from 'next';
 
 import Containers from '@containers';
 import Presentations from '@presentations';
+import { ReducersState } from '@store';
+import { setFooterItemIndex } from '@reducers/footer';
 
-const indexPage: NextPage = (): ReactElement => {
+const InfoPage: NextPage = (): ReactElement => {
   return (
     <Containers.MainLayout>
       <Presentations.InfoText />
@@ -12,4 +15,10 @@ const indexPage: NextPage = (): ReactElement => {
   );
 };
 
-export default indexPage;
+InfoPage.getInitialProps = async ({ store }: NextPageContext<ReducersState>) => {
+  store.dispatch(setFooterItemIndex(2));
+
+  return {};
+};
+
+export default connect()(InfoPage);

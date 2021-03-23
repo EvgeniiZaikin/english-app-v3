@@ -6,6 +6,7 @@ import search from './search';
 import repeat from './repeat';
 import auth from './auth';
 import settings from './settings';
+import footer from './footer';
 
 export default combineReducers({
   create,
@@ -15,9 +16,10 @@ export default combineReducers({
   repeat,
   auth,
   settings,
+  footer,
 });
 
-interface IAction<P> {
+export interface IAction<P> {
   type: string;
   payload?: P | null;
 }
