@@ -7,7 +7,7 @@ import { AsyncDispatch } from '@utils/types';
 import { IResponse } from '@utils/interfaces';
 
 import { hideGlobalLoading, showGlobalLoading } from './global-loading';
-import { AlertTypes, delayHideGlobalAlert, showErrorGlobalAlert, showGlobalAlert } from './global-alert';
+import { TSnackbar, showSnackbar } from './snackbar';
 
 interface IState {
   isRemember: boolean;
@@ -47,15 +47,14 @@ export const setRemember = (userId: number, remember: boolean) => async (dispatc
     const { data }: { data: IResponse } = await axios.put(`/api/users/remember`, { userId, remember });
 
     if (data.status) {
-      dispatch(showGlobalAlert(AlertTypes.SUCCESS, `Авторизация пользователя сохранена!`));
       dispatch(simpleSetRemember(remember));
     } else {
-      showErrorGlobalAlert(dispatch, `Не удалось сохранить пользователя авторизированным!`, data.error);
+      dispatch(
+        showSnackbar(TSnackbar.WARNING, 'Не удалось сохранить пользователя авторизированным на стороне сервера!')
+      );
     }
-
-    delayHideGlobalAlert(dispatch, 2000);
   } catch (error: unknown) {
-    showErrorGlobalAlert(dispatch, `Не удалось сохранить пользователя авторизированным!`, error);
+    dispatch(showSnackbar(TSnackbar.WARNING, 'Не удалось сохранить пользователя авторизированным!'));
   }
 
   dispatch(hideGlobalLoading());

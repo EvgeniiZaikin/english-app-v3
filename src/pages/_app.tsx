@@ -65,8 +65,8 @@ class MyApp extends App<AppInitialProps> {
 
         <Component {...pageProps} />
 
-        <Containers.GlobalAlert />
         <Containers.GlobalLoading />
+        <Containers.Snackbar />
       </>
     );
   }

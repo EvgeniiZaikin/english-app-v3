@@ -6,7 +6,7 @@ import { ReducersState } from '@store';
 import axios from 'axios';
 import { IResponse } from '@utils/interfaces';
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
-import { showErrorGlobalAlert } from './global-alert';
+import { TSnackbar, showSnackbar } from './snackbar';
 
 const SET_REPEAT_WORD_INFO: string = 'SET_REPEAT_WORD_INFO';
 const FINISH_REPEAT_WORD: string = 'FINISH_REPEAT_WORD';
@@ -84,10 +84,10 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbu
       const [words] = result as Array<object>;
       dispatch(setRepeatWordInfo(words));
     } else {
-      throw new Error(`Status get words is false! Error: ${error}`);
+      dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось получить слово для повторения со стороны сервера'));
     }
   } catch (error: unknown) {
-    showErrorGlobalAlert(dispatch, `Can not get guess word!`, error);
+    dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось получить слово для повторения'));
   }
 
   dispatch(hideGlobalLoading());
@@ -110,7 +110,7 @@ export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispat
     const data: IResponse = await axios.put(`/api/words/word`, params);
     if (!data.status || data.error) {
       isUpdated = false;
-      showErrorGlobalAlert(dispatch, `Word did not update!`, data.error);
+      dispatch(showSnackbar(TSnackbar.ERROR, 'Слово не удалось обновить на стороне сервера'));
     }
 
     return isUpdated;
@@ -124,13 +124,14 @@ export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispat
       },
     });
 
-    (!data.status || data.error) && showErrorGlobalAlert(dispatch, `User word did not update!`, data.error);
+    (!data.status || data.error) && dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось получить слово с сервера'));
     return data.result[0];
   };
 
   const updateUserWord = async () => {
     const data: IResponse = await axios.put(`/api/users-words/user-word`, params);
-    (!data.status || data.error) && showErrorGlobalAlert(dispatch, `User word did not update!`, data.error);
+    (!data.status || data.error) &&
+      dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось обновить пользовательское слово на стороне сервера'));
   };
 
   const createUserWord = async () => {
@@ -139,7 +140,7 @@ export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispat
     const data: IResponse = await axios.post(`/api/users-words/user-word`, params);
     if (!data.status || data.error) {
       isCreated = false;
-      showErrorGlobalAlert(dispatch, `User word did not create!`, data.error);
+      dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось создать слово на стороне сервера'));
     }
 
     return isCreated;
@@ -157,6 +158,6 @@ export const updateWord = (params: IUpdateWordParams) => async (dispatch: Dispat
       }
     }
   } catch (error: unknown) {
-    showErrorGlobalAlert(dispatch, `Word did not update!`, error);
+    dispatch(showSnackbar(TSnackbar.ERROR, 'Слово не удалось обновить'));
   }
 };

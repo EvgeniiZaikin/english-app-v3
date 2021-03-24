@@ -1,22 +1,22 @@
 import { combineReducers } from 'redux';
 import create from './create';
 import globalLoading from './global-loading';
-import globalAlert from './global-alert';
 import search from './search';
 import repeat from './repeat';
 import auth from './auth';
 import settings from './settings';
 import footer from './footer';
+import snackbar from './snackbar';
 
 export default combineReducers({
   create,
   globalLoading,
-  globalAlert,
   search,
   repeat,
   auth,
   settings,
   footer,
+  snackbar,
 });
 
 export interface IAction<P> {

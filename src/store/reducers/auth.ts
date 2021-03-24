@@ -6,7 +6,7 @@ import { getAction } from '@rootReducer';
 import { AsyncDispatch } from '@utils/types';
 import { IResponse } from '@utils/interfaces';
 import { hideGlobalLoading, showGlobalLoading } from './global-loading';
-import { AlertTypes, delayHideGlobalAlert, showGlobalAlert, showErrorGlobalAlert } from './global-alert';
+import { TSnackbar, showSnackbar } from './snackbar';
 
 const SET_LOGIN: string = 'SET_LOGIN';
 const SET_PASSWORD: string = 'SET_PASSWORD';
@@ -93,18 +93,16 @@ const loginAction = (isAuth: boolean, login: string, password: string) => async 
   try {
     if (!login || !password) {
       success = false;
-      showErrorGlobalAlert(dispatch, `Логин или Пароль не заполнены!`);
+      dispatch(showSnackbar(TSnackbar.WARNING, 'Поле логин и/или пароль не заполнены'));
     } else {
       const {
-        data: { status, result, error },
+        data: { status, result },
       }: { data: IResponse } = await axios.post(data.url, {
         login,
         password,
       });
 
       if (status) {
-        dispatch(showGlobalAlert(AlertTypes.SUCCESS, data.successMessage));
-
         const [user] = result;
         const { user_id: userId, user_login: userLogin, user_password: userPassword } = user;
         dispatch(setUserId(userId));
@@ -112,14 +110,12 @@ const loginAction = (isAuth: boolean, login: string, password: string) => async 
         dispatch(setPassword(userPassword));
         dispatch(loginUser());
       } else {
-        showErrorGlobalAlert(dispatch, data.detailErrorMessage(error), error);
+        dispatch(showSnackbar(TSnackbar.ERROR, 'Ошибка при обработке авторизации на стороне сервера'));
         success = false;
       }
     }
-
-    delayHideGlobalAlert(dispatch, 2000);
   } catch (error: unknown) {
-    showErrorGlobalAlert(dispatch, data.errorMessage, error);
+    dispatch(showSnackbar(TSnackbar.ERROR, 'Ошибка при обработке авторизации'));
     success = false;
   }
 

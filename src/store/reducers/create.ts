@@ -7,7 +7,7 @@ import axios from 'axios';
 import { AsyncDispatch } from '@utils/types';
 
 import { showGlobalLoading, hideGlobalLoading } from './global-loading';
-import { showGlobalAlert, delayHideGlobalAlert, AlertTypes, showErrorGlobalAlert } from './global-alert';
+import { TSnackbar, showSnackbar } from './snackbar';
 
 const SET_TYPE: string = 'SET_TYPE';
 const SET_RU_VALUE: string = 'SET_RU_VALUE';
@@ -58,9 +58,8 @@ const create: Reducer<IState, AnyAction> = (state = initialState, action) => {
     case SET_ENABLE_CATEGORIES:
       return { ...state, enableCategories: action.payload };
     case SET_CHECKBOX_DATA:
-      const { type, check } = action.payload;
-      if ([`expression`, `slang`, `abuse`, `abbreviation`].includes(type)) {
-        return { ...state, [type]: check };
+      if ([`expression`, `slang`, `abuse`, `abbreviation`].includes(action.payload.type)) {
+        return { ...state, [action.payload.type]: action.payload.check };
       }
 
       return { ...state };
@@ -98,9 +97,7 @@ export const createWordOrCategory = (type: string, params: object) => async (dis
     }: { data: IResponse } = await axios.post(url, params);
 
     if (status) {
-      dispatch(
-        showGlobalAlert(AlertTypes.SUCCESS, `${type.charAt(0).toUpperCase() + type.slice(1)} successfully save!`)
-      );
+      dispatch(showSnackbar(TSnackbar.SUCCESS, 'Данные по слову или категории успешно сохранены'));
     } else {
       let label = `Произошла ошибка при создании нового слова!`;
 
@@ -110,12 +107,10 @@ export const createWordOrCategory = (type: string, params: object) => async (dis
         message.includes(`Duplicate entry`) && (label += ` This ${type} already exists!`);
       }
 
-      showErrorGlobalAlert(dispatch, label, error);
+      dispatch(showSnackbar(TSnackbar.ERROR, 'При сохранении слова или категории произошла ошибка на стороне сервера'));
     }
-
-    delayHideGlobalAlert(dispatch, 1500);
   } catch (error: unknown) {
-    showErrorGlobalAlert(dispatch, `Error with save ${type}!`, error);
+    dispatch(showSnackbar(TSnackbar.ERROR, 'При сохранении нового слова или категории произошла ошибка'));
   }
 
   dispatch(hideGlobalLoading());

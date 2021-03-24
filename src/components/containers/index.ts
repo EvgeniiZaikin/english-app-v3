@@ -1,5 +1,4 @@
 import MainLayout from './main-layout';
-import GlobalAlert from './global-alert';
 import GlobalLoading from './global-loading';
 import RuValueInput from './ru-value-input';
 import EnValueInput from './en-value-unput';
@@ -19,11 +18,11 @@ import LoginInput from './login-input';
 import CreateCheckboxsGroup from './create-checkboxs-group';
 import TranscriptionInput from './transcription-input';
 import Header from './header';
+import Snackbar from './snackbar';
 
 const containers = {
   CreateCheckboxsGroup,
   MainLayout,
-  GlobalAlert,
   GlobalLoading,
   RuValueInput,
   EnValueInput,
@@ -42,6 +41,7 @@ const containers = {
   LoginInput,
   TranscriptionInput,
   Header,
+  Snackbar,
 };
 
 export default containers;

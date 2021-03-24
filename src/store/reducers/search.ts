@@ -6,7 +6,7 @@ import { getAction } from '@rootReducer';
 import { AsyncDispatch } from '@utils/types';
 import { sleep } from '@utils/functions';
 
-import { showErrorGlobalAlert } from './global-alert';
+import { TSnackbar, showSnackbar } from './snackbar';
 import { hideGlobalLoading, showGlobalLoading } from './global-loading';
 
 export const SET_SEARCH_INFO: string = 'SET_SEARCH_INFO';
@@ -79,10 +79,10 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
       dispatch(setSearchInfo(word));
     } else {
       dispatch(resetSearchInfo());
-      throw new Error(`Status search word is false! Error: ${error.toString()}`);
+      dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось выполнить поиск слова на сервере'));
     }
   } catch (error: unknown) {
-    showErrorGlobalAlert(dispatch, `Can not search word!`, error);
+    dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось выполнить поиск слова'));
   }
 
   dispatch(hideGlobalLoading());
