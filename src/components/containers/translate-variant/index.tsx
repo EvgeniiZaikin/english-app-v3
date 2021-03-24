@@ -43,9 +43,9 @@ const TranslateVariant: FC<IProps> = ({
   const classes: string = `
         ${translateVariant__button}
         &nbsp;
-        ${style}
-        &nbsp;
         ${translateVariant__button_light}
+        &nbsp;
+        ${style}
     `;
 
   const click = () => {

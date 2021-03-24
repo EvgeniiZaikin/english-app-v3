@@ -1,4 +1,4 @@
-import { ReactElement, FC, Fragment } from 'react';
+import { ReactElement, FC } from 'react';
 import { connect } from 'react-redux';
 import uniqid from 'uniqid';
 
@@ -51,11 +51,7 @@ const repeatPageWrapper: FC<IProps> = ({
           </div>
           <div className={repeatPage__variants}>
             {enValues.map((variant: string) => {
-              return (
-                <Fragment key={uniqid()}>
-                  <Containers.TranslateVariant value={variant} />
-                </Fragment>
-              );
+              return <Containers.TranslateVariant key={uniqid()} value={variant} />;
             })}
           </div>
           <div className={repeatPage__nextButton}>
