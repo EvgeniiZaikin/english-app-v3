@@ -1,4 +1,3 @@
-import Button from './button';
 import Input from './input';
 import RadioButtons from './radio-buttons';
 import Select from './select';
@@ -10,7 +9,6 @@ import WordsTypesChips from './words-types-chips';
 import SettingsBlock from './settings-block';
 
 const presentations = {
-  Button,
   Input,
   RadioButtons,
   Select,

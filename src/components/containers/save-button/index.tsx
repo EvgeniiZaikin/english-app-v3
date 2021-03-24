@@ -1,22 +1,13 @@
 import { FC, ReactElement } from 'react';
-import Presentations from '@presentations';
 import SaveIcon from '@material-ui/icons/Save';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { ReducersState } from '@store';
 import { AnyAction } from 'redux';
 import { createWordOrCategory } from '@reducers/create';
 import { ThunkDispatch } from 'redux-thunk';
 import { printLog } from '@utils/functions';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#008000',
-      contrastText: '#fff',
-    },
-  },
-});
+import { Button } from '@material-ui/core';
+import { saveButton_button } from './styles.scss';
 
 interface IProps {
   type: string;
@@ -66,9 +57,18 @@ const saveButton: FC<IProps> = ({
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Presentations.Button click={save} disabled={disabled} icon={<SaveIcon />} title="Сохранить" />
-    </ThemeProvider>
+    <Button
+      className={saveButton_button}
+      onClick={save}
+      variant="contained"
+      size="large"
+      color="primary"
+      startIcon={<SaveIcon />}
+      disabled={disabled}
+      fullWidth={true}
+    >
+      Сохранить
+    </Button>
   );
 };
 

@@ -1,21 +1,12 @@
 import { ReactElement, FC } from 'react';
-import Presentations from '@presentations';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { ReducersState } from '@store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { setRepeatWordData } from '@reducers/repeat';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#008000',
-      contrastText: '#fff',
-    },
-  },
-});
+import { Button } from '@material-ui/core';
+import { nextButton_button } from './styles.scss';
 
 interface IProps {
   disabled: boolean;
@@ -26,15 +17,21 @@ interface IProps {
 }
 
 const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, useAbuse }): ReactElement => {
+  const handleNextWord = () => nextWord(userId, isAuth, useAbuse);
+
   return (
-    <ThemeProvider theme={theme}>
-      <Presentations.Button
-        click={() => nextWord(userId, isAuth, useAbuse)}
-        disabled={disabled}
-        icon={<NavigateNextIcon />}
-        title="Далее"
-      />
-    </ThemeProvider>
+    <Button
+      className={nextButton_button}
+      onClick={handleNextWord}
+      variant="contained"
+      size="large"
+      color="primary"
+      startIcon={<NavigateNextIcon />}
+      disabled={disabled}
+      fullWidth={true}
+    >
+      Далее
+    </Button>
   );
 };
 
