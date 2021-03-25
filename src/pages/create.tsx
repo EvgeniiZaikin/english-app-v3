@@ -3,7 +3,6 @@ import { ReactElement } from 'react';
 import { NextPage, NextPageContext } from 'next';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setEnabledCategories } from '@reducers/create';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';
 import { setFooterItemIndex } from '@reducers/footer';
@@ -14,27 +13,31 @@ interface ICategory {
   categoru_count_views: number;
 }
 
-const CreatePage: NextPage = (): ReactElement => (
+interface ICreatePageProps {
+  categories: Array<string>;
+}
+
+const CreatePage: NextPage<ICreatePageProps> = ({ categories }): ReactElement => (
   <Containers.MainLayout>
-    <Containers.CreatePageWrapper />
+    <Containers.CreatePageWrapper categories={categories} />
   </Containers.MainLayout>
 );
 
 CreatePage.getInitialProps = async ({ req, store }: NextPageContext) => {
+  let categories: Array<string> = [];
+
   try {
     const host: string = getHost(req);
 
     const { data }: AxiosResponse = await axios.get(`${host}/api/categories/categories`);
-    const categories: Array<string> = data.result.map((item: ICategory) => item.category_label);
-
-    store.dispatch(setEnabledCategories(categories));
+    categories = data.result.map((item: ICategory) => item.category_label);
   } catch (error: unknown) {
     printLog((error as Error).toString());
   }
 
   store.dispatch(setFooterItemIndex(1));
 
-  return {};
+  return { categories };
 };
 
 export default connect()(CreatePage);

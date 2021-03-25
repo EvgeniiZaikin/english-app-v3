@@ -138,10 +138,10 @@ router.post(`/word`, async (req: Request, res: Response) => {
       queries.words.createWord(
         req.body.ruValue,
         req.body.enValue,
-        req.body.expression,
-        req.body.slang,
-        req.body.abuse,
-        req.body.abbreviation,
+        req.body.isExpression,
+        req.body.isSlang,
+        req.body.isAbuse,
+        req.body.isAbbreviation,
         req.body.transcription
       )
     );

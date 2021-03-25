@@ -1,30 +1,23 @@
-import React, { ChangeEvent, ReactElement } from 'react';
-import TextField from '@material-ui/core/TextField';
+import { FC, ReactElement, ChangeEvent } from 'react';
+import { TextField } from '@material-ui/core';
 
-interface IProps {
-  change: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
-  defaultValue: string;
-  errorCondition: boolean;
-  label: string;
-  placeholder: string;
+interface IInputProps {
+  value: string;
+  helper: string;
+  onChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
 }
 
-const input: React.FunctionComponent<IProps> = ({
-  change,
-  defaultValue,
-  errorCondition,
-  label,
-  placeholder,
-}): ReactElement => (
-  <TextField
-    onChange={change}
-    defaultValue={defaultValue}
-    error={errorCondition}
-    fullWidth={true}
-    id="standard-basic"
-    label={label}
-    helperText={placeholder}
-  />
-);
+const Input: FC<IInputProps> = ({ value, helper, onChange }): ReactElement => {
+  return (
+    <TextField
+      onChange={onChange}
+      defaultValue={value}
+      error={!value}
+      fullWidth={true}
+      label={helper}
+      helperText={helper}
+    />
+  );
+};
 
-export default input;
+export default Input;

@@ -1,10 +1,5 @@
 import MainLayout from './main-layout';
 import GlobalLoading from './global-loading';
-import RuValueInput from './ru-value-input';
-import EnValueInput from './en-value-unput';
-import CategorySelect from './category-select';
-import TypeRadioButtons from './type-radio-buttons';
-import SaveButton from './save-button';
 import CreatePageWrapper from './create-page-wrapper';
 import SearchInfo from './search-info';
 import SearchInput from './search-input';
@@ -15,20 +10,12 @@ import Footer from './footer';
 import AuthPageWrapper from './auth-page-wrapper';
 import PasswordInput from './password-input';
 import LoginInput from './login-input';
-import CreateCheckboxsGroup from './create-checkboxs-group';
-import TranscriptionInput from './transcription-input';
 import Header from './header';
 import Snackbar from './snackbar';
 
 const containers = {
-  CreateCheckboxsGroup,
   MainLayout,
   GlobalLoading,
-  RuValueInput,
-  EnValueInput,
-  CategorySelect,
-  TypeRadioButtons,
-  SaveButton,
   CreatePageWrapper,
   SearchInfo,
   SearchInput,
@@ -39,7 +26,6 @@ const containers = {
   AuthPageWrapper,
   PasswordInput,
   LoginInput,
-  TranscriptionInput,
   Header,
   Snackbar,
 };
