@@ -99,6 +99,13 @@ const queries = {
                 word_id = ${id}
         `;
   },
+
+  getWordsCount: () => `
+    SELECT 
+        COUNT(*) as "count" 
+    FROM 
+        words
+    `,
 };
 
 export default queries;

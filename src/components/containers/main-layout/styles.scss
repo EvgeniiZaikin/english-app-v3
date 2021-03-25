@@ -14,3 +14,10 @@
   align-items: center;
   justify-content: center;
 }
+
+@media screen and (max-width: 320px) {
+  .layout__container {
+    margin-top: 96px;
+    margin-bottom: 84px;
+  }
+}

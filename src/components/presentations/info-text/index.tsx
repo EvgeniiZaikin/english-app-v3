@@ -8,9 +8,17 @@ const Spacer: FC = (): ReactElement => (
   </>
 );
 
-const InfoText: FC = (): ReactElement => {
+interface IInfoTextProps {
+  wordsCount: number;
+}
+
+const InfoText: FC<IInfoTextProps> = ({ wordsCount }): ReactElement => {
   return (
     <div className={info__container}>
+      <span className={info__subtitle}>Количество слов:</span>
+      <Spacer />
+      <p>В настоящий момент в приложении {wordsCount || 'не установленное количество'} слов.</p>
+      <br />
       <span className={info__subtitle}>О приложении:</span>
       <Spacer />
       <p>
@@ -21,7 +29,7 @@ const InfoText: FC = (): ReactElement => {
         покажет вам правильно вы угадали или нет. После чего вам будет предложено следующее слово на русском со своими
         вариантами ответа.
       </p>
-      <Spacer />
+      <br />
       <span className={info__subtitle}>Типы пользователей:</span>
       <Spacer />
       <p>
@@ -35,7 +43,7 @@ const InfoText: FC = (): ReactElement => {
         <Spacer />
         Вверху вы видите подсказку каким пользователем вы являетесь на текущий момент.
       </p>
-      <Spacer />
+      <br />
       <span className={info__subtitle}>Ограничения:</span>
       <Spacer />
       <p>На текущий момент в приложении для одного значения слова на английском доступно одно значение на русском.</p>

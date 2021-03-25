@@ -164,4 +164,17 @@ router.put(`/word`, async (req: Request, res: Response) => {
   await endpoint(res, logic);
 });
 
+router.get('/count', async (_: Request, res: Response) => {
+  interface IWordsCount {
+    count: number;
+  }
+
+  const logic = async (): Promise<Number[]> => {
+    const [rows]: TQueryResult = await dbRequest(queries.words.getWordsCount());
+    return [(rows as [IWordsCount])[0].count];
+  };
+
+  await endpoint(res, logic);
+});
+
 export default router;
