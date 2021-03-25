@@ -1,13 +1,10 @@
 import { connect } from 'react-redux';
 import { FC, ReactElement } from 'react';
-
-import { Divider } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Presentations from '@presentations';
+import { Typography } from '@material-ui/core';
 
 import { ReducersState } from '@store';
+import Presentations from '@presentations';
+
 import { searchWordInfo__container } from './styles.scss';
 
 interface IProps {
@@ -33,26 +30,18 @@ const searchInfo: FC<IProps> = ({
 }): ReactElement => {
   return (
     <div className={searchWordInfo__container}>
-      <Presentations.WordsTypesChips
+      <Typography variant="h4" gutterBottom>
+        {ruValue}
+      </Typography>
+      <Presentations.WordCard
+        word={enValue}
+        category={category}
         isExpression={isExpression}
         isSlang={isSlang}
         isAbuse={isAbuse}
         isAbbreviation={isAbbreviation}
+        transcription={transcription}
       />
-      <List>
-        <ListItem disableGutters={true}>
-          <ListItemText style={{ fontWeight: 'bold' }} primary={ruValue} secondary={category} />
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        <ListItem disableGutters={true}>
-          <ListItemText
-            primary={enValue}
-            secondary={transcription ? `[${transcription}]` : `Транскрипция не указана`}
-          />
-        </ListItem>
-      </List>
     </div>
   );
 };

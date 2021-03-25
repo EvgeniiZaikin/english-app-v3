@@ -2,11 +2,7 @@
   "compilerOptions": {
     "downlevelIteration": true,
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,11 +18,12 @@
     "paths": {
       "@containers": ["src/components/containers"],
       "@presentations": ["src/components/presentations"],
+      "@wrappers": ["src/components/wrappers"],
       "@store": ["src/store"],
       "@rootReducer": ["src/store/reducers"],
       "@reducers/*": ["src/store/reducers/*"],
       "@utils/*": ["src/utils/*"],
-      "@defaultStyles": ["src/assets/styles/default.scss"],
+      "@defaultStyles": ["src/assets/styles/default.scss"]
     }
   },
   "include": [
@@ -35,13 +32,12 @@
     "**/*.tsx",
     "src/components/containers",
     "src/components/presentations",
+    "src/components/wrappers",
     "src/store",
     "src/store/reducers/*",
     "src/utils/*",
     "src/store/reducers",
-    "src/assets/styles/default.scss",
+    "src/assets/styles/default.scss"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

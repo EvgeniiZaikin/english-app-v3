@@ -12,6 +12,7 @@ import PasswordInput from './password-input';
 import LoginInput from './login-input';
 import Header from './header';
 import Snackbar from './snackbar';
+import SearchButton from './search-button';
 
 const containers = {
   MainLayout,
@@ -28,6 +29,7 @@ const containers = {
   LoginInput,
   Header,
   Snackbar,
+  SearchButton,
 };
 
 export default containers;

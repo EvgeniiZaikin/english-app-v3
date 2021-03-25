@@ -1,11 +1,10 @@
 .searchInput__container {
-  margin-bottom: 50px;
-  width: 205px;
+  width: 200px;
+  margin-bottom: 32px;
 }
 
 @media screen and (max-height: 415px) {
   .searchInput__container {
-    margin-bottom: 25px;
     width: 80vw;
   }
 }

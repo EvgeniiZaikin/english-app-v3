@@ -3,7 +3,8 @@ const withSass = require('@zeit/next-sass');
 const { TypedCssModulesPlugin } = require('typed-css-modules-webpack-plugin');
 const path = require('path');
 
-module.exports = withTypescript(withSass({
+module.exports = withTypescript(
+  withSass({
     cssModules: true,
     sassOptions: {
       // includePaths: ['./src/client/pages/global.scss'],
@@ -15,7 +16,7 @@ module.exports = withTypescript(withSass({
         new TypedCssModulesPlugin({
           globPattern: 'src/components/**/**/*.scss',
           // globPattern: 'src/client/assets/styles/*.scss',
-        }),
+        })
       );
 
       /* config.resolve.alias['@creators'] = path.join(__dirname, 'src/client/store/creators');
@@ -23,6 +24,7 @@ module.exports = withTypescript(withSass({
       config.resolve.alias['@creators/async'] = path.join(__dirname, 'src/client/store/creators/async'); */
       config.resolve.alias['@presentations'] = path.join(__dirname, 'src/components/presentations');
       config.resolve.alias['@containers'] = path.join(__dirname, 'src/components/containers');
+      config.resolve.alias['@wrappers'] = path.join(__dirname, 'src/components/wrappers');
       config.resolve.alias['@store'] = path.join(__dirname, 'src/store');
       config.resolve.alias['@rootReducer'] = path.join(__dirname, 'src/store/reducers');
       config.resolve.alias['@reducers/*'] = path.join(__dirname, 'src/store/reducers/*');
@@ -31,5 +33,6 @@ module.exports = withTypescript(withSass({
       /* config.resolve.alias['@actions'] = path.join(__dirname, 'src/client/store/actions'); */
 
       return config;
-    }
-}));
+    },
+  })
+);

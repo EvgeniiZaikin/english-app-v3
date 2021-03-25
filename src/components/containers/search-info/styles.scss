@@ -1,7 +1,9 @@
 @import '@defaultStyles';
 
 .searchWordInfo__container {
-  width: $default-width;
+  width: 200px;
+  text-align: left;
+  margin-bottom: 16px;
 }
 
 @media screen and (max-height: 415px) {

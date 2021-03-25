@@ -1,17 +1,18 @@
 import { NextPage, NextPageContext } from 'next';
 import { ReactElement } from 'react';
 import Containers from '@containers';
-import Presentations from '@presentations';
+import Wrappers from '@wrappers';
 import { ReducersState } from '@store';
 import { setFooterItemIndex } from '@reducers/footer';
 import { connect } from 'react-redux';
 
 const SearchPage: NextPage = (): ReactElement => (
   <Containers.MainLayout>
-    <Presentations.SearchPageWrapper>
-      <Containers.SearchInput />
+    <Wrappers.SearchPageWrapper>
       <Containers.SearchInfo />
-    </Presentations.SearchPageWrapper>
+      <Containers.SearchInput />
+      <Containers.SearchButton />
+    </Wrappers.SearchPageWrapper>
   </Containers.MainLayout>
 );
 

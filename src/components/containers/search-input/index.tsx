@@ -1,63 +1,40 @@
 import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import { ChangeEvent, FC, ReactElement, FocusEvent } from 'react';
+import { Dispatch } from 'redux';
+import { FC, ReactElement, ChangeEvent } from 'react';
 
-import TextField from '@material-ui/core/TextField';
+import Presentations from '@presentations';
 
 import { ReducersState } from '@store';
-import { setSearchData } from '@reducers/search';
+import { setSearchValue } from '@reducers/search';
 
 import { searchInput__container } from './styles.scss';
 
-type ChangeInput = ChangeEvent<HTMLInputElement>;
-type FocusInput = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
-
 interface IProps {
-  search: Function;
+  searchValue: string;
+  setSearch(value: string): void;
 }
 
-let timer: null | NodeJS.Timeout = null;
+const searchWordInput: FC<IProps> = ({ searchValue, setSearch }): ReactElement => {
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setSearch(event.target.value);
 
-const onInput: Function = (event: ChangeInput, changeData: Function) => {
-  timer && clearTimeout(timer);
-
-  event.target.value &&
-    (timer = setTimeout(() => {
-      changeData(event.target.value);
-    }, 1000));
-};
-
-const onBlur = () => {
-  timer && clearTimeout(timer);
-};
-
-const onFocus = (event: FocusInput, changeData: Function) => {
-  event.target.value &&
-    (timer = setTimeout(() => {
-      changeData(event.target.value);
-    }, 1000));
-};
-
-const searchWordInput: FC<IProps> = ({ search }): ReactElement => {
   return (
     <div className={searchInput__container}>
-      <TextField
-        fullWidth={true}
-        id="standard-search"
-        label="Поиск слов..."
-        type="search"
-        onInput={(event) => onInput(event, search)}
-        onBlur={onBlur}
-        onFocus={(event) => onFocus(event, search)}
-      />
+      <Presentations.Input value={searchValue} helper="RU или EN значение" onChange={handleOnChange} />
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
-  const search = (value: string) => dispatch(setSearchData(value, value));
-  return { search };
+const mapStateToProps = (state: ReducersState) => {
+  const {
+    search: { searchValue },
+  } = state;
+
+  return { searchValue };
 };
 
-export default connect(null, mapDispatchToProps)(searchWordInput);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  const setSearch = (value: string) => dispatch(setSearchValue(value));
+  return { setSearch };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(searchWordInput);

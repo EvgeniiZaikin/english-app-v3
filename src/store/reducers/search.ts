@@ -11,8 +11,10 @@ import { hideGlobalLoading, showGlobalLoading } from './global-loading';
 
 export const SET_SEARCH_INFO: string = 'SET_SEARCH_INFO';
 export const RESET_SEARCH_INFO: string = 'RESET_SEARCH_INFO';
+export const SET_SEARCH_VALUE: string = 'SET_SEARCH_VALUE';
 
 interface IState {
+  searchValue: string;
   ruValue: string;
   enValue: string;
   category: string;
@@ -24,6 +26,7 @@ interface IState {
 }
 
 const initialState: IState = {
+  searchValue: '',
   ruValue: 'Слово не определено',
   enValue: 'Translate is not define',
   category: 'Категория не определена',
@@ -54,6 +57,11 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
       return {
         ...initialState,
       };
+    case SET_SEARCH_VALUE:
+      return {
+        ...state,
+        searchValue: action.payload,
+      };
     default:
       return { ...state };
   }
@@ -61,6 +69,7 @@ const search: Reducer<IState, AnyAction> = (state = initialState, action) => {
 
 export default search;
 
+export const setSearchValue = (value: string) => getAction<string>(SET_SEARCH_VALUE, value);
 export const setSearchInfo = (info: IState) => getAction<IState>(SET_SEARCH_INFO, info);
 export const resetSearchInfo = () => getAction(RESET_SEARCH_INFO);
 
