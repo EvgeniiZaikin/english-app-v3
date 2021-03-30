@@ -5,15 +5,21 @@ import Wrappers from '@wrappers';
 import { ReducersState } from '@store';
 import { setFooterItemIndex } from '@reducers/footer';
 import { connect } from 'react-redux';
+import Head from 'next/head';
 
 const SearchPage: NextPage = (): ReactElement => (
-  <Containers.MainLayout>
-    <Wrappers.SearchPageWrapper>
-      <Containers.SearchInfo />
-      <Containers.SearchInput />
-      <Containers.SearchButton />
-    </Wrappers.SearchPageWrapper>
-  </Containers.MainLayout>
+  <div>
+    <Head>
+      <title>English words app - поиск слова</title>
+    </Head>
+    <Containers.MainLayout>
+      <Wrappers.SearchPageWrapper>
+        <Containers.SearchInfo />
+        <Containers.SearchInput />
+        <Containers.SearchButton />
+      </Wrappers.SearchPageWrapper>
+    </Containers.MainLayout>
+  </div>
 );
 
 SearchPage.getInitialProps = async ({ store }: NextPageContext<ReducersState>) => {

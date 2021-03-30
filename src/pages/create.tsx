@@ -1,6 +1,7 @@
 import Containers from '@containers';
 import { ReactElement } from 'react';
 import { NextPage, NextPageContext } from 'next';
+import Head from 'next/head';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { AxiosResponse } from '@utils/types';
@@ -18,9 +19,14 @@ interface ICreatePageProps {
 }
 
 const CreatePage: NextPage<ICreatePageProps> = ({ categories }): ReactElement => (
-  <Containers.MainLayout>
-    <Containers.CreatePageWrapper categories={categories} />
-  </Containers.MainLayout>
+  <div>
+    <Head>
+      <title>English words app - создание слова или категории</title>
+    </Head>
+    <Containers.MainLayout>
+      <Containers.CreatePageWrapper categories={categories} />
+    </Containers.MainLayout>
+  </div>
 );
 
 CreatePage.getInitialProps = async ({ req, store }: NextPageContext) => {

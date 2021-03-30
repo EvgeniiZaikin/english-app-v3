@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import next from 'next';
 import bodyParser from 'body-parser';
-
 import { printLog, isDevelop } from '../utils/functions';
 
 import '../database';

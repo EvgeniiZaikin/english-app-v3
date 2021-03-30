@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
-
+import Head from 'next/head';
 import { setRepeatWordInfo } from '@reducers/repeat';
 import { ReducersState } from '@store';
 import { AxiosResponse } from '@utils/types';
@@ -12,9 +12,14 @@ import { setFooterItemIndex } from '@reducers/footer';
 
 const RepeatPage: NextPage = (): ReactElement => {
   return (
-    <Containers.MainLayout>
-      <Containers.RepeatPageWrapper />
-    </Containers.MainLayout>
+    <div>
+      <Head>
+        <title>English words app - повторение слов</title>
+      </Head>
+      <Containers.MainLayout>
+        <Containers.RepeatPageWrapper />
+      </Containers.MainLayout>
+    </div>
   );
 };
 

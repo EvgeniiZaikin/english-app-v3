@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { NextPage, NextPageContext } from 'next';
-
+import Head from 'next/head';
 import Containers from '@containers';
 import Presentations from '@presentations';
 import { ReducersState } from '@store';
@@ -16,9 +16,14 @@ interface IInfoPageProps {
 
 const InfoPage: NextPage<IInfoPageProps> = ({ wordsCount }): ReactElement => {
   return (
-    <Containers.MainLayout>
-      <Presentations.InfoText wordsCount={wordsCount} />
-    </Containers.MainLayout>
+    <div>
+      <Head>
+        <title>English words app - информация</title>
+      </Head>
+      <Containers.MainLayout>
+        <Presentations.InfoText wordsCount={wordsCount} />
+      </Containers.MainLayout>
+    </div>
   );
 };
 

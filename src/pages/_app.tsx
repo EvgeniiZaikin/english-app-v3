@@ -61,6 +61,8 @@ class MyApp extends App<AppInitialProps> {
             content={`width=device-width, minimum-scale=1.0, initial-scale=1.0, 
                             maximum-scale=1.0, user-scalable=no, viewport-fit=cover`}
           />
+          <title>English words app</title>
+          <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
 
         <Component {...pageProps} />
