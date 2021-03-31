@@ -1,5 +1,4 @@
 declare const styles: {
-  readonly "searchButton_button": string;
+  readonly searchButton_button: string;
 };
 export = styles;
-
