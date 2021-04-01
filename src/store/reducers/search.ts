@@ -6,8 +6,8 @@ import { getAction } from '@rootReducer';
 import { AsyncDispatch } from '@utils/types';
 import { sleep } from '@utils/functions';
 
-import { TSnackbar, showSnackbar } from './snackbar';
-import { hideGlobalLoading, showGlobalLoading } from './global-loading';
+import { showSnackbar } from '@reducers/snackbar/creators';
+import { TSnackbar } from '@reducers/snackbar/types';
 
 export const SET_SEARCH_INFO: string = 'SET_SEARCH_INFO';
 export const RESET_SEARCH_INFO: string = 'RESET_SEARCH_INFO';
@@ -74,8 +74,6 @@ export const setSearchInfo = (info: IState) => getAction<IState>(SET_SEARCH_INFO
 export const resetSearchInfo = () => getAction(RESET_SEARCH_INFO);
 
 export const setSearchData = (ruValue: string, enValue: string) => async (dispatch: AsyncDispatch) => {
-  dispatch(showGlobalLoading());
-
   await sleep(800);
 
   try {
@@ -93,6 +91,4 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
   } catch (error: unknown) {
     dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось выполнить поиск слова'));
   }
-
-  dispatch(hideGlobalLoading());
 };

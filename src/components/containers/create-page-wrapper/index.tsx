@@ -13,14 +13,10 @@ import {
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import uniqid from 'uniqid';
-
+import { Dispatch } from 'redux';
 import Presentations from '@presentations';
-import { showGlobalLoading, hideGlobalLoading } from '@reducers/global-loading';
-import { TSnackbar, showSnackbar } from '@reducers/snackbar';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-
-import { ReducersState } from '@store';
+import { showSnackbar } from '@reducers/snackbar/creators';
+import { TSnackbar } from '@reducers/snackbar/types';
 import axios from 'axios';
 import { IResponse } from '@utils/interfaces';
 
@@ -39,16 +35,12 @@ import {
 
 interface ICreatePageWrapperProps {
   categories: Array<string>;
-  showLoading(): void;
-  hideLoading(): void;
   showSuccessSnackbar(message: string): void;
   showErrorSnackbar(message: string): void;
 }
 
 const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({
   categories,
-  showLoading,
-  hideLoading,
   showSuccessSnackbar,
   showErrorSnackbar,
 }): ReactElement => {
@@ -122,8 +114,6 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({
     entity === 'word' && (duplicateMessage = 'Данное слово уже существует');
     entity === 'category' && (duplicateMessage = 'Данная категория уже существует');
 
-    showLoading();
-
     try {
       const { data }: { data: IResponse } = await axios.post(url, params);
       if (data.status) showSuccessSnackbar(successMessage);
@@ -133,8 +123,6 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({
       if ((error as Error).toString().includes('Duplicate entry')) showErrorSnackbar(duplicateMessage);
       else showErrorSnackbar(errorMessage);
     }
-
-    hideLoading();
   };
 
   return (
@@ -230,13 +218,11 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
-  const showLoading = () => dispatch(showGlobalLoading());
-  const hideLoading = () => dispatch(hideGlobalLoading());
+const mapDispatchToProps = (dispatch: Dispatch) => {
   const showSuccessSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.SUCCESS, message));
   const showErrorSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.ERROR, message));
 
-  return { showLoading, hideLoading, showSuccessSnackbar, showErrorSnackbar };
+  return { showSuccessSnackbar, showErrorSnackbar };
 };
 
 export default connect(null, mapDispatchToProps)(CreatePageWrapper);

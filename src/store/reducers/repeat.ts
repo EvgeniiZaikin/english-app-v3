@@ -5,8 +5,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { ReducersState } from '@store';
 import axios from 'axios';
 import { IResponse } from '@utils/interfaces';
-import { showGlobalLoading, hideGlobalLoading } from './global-loading';
-import { TSnackbar, showSnackbar } from './snackbar';
+import { showSnackbar } from '@reducers/snackbar/creators';
+import { TSnackbar } from '@reducers/snackbar/types';
 
 const SET_REPEAT_WORD_INFO: string = 'SET_REPEAT_WORD_INFO';
 const FINISH_REPEAT_WORD: string = 'FINISH_REPEAT_WORD';
@@ -70,8 +70,6 @@ export const resetRepeatWordInfo = () => getAction(RESET_REPEAT_WORD_INFO);
 export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbuse: boolean) => async (
   dispatch: ThunkDispatch<ReducersState, void, AnyAction>
 ) => {
-  dispatch(showGlobalLoading());
-
   try {
     dispatch(resetRepeatWordInfo());
 
@@ -89,8 +87,6 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbu
   } catch (error: unknown) {
     dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось получить слово для повторения'));
   }
-
-  dispatch(hideGlobalLoading());
 };
 
 export interface IUpdateWordParams {

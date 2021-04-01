@@ -1,16 +1,7 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { getAction } from '@rootReducer';
-
-const SHOW_SNACKBAR: string = 'SHOW_SNACKBAR';
-const HIDE_SNACKBAR: string = 'HIDE_SNACKBAR';
-
-export enum TSnackbar {
-  SUCCESS = 'success',
-  INFO = 'info',
-  WARNING = 'warning',
-  ERROR = 'error',
-}
+import { TSnackbar } from './types';
+import { SHOW_SNACKBAR, HIDE_SNACKBAR } from './actions';
 
 interface IState {
   show: boolean;
@@ -38,6 +29,3 @@ const snackbar: Reducer<IState, AnyAction> = (state = initialState, action) => {
 };
 
 export default snackbar;
-
-export const showSnackbar = (type: TSnackbar, message: string) => getAction<object>(SHOW_SNACKBAR, { type, message });
-export const hideSnackbar = () => getAction(HIDE_SNACKBAR);

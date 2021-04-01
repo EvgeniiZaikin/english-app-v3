@@ -5,8 +5,8 @@ import axios from 'axios';
 import { getAction } from '@rootReducer';
 import { AsyncDispatch } from '@utils/types';
 import { IResponse } from '@utils/interfaces';
-import { hideGlobalLoading, showGlobalLoading } from './global-loading';
-import { TSnackbar, showSnackbar } from './snackbar';
+import { showSnackbar } from '@reducers/snackbar/creators';
+import { TSnackbar } from '@reducers/snackbar/types';
 
 const SET_LOGIN: string = 'SET_LOGIN';
 const SET_PASSWORD: string = 'SET_PASSWORD';
@@ -88,8 +88,6 @@ const loginAction = (isAuth: boolean, login: string, password: string) => async 
 
   let success = true;
 
-  dispatch(showGlobalLoading());
-
   try {
     if (!login || !password) {
       success = false;
@@ -119,7 +117,6 @@ const loginAction = (isAuth: boolean, login: string, password: string) => async 
     success = false;
   }
 
-  dispatch(hideGlobalLoading());
   return success;
 };
 

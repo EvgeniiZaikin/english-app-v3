@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import globalLoading from './global-loading';
 import search from './search';
 import repeat from './repeat';
 import auth from './auth';
@@ -8,7 +7,6 @@ import footer from './footer';
 import snackbar from './snackbar';
 
 export default combineReducers({
-  globalLoading,
   search,
   repeat,
   auth,
