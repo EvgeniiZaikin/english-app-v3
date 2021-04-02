@@ -4,3 +4,9 @@ export enum TSnackbar {
   WARNING = 'warning',
   ERROR = 'error',
 }
+
+export interface ISnackbarState {
+  show: boolean;
+  message: string;
+  type: TSnackbar;
+}

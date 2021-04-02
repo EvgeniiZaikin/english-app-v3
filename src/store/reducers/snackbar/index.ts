@@ -1,21 +1,15 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { Reducer, AnyAction } from 'redux';
-import { TSnackbar } from './types';
+import { TSnackbar, ISnackbarState } from './types';
 import { SHOW_SNACKBAR, HIDE_SNACKBAR } from './actions';
 
-interface IState {
-  show: boolean;
-  message: string;
-  type: TSnackbar;
-}
-
-const initialState: IState = {
+const initialState: ISnackbarState = {
   show: false,
   message: '',
   type: TSnackbar.INFO,
 };
 
-const snackbar: Reducer<IState, AnyAction> = (state = initialState, action) => {
+const snackbar: Reducer<ISnackbarState, AnyAction> = (state = initialState, action) => {
   switch (action.type) {
     case HYDRATE:
       return { ...action.payload.snackbar };
@@ -24,7 +18,7 @@ const snackbar: Reducer<IState, AnyAction> = (state = initialState, action) => {
     case HIDE_SNACKBAR:
       return { ...state, show: false };
     default:
-      return { ...state };
+      return state;
   }
 };
 
