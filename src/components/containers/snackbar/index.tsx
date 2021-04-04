@@ -1,21 +1,16 @@
 import React, { FC, ReactElement } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar as MuiSnackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
+
 import { hideSnackbar } from '@reducers/snackbar/creators';
-import { TSnackbar } from '@reducers/snackbar/types';
-import { ReducersState } from '@store';
-import { Dispatch } from 'redux';
-import { IAction } from '@rootReducer';
+import { getSnackbarInfo } from '@reducers/snackbar/selectors';
 
-interface ISnackbarProps {
-  show: boolean;
-  message: string;
-  type: TSnackbar;
-  handleClose(): IAction<unknown>;
-}
+const Snackbar: FC = (): ReactElement => {
+  const dispatch = useDispatch();
+  const { show, type, message } = useSelector(getSnackbarInfo);
+  const handleClose = () => dispatch(hideSnackbar());
 
-const Snackbar: FC<ISnackbarProps> = ({ type, message, show, handleClose }): ReactElement => {
   return (
     <MuiSnackbar open={show} autoHideDuration={2500} onClose={handleClose}>
       <MuiAlert elevation={6} variant="filled" onClose={handleClose} severity={type}>
@@ -25,18 +20,4 @@ const Snackbar: FC<ISnackbarProps> = ({ type, message, show, handleClose }): Rea
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    snackbar: { show, type, message },
-  } = state;
-
-  return { show, type, message };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  const handleClose = () => dispatch(hideSnackbar());
-
-  return { handleClose };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Snackbar);
+export default Snackbar;
