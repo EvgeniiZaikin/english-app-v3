@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import Containers from '@containers';
 import Wrappers from '@wrappers';
 import { ReducersState } from '@store';
-import { setFooterItemIndex } from '@reducers/footer';
+import { setFooterItemIndex } from '@reducers/footer/creators';
 import { connect } from 'react-redux';
 import Head from 'next/head';
 

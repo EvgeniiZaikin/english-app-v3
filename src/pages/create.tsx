@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';
-import { setFooterItemIndex } from '@reducers/footer';
+import { setFooterItemIndex } from '@reducers/footer/creators';
 
 interface ICategory {
   category_id: number;

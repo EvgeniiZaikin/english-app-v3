@@ -8,7 +8,7 @@ import { ReducersState } from '@store';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';
 import Containers from '@containers';
-import { setFooterItemIndex } from '@reducers/footer';
+import { setFooterItemIndex } from '@reducers/footer/creators';
 
 const RepeatPage: NextPage = (): ReactElement => {
   return (

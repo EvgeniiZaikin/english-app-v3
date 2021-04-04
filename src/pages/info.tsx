@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Containers from '@containers';
 import Presentations from '@presentations';
 import { ReducersState } from '@store';
-import { setFooterItemIndex } from '@reducers/footer';
+import { setFooterItemIndex } from '@reducers/footer/creators';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';
 import axios from 'axios';

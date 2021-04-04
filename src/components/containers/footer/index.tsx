@@ -1,8 +1,8 @@
 import { FC, ReactElement } from 'react';
-import { NextRouter, withRouter } from 'next/router';
-import { connect } from 'react-redux';
+import { withRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
-import { ReducersState } from '@store';
+import { getFooterActiveIndex } from '@reducers/footer/selectors';
 
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -10,14 +10,12 @@ import SchoolIcon from '@material-ui/icons/School';
 import AddIcon from '@material-ui/icons/Add';
 import InfoIcon from '@material-ui/icons/Info';
 
+import { IFooterProps } from './types';
 import { footer__container, footer__item } from './styles.scss';
 
-interface IFooterProps {
-  router: NextRouter;
-  itemIndex: number | null;
-}
+const Footer: FC<IFooterProps> = ({ router }): ReactElement => {
+  const itemIndex = useSelector(getFooterActiveIndex);
 
-const Footer: FC<IFooterProps> = ({ router, itemIndex }): ReactElement => {
   return (
     <BottomNavigation className={footer__container} value={itemIndex} showLabels>
       <BottomNavigationAction
@@ -42,12 +40,4 @@ const Footer: FC<IFooterProps> = ({ router, itemIndex }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    footer: { itemIndex },
-  } = state;
-
-  return { itemIndex };
-};
-
-export default connect(mapStateToProps)(withRouter(Footer));
+export default withRouter(Footer);
