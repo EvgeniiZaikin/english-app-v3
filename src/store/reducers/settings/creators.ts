@@ -1,5 +1,3 @@
-import { Reducer, AnyAction } from 'redux';
-import { HYDRATE } from 'next-redux-wrapper';
 import axios from 'axios';
 
 import { getAction } from '@rootReducer';
@@ -8,33 +6,7 @@ import { IResponse } from '@utils/interfaces';
 import { showSnackbar } from '@reducers/snackbar/creators';
 import { TSnackbar } from '@reducers/snackbar/types';
 
-interface IState {
-  isRemember: boolean;
-  useAbuse: boolean;
-}
-
-const initialState: IState = {
-  isRemember: false,
-  useAbuse: false,
-};
-
-const SET_REMEMBER: string = 'SET_REMEMBER';
-const SET_USE_ABUSE: string = 'SET_USE_ABUSE';
-
-const settings: Reducer<IState, AnyAction> = (state = initialState, action) => {
-  switch (action.type) {
-    case HYDRATE:
-      return { ...action.payload.settings };
-    case SET_REMEMBER:
-      return { ...state, isRemember: action.payload };
-    case SET_USE_ABUSE:
-      return { ...state, useAbuse: action.payload };
-    default:
-      return { ...state };
-  }
-};
-
-export default settings;
+import { SET_REMEMBER, SET_USE_ABUSE } from './actions';
 
 export const setUseAbuse = (useAbuse: boolean) => getAction<boolean>(SET_USE_ABUSE, useAbuse);
 export const simpleSetRemember = (remember: boolean) => getAction<boolean>(SET_REMEMBER, remember);

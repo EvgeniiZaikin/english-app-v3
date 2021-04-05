@@ -1,6 +1,6 @@
 import React, { FC, ReactElement } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import { NextRouter, withRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+import { withRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
@@ -9,31 +9,27 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 
-import { ReducersState } from '@store';
 import { logoutUser as logoutUserAction } from '@reducers/auth/creators';
-import { setRemember, setUseAbuse } from '@reducers/settings';
-import { AsyncDispatch } from '@utils/types';
+import { setRemember, setUseAbuse } from '@reducers/settings/creators';
 import Presentations from '@presentations';
 
 import { getIsAuth, getLogin, getUserId } from '@reducers/auth/selectors';
+import { getIsRemember, getUseAbuse } from '@reducers/settings/selectors';
 
+import { IHeaderProps } from './types';
 import { header__wrapper, header__auth } from './styles.scss';
 
-interface IHeaderProps {
-  router: NextRouter;
-  isRemember: boolean;
-  useAbuse: boolean;
-  toggleRemember(userId: number, remember: boolean): Promise<void>;
-  toggleUseAbuse(useAbuse: boolean): void;
-}
-
-const Header: FC<IHeaderProps> = ({ router, isRemember, useAbuse, toggleRemember, toggleUseAbuse }): ReactElement => {
+const Header: FC<IHeaderProps> = ({ router }): ReactElement => {
   const isAuth = useSelector(getIsAuth);
   const login = useSelector(getLogin);
   const userId = useSelector(getUserId);
+  const isRemember = useSelector(getIsRemember);
+  const useAbuse = useSelector(getUseAbuse);
 
   const dispatch = useDispatch();
   const logout = () => dispatch(logoutUserAction());
+  const toggleRemember = (id: number, remember: boolean) => dispatch(setRemember(id, remember));
+  const toggleUseAbuse = (use: boolean) => dispatch(setUseAbuse(use));
 
   const [settingsAnchorElement, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -117,21 +113,4 @@ const Header: FC<IHeaderProps> = ({ router, isRemember, useAbuse, toggleRemember
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    settings: { isRemember, useAbuse },
-  } = state;
-  return { isRemember, useAbuse };
-};
-
-const mapDispatchToProps = (dispatch: AsyncDispatch) => {
-  const toggleRemember = (userId: number, remember: boolean): Promise<void> => dispatch(setRemember(userId, remember));
-  const toggleUseAbuse = (useAbuse: boolean) => dispatch(setUseAbuse(useAbuse));
-
-  return {
-    toggleRemember,
-    toggleUseAbuse,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
+export default withRouter(Header);
