@@ -1,37 +1,8 @@
 import express, { Router, Request, Response } from 'express';
-import { TQueryResult, dbRequest, endpoint } from './helpers';
-import queries from '../database/queries';
+import { TQueryResult, dbRequest, endpoint } from '../helpers';
+import queries from '../../database/queries';
 
-interface IWord {
-  word_id: number;
-  word_ru_value: string;
-  word_en_value: string;
-  word_count_views: number;
-  word_count_success_guesses: number;
-}
-
-interface IFoundedWord {
-  word_ru_value: string;
-  word_en_value: string;
-  category_label: string;
-  isExpression: boolean;
-  isSlang: boolean;
-  isAbuse: boolean;
-  isAbbreviation: boolean;
-  transcription: string | null;
-}
-
-interface IGuessWord {
-  wordId: number;
-  ruValue: string;
-  enValue: string;
-  category: string | null;
-  isExpression: boolean;
-  isSlang: boolean;
-  isAbuse: boolean;
-  isAbbreviation: boolean;
-  transcription: string | null;
-}
+import { IWord, IFoundedWord, IGuessWord } from './types';
 
 const router: Router = express.Router();
 

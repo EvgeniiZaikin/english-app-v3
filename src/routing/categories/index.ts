@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from 'express';
 
-import queries from '../database/queries';
-import { dbRequest, endpoint } from './helpers';
+import queries from '../../database/queries';
+import { dbRequest, endpoint } from '../helpers';
 
 const router: Router = express.Router();
 

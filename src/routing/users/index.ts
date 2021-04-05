@@ -1,13 +1,10 @@
 import express, { Router, Request, Response } from 'express';
-import queries from '../database/queries';
-import { dbRequest, endpoint, TQueryResult } from './helpers';
+import queries from '../../database/queries';
+import { dbRequest, endpoint, TQueryResult } from '../helpers';
+
+import { IUser } from './types';
 
 const router: Router = express.Router();
-
-interface IUser {
-  user_login: string;
-  user_password: string;
-}
 
 router.post(`/registration`, async (req: Request, res: Response) => {
   const logic = async (): Promise<IUser[]> => {

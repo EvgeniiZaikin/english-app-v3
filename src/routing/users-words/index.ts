@@ -1,19 +1,8 @@
 import express, { Router, Request, Response } from 'express';
-import { TQueryResult, dbRequest, endpoint } from './helpers';
-import queries from '../database/queries';
+import { TQueryResult, dbRequest, endpoint } from '../helpers';
+import queries from '../../database/queries';
 
-interface IGuessWord {
-  wordId: number;
-  ruValue: string;
-  enValue: string;
-  category: string | null;
-  userWordId: number;
-  isExpression: boolean;
-  isSlang: boolean;
-  isAbuse: boolean;
-  isAbbreviation: boolean;
-  transcription: string | null;
-}
+import { IGuessWord } from './types';
 
 const router: Router = express.Router();
 
