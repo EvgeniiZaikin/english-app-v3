@@ -1,20 +1,18 @@
 import { ReactElement, FC } from 'react';
-import { connect } from 'react-redux';
-import { ReducersState } from '@store';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 
-import { setSearchData } from '@reducers/search';
+import { setSearchData } from '@reducers/search/creators';
+import { getSearchValue } from '@reducers/search/selectors';
 
 import { searchButton_button } from './styles.scss';
 
-interface IProps {
-  searchValue: string;
-  search(value: string): void;
-}
+const NextButton: FC = (): ReactElement => {
+  const searchValue = useSelector(getSearchValue);
 
-const nextButton: FC<IProps> = ({ searchValue, search }): ReactElement => {
+  const dispatch = useDispatch();
+  const search = (value: string) => dispatch(setSearchData(value, value));
+
   const handleSearch = () => search(searchValue);
 
   return (
@@ -32,17 +30,4 @@ const nextButton: FC<IProps> = ({ searchValue, search }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    search: { searchValue },
-  } = state;
-  return { searchValue };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
-  const search = (value: string) => dispatch(setSearchData(value, value));
-
-  return { search };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(nextButton);
+export default NextButton;

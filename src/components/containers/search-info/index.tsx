@@ -1,33 +1,31 @@
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FC, ReactElement } from 'react';
 import { Typography } from '@material-ui/core';
 
-import { ReducersState } from '@store';
 import Presentations from '@presentations';
+import {
+  getRuValue,
+  getEnValue,
+  getCategory,
+  getIsExpression,
+  getIsSlang,
+  getIsAbuse,
+  getIsAbbreviation,
+  getTranscription,
+} from '@reducers/search/selectors';
 
 import { searchWordInfo__container } from './styles.scss';
 
-interface IProps {
-  ruValue: string;
-  enValue: string;
-  category: string;
-  isExpression: boolean;
-  isSlang: boolean;
-  isAbuse: boolean;
-  isAbbreviation: boolean;
-  transcription: string | null;
-}
+const SearchInfo: FC = (): ReactElement => {
+  const ruValue = useSelector(getRuValue);
+  const enValue = useSelector(getEnValue);
+  const category = useSelector(getCategory);
+  const isExpression = useSelector(getIsExpression);
+  const isSlang = useSelector(getIsSlang);
+  const isAbuse = useSelector(getIsAbuse);
+  const isAbbreviation = useSelector(getIsAbbreviation);
+  const transcription = useSelector(getTranscription);
 
-const searchInfo: FC<IProps> = ({
-  ruValue,
-  enValue,
-  category,
-  isExpression,
-  isSlang,
-  isAbuse,
-  isAbbreviation,
-  transcription,
-}): ReactElement => {
   return (
     <div className={searchWordInfo__container}>
       <Typography variant="h4" gutterBottom>
@@ -46,11 +44,4 @@ const searchInfo: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    search: { ruValue, enValue, category, isExpression, isSlang, isAbuse, isAbbreviation, transcription },
-  } = state;
-  return { ruValue, enValue, category, isExpression, isSlang, isAbuse, isAbbreviation, transcription };
-};
-
-export default connect(mapStateToProps)(searchInfo);
+export default SearchInfo;

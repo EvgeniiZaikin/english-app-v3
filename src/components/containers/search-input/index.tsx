@@ -1,20 +1,19 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FC, ReactElement, ChangeEvent } from 'react';
 
 import Presentations from '@presentations';
 
-import { ReducersState } from '@store';
-import { setSearchValue } from '@reducers/search';
+import { setSearchValue } from '@reducers/search/creators';
+import { getSearchValue } from '@reducers/search/selectors';
 
 import { searchInput__container } from './styles.scss';
 
-interface IProps {
-  searchValue: string;
-  setSearch(value: string): void;
-}
+const SearchWordInput: FC = (): ReactElement => {
+  const searchValue = useSelector(getSearchValue);
 
-const searchWordInput: FC<IProps> = ({ searchValue, setSearch }): ReactElement => {
+  const dispatch = useDispatch();
+  const setSearch = (value: string) => dispatch(setSearchValue(value));
+
   const handleOnChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setSearch(event.target.value);
 
   return (
@@ -24,17 +23,4 @@ const searchWordInput: FC<IProps> = ({ searchValue, setSearch }): ReactElement =
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    search: { searchValue },
-  } = state;
-
-  return { searchValue };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  const setSearch = (value: string) => dispatch(setSearchValue(value));
-  return { setSearch };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(searchWordInput);
+export default SearchWordInput;
