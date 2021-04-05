@@ -1,24 +1,22 @@
 import { ReactElement, FC } from 'react';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { connect, useSelector } from 'react-redux';
-import { ReducersState } from '@store';
-import { ThunkDispatch } from 'redux-thunk';
-import { AnyAction } from 'redux';
-import { setRepeatWordData } from '@reducers/repeat';
+import { useSelector, useDispatch } from 'react-redux';
+import { setRepeatWordData } from '@reducers/repeat/creators';
 import { Button } from '@material-ui/core';
 import { getUserId, getIsAuth } from '@reducers/auth/selectors';
+import { getFinished } from '@reducers/repeat/selectors';
+import { getUseAbuse } from '@reducers/settings/selectors';
+
 import { nextButton_button } from './styles.scss';
 
-interface IProps {
-  disabled: boolean;
-  useAbuse: boolean;
-  nextWord: (userId: number | null, isAuth: boolean, useAbuse: boolean) => void;
-}
-
-const NextButton: FC<IProps> = ({ disabled, nextWord, useAbuse }): ReactElement => {
+const NextButton: FC = (): ReactElement => {
   const userId = useSelector(getUserId);
   const isAuth = useSelector(getIsAuth);
+  const disabled = !useSelector(getFinished);
+  const useAbuse = useSelector(getUseAbuse);
 
+  const dispatch = useDispatch();
+  const nextWord = (id: number | null, auth: boolean, abuse: boolean) => dispatch(setRepeatWordData(id, auth, abuse));
   const handleNextWord = () => nextWord(userId, isAuth, useAbuse);
 
   return (
@@ -37,19 +35,4 @@ const NextButton: FC<IProps> = ({ disabled, nextWord, useAbuse }): ReactElement 
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    repeat: { finished },
-    settings: { useAbuse },
-  } = state;
-  return { disabled: !finished, useAbuse };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
-  const nextWord = (userId: number | null, isAuth: boolean, useAbuse: boolean) =>
-    dispatch(setRepeatWordData(userId, isAuth, useAbuse));
-
-  return { nextWord };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NextButton);
+export default NextButton;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NextPage, NextPageContext } from 'next';
 import axios from 'axios';
 import Head from 'next/head';
-import { setRepeatWordInfo } from '@reducers/repeat';
+import { setRepeatWordInfo } from '@reducers/repeat/creators';
 import { ReducersState } from '@store';
 import { AxiosResponse } from '@utils/types';
 import { getHost, printLog } from '@utils/functions';

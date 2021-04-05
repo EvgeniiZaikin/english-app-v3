@@ -1,0 +1,4 @@
+export const SET_REPEAT_WORD_INFO: string = 'SET_REPEAT_WORD_INFO';
+export const FINISH_REPEAT_WORD: string = 'FINISH_REPEAT_WORD';
+export const SET_REPEAT_WORD_STATUS: string = 'SET_GUESSED_WORD_STATUS';
+export const RESET_REPEAT_WORD_INFO: string = 'RESET_REPEAT_WORD_INFO';

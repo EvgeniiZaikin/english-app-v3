@@ -1,10 +1,20 @@
 import { ReactElement, FC } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import uniqid from 'uniqid';
 
 import Presentations from '@presentations';
 import Containers from '@containers';
-import { ReducersState } from '@store';
+
+import {
+  getWord,
+  getCategory,
+  getEnValues,
+  getIsExpression,
+  getIsSlang,
+  getIsAbuse,
+  getIsAbbreviation,
+  getTranscription,
+} from '@reducers/repeat/selectors';
 
 import {
   repeatPage_container,
@@ -13,27 +23,16 @@ import {
   repeatPage__variants,
 } from './styles.scss';
 
-interface IProps {
-  word: string;
-  category: string;
-  enValues: Array<string>;
-  isExpression: boolean;
-  isSlang: boolean;
-  isAbuse: boolean;
-  isAbbreviation: boolean;
-  transcription: string | null;
-}
+const RepeatPageWrapper: FC = (): ReactElement => {
+  const word = useSelector(getWord);
+  const category = useSelector(getCategory);
+  const enValues = useSelector(getEnValues);
+  const isExpression = useSelector(getIsExpression);
+  const isSlang = useSelector(getIsSlang);
+  const isAbuse = useSelector(getIsAbuse);
+  const isAbbreviation = useSelector(getIsAbbreviation);
+  const transcription = useSelector(getTranscription);
 
-const repeatPageWrapper: FC<IProps> = ({
-  word,
-  category,
-  enValues,
-  isExpression,
-  isSlang,
-  isAbuse,
-  isAbbreviation,
-  transcription,
-}): ReactElement => {
   return (
     <>
       {word.length ? (
@@ -65,11 +64,4 @@ const repeatPageWrapper: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    repeat: { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation, transcription },
-  } = state;
-  return { word, category, enValues, isExpression, isSlang, isAbuse, isAbbreviation, transcription };
-};
-
-export default connect(mapStateToProps)(repeatPageWrapper);
+export default RepeatPageWrapper;

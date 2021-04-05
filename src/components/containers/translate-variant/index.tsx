@@ -1,11 +1,11 @@
 import { ReactElement, FC, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
-import { ReducersState } from '@store';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { finishRepeatWord, IUpdateWordParams, setRepeatWordStatus, updateWord } from '@reducers/repeat';
+import { useSelector, useDispatch } from 'react-redux';
+import { finishRepeatWord, IUpdateWordParams, setRepeatWordStatus, updateWord } from '@reducers/repeat/creators';
 import { getUserId, getIsAuth } from '@reducers/auth/selectors';
 
+import { getWord, getRightEnValue, getFinished, getWordId } from '@reducers/repeat/selectors';
+
+import { ITranslateVariantProps } from './types';
 import {
   translateVariant__button,
   translateVariant__button_neutral,
@@ -14,29 +14,18 @@ import {
   translateVariant__button_light,
 } from './styles.scss';
 
-interface IProps {
-  value: string;
-  wordId: number | null;
-  wordRuValue: string;
-  rightEnValue: string;
-  openNextButton: Function;
-  setGuessedWordStatus: Function;
-  finished: boolean;
-  updateGuessedWord: Function;
-}
-
-const TranslateVariant: FC<IProps> = ({
-  value,
-  rightEnValue,
-  wordId,
-  wordRuValue,
-  openNextButton,
-  setGuessedWordStatus,
-  finished,
-  updateGuessedWord,
-}): ReactElement => {
+const TranslateVariant: FC<ITranslateVariantProps> = ({ value }): ReactElement => {
   const isAuth = useSelector(getIsAuth);
   const userId = useSelector(getUserId);
+  const wordId = useSelector(getWordId);
+  const wordRuValue = useSelector(getWord);
+  const rightEnValue = useSelector(getRightEnValue);
+  const finished = useSelector(getFinished);
+
+  const dispatch = useDispatch();
+  const openNextButton = () => dispatch(finishRepeatWord());
+  const setGuessedWordStatus = (guessed: boolean) => dispatch(setRepeatWordStatus(guessed));
+  const updateGuessedWord = (params: IUpdateWordParams) => dispatch(updateWord(params));
 
   const [style, setStyle] = useState(translateVariant__button_neutral);
 
@@ -57,7 +46,7 @@ const TranslateVariant: FC<IProps> = ({
     openNextButton();
     setGuessedWordStatus(guessed);
     updateGuessedWord({
-      id: wordId,
+      id: Number(wordId),
       ruValue: wordRuValue,
       enValue: rightEnValue,
       incrementViews: true,
@@ -74,23 +63,4 @@ const TranslateVariant: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    repeat: { wordId, word, rightEnValue, finished },
-  } = state;
-  return { wordId, wordRuValue: word, rightEnValue, finished };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
-  const openNextButton = () => dispatch(finishRepeatWord());
-  const setGuessedWordStatus = (guessed: boolean) => dispatch(setRepeatWordStatus(guessed));
-  const updateGuessedWord = (params: IUpdateWordParams) => dispatch(updateWord(params));
-
-  return {
-    openNextButton,
-    setGuessedWordStatus,
-    updateGuessedWord,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TranslateVariant);
+export default TranslateVariant;
