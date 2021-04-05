@@ -9,7 +9,7 @@ import '../assets/styles/global.scss';
 import { getHost, printLog } from '@utils/functions';
 import { AxiosResponse } from '@utils/types';
 import axios from 'axios';
-import { loginUser, setLogin, setPassword, setUserId } from '@reducers/auth';
+import { loginUser, setLogin, setPassword, setUserId } from '@reducers/auth/creators';
 import { setUseAbuse, simpleSetRemember } from '@reducers/settings';
 import nextCookies from 'next-cookies';
 

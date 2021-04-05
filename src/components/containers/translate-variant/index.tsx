@@ -1,9 +1,10 @@
 import { ReactElement, FC, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { ReducersState } from '@store';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { finishRepeatWord, IUpdateWordParams, setRepeatWordStatus, updateWord } from '@reducers/repeat';
+import { getUserId, getIsAuth } from '@reducers/auth/selectors';
 
 import {
   translateVariant__button,
@@ -22,8 +23,6 @@ interface IProps {
   setGuessedWordStatus: Function;
   finished: boolean;
   updateGuessedWord: Function;
-  isAuth: boolean;
-  userId: number | null;
 }
 
 const TranslateVariant: FC<IProps> = ({
@@ -35,9 +34,10 @@ const TranslateVariant: FC<IProps> = ({
   setGuessedWordStatus,
   finished,
   updateGuessedWord,
-  isAuth,
-  userId,
 }): ReactElement => {
+  const isAuth = useSelector(getIsAuth);
+  const userId = useSelector(getUserId);
+
   const [style, setStyle] = useState(translateVariant__button_neutral);
 
   const classes: string = `
@@ -77,9 +77,8 @@ const TranslateVariant: FC<IProps> = ({
 const mapStateToProps = (state: ReducersState) => {
   const {
     repeat: { wordId, word, rightEnValue, finished },
-    auth: { isAuth, userId },
   } = state;
-  return { wordId, wordRuValue: word, rightEnValue, finished, isAuth, userId };
+  return { wordId, wordRuValue: word, rightEnValue, finished };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {

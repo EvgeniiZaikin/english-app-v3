@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, ReactElement } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,18 +8,17 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { ReducersState } from '@store';
-import { Dispatch } from 'redux';
-import { setPassword, toggleShowPassword } from '@reducers/auth';
 
-interface IProps {
-  password: string;
-  showPassword: boolean;
-  changePassword: (value: string) => void;
-  toggleVisiblePassword: () => void;
-}
+import { setPassword, toggleShowPassword } from '@reducers/auth/creators';
+import { getPassword, getShowPassword } from '@reducers/auth/selectors';
 
-const passwordInput: FC<IProps> = ({ password, showPassword, changePassword, toggleVisiblePassword }): ReactElement => {
+const PasswordInput: FC = (): ReactElement => {
+  const password = useSelector(getPassword);
+  const showPassword = useSelector(getShowPassword);
+
+  const dispatch = useDispatch();
+  const changePassword = (value: string) => dispatch(setPassword(value));
+  const toggleVisiblePassword = () => dispatch(toggleShowPassword());
   const passwordHandler = (event: ChangeEvent<HTMLInputElement>) => changePassword(event.target.value);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
 
@@ -47,17 +46,4 @@ const passwordInput: FC<IProps> = ({ password, showPassword, changePassword, tog
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    auth: { password, showPassword },
-  } = state;
-  return { password, showPassword };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  const changePassword = (password: string) => dispatch(setPassword(password));
-  const toggleVisiblePassword = () => dispatch(toggleShowPassword());
-  return { changePassword, toggleVisiblePassword };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(passwordInput);
+export default PasswordInput;

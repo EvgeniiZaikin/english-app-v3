@@ -1,22 +1,24 @@
 import { ReactElement, FC } from 'react';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { ReducersState } from '@store';
 import { ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { setRepeatWordData } from '@reducers/repeat';
 import { Button } from '@material-ui/core';
+import { getUserId, getIsAuth } from '@reducers/auth/selectors';
 import { nextButton_button } from './styles.scss';
 
 interface IProps {
   disabled: boolean;
-  isAuth: boolean;
-  userId: number | null;
   useAbuse: boolean;
   nextWord: (userId: number | null, isAuth: boolean, useAbuse: boolean) => void;
 }
 
-const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, useAbuse }): ReactElement => {
+const NextButton: FC<IProps> = ({ disabled, nextWord, useAbuse }): ReactElement => {
+  const userId = useSelector(getUserId);
+  const isAuth = useSelector(getIsAuth);
+
   const handleNextWord = () => nextWord(userId, isAuth, useAbuse);
 
   return (
@@ -38,10 +40,9 @@ const nextButton: FC<IProps> = ({ disabled, isAuth, userId, nextWord, useAbuse }
 const mapStateToProps = (state: ReducersState) => {
   const {
     repeat: { finished },
-    auth: { isAuth, userId },
     settings: { useAbuse },
   } = state;
-  return { disabled: !finished, isAuth, userId, useAbuse };
+  return { disabled: !finished, useAbuse };
 };
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyAction>) => {
@@ -51,4 +52,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<ReducersState, void, AnyActi
   return { nextWord };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(nextButton);
+export default connect(mapStateToProps, mapDispatchToProps)(NextButton);

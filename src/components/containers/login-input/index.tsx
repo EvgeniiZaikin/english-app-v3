@@ -1,20 +1,19 @@
 import { FC, ReactElement } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { ReducersState } from '@store';
-import { Dispatch } from 'redux';
-import { setLogin } from '@reducers/auth';
+import { setLogin } from '@reducers/auth/creators';
 
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-interface IProps {
-  login: string;
-  changeLogin: (value: string) => void;
-}
+import { getLogin } from '@reducers/auth/selectors';
 
-const loginInput: FC<IProps> = ({ login, changeLogin }): ReactElement => {
+const LoginInput: FC = (): ReactElement => {
+  const login = useSelector(getLogin);
+
+  const dispatch = useDispatch();
+  const changeLogin = (value: string) => dispatch(setLogin(value));
   const loginHandler = (event: React.ChangeEvent<HTMLInputElement>) => changeLogin(event.target.value);
 
   return (
@@ -25,16 +24,4 @@ const loginInput: FC<IProps> = ({ login, changeLogin }): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    auth: { login },
-  } = state;
-  return { login };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  const changeLogin = (login: string) => dispatch(setLogin(login));
-  return { changeLogin };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(loginInput);
+export default LoginInput;

@@ -1,39 +1,30 @@
 import { FC, ReactElement } from 'react';
-import { connect } from 'react-redux';
-import { NextRouter, withRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+import { withRouter } from 'next/router';
 import Button from '@material-ui/core/Button';
-
-import { AsyncDispatch } from '@utils/types';
-import { registration, authorization, logoutUser } from '@reducers/auth';
-import { ReducersState } from '@store';
+import { registration, authorization, logoutUser } from '@reducers/auth/creators';
 import Presentations from '@presentations';
 import Containers from '@containers';
 
+import { getIsAuth, getLogin, getPassword } from '@reducers/auth/selectors';
+
+import { IAuthPageWrapperProps } from './types';
 import { authPageWrapper__container, authPageWrapper__label, authPageWrapper__authForm } from './styles.scss';
 
-interface IProps {
-  login: string;
-  password: string;
-  isAuth: boolean;
-  doRegistration: (login: string, password: string) => Promise<boolean>;
-  doAuth: (login: string, password: string) => Promise<boolean>;
-  logout: Function;
-  router: NextRouter;
-}
+const AuthPageWrapper: FC<IAuthPageWrapperProps> = ({ router }): ReactElement => {
+  const isAuth = useSelector(getIsAuth);
+  const login = useSelector(getLogin);
+  const password = useSelector(getPassword);
 
-const authPageWrapper: FC<IProps> = ({
-  login,
-  password,
-  doRegistration,
-  doAuth,
-  router,
-  isAuth,
-  logout,
-}): ReactElement => {
+  const dispatch = useDispatch();
+  const doRegistration = (login: string, password: string) => dispatch(registration(login, password));
+  const doAuth = (login: string, password: string) => dispatch(authorization(login, password));
+  const logout = () => dispatch(logoutUser());
+
   const doLogin = async (type: 'auth' | 'reg') => {
     const action = type === 'auth' ? doAuth : doRegistration;
-    const success: boolean = await action(login, password);
-    success && router.push('/repeat');
+    const success = await action(login, password);
+    !!success && router.push('/repeat');
   };
 
   const authUser = () => doLogin('auth');
@@ -75,19 +66,4 @@ const authPageWrapper: FC<IProps> = ({
   );
 };
 
-const mapStateToProps = (state: ReducersState) => {
-  const {
-    auth: { login, password, isAuth },
-  } = state;
-  return { login, password, isAuth };
-};
-
-const mapDispatchToProps = (dispatch: AsyncDispatch) => {
-  const doRegistration = (login: string, password: string): Promise<boolean> => dispatch(registration(login, password));
-  const doAuth = (login: string, password: string): Promise<boolean> => dispatch(authorization(login, password));
-  const logout = () => dispatch(logoutUser());
-
-  return { doRegistration, doAuth, logout };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(authPageWrapper));
+export default withRouter(AuthPageWrapper);

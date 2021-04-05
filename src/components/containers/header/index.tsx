@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { NextRouter, withRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
@@ -10,36 +10,31 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import TransferWithinAStationIcon from '@material-ui/icons/TransferWithinAStation';
 
 import { ReducersState } from '@store';
-import { logoutUser as logoutUserAction } from '@reducers/auth';
+import { logoutUser as logoutUserAction } from '@reducers/auth/creators';
 import { setRemember, setUseAbuse } from '@reducers/settings';
 import { AsyncDispatch } from '@utils/types';
 import Presentations from '@presentations';
+
+import { getIsAuth, getLogin, getUserId } from '@reducers/auth/selectors';
 
 import { header__wrapper, header__auth } from './styles.scss';
 
 interface IHeaderProps {
   router: NextRouter;
-  isAuth: boolean;
-  login: string;
   isRemember: boolean;
-  userId: number | null;
   useAbuse: boolean;
   toggleRemember(userId: number, remember: boolean): Promise<void>;
   toggleUseAbuse(useAbuse: boolean): void;
-  logout(): void;
 }
 
-const Header: FC<IHeaderProps> = ({
-  router,
-  isAuth,
-  login,
-  userId,
-  isRemember,
-  useAbuse,
-  toggleRemember,
-  toggleUseAbuse,
-  logout,
-}): ReactElement => {
+const Header: FC<IHeaderProps> = ({ router, isRemember, useAbuse, toggleRemember, toggleUseAbuse }): ReactElement => {
+  const isAuth = useSelector(getIsAuth);
+  const login = useSelector(getLogin);
+  const userId = useSelector(getUserId);
+
+  const dispatch = useDispatch();
+  const logout = () => dispatch(logoutUserAction());
+
   const [settingsAnchorElement, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const isSettingsOpen = Boolean(settingsAnchorElement);
@@ -124,21 +119,18 @@ const Header: FC<IHeaderProps> = ({
 
 const mapStateToProps = (state: ReducersState) => {
   const {
-    auth: { isAuth, login, userId },
     settings: { isRemember, useAbuse },
   } = state;
-  return { isAuth, login, userId, isRemember, useAbuse };
+  return { isRemember, useAbuse };
 };
 
 const mapDispatchToProps = (dispatch: AsyncDispatch) => {
   const toggleRemember = (userId: number, remember: boolean): Promise<void> => dispatch(setRemember(userId, remember));
   const toggleUseAbuse = (useAbuse: boolean) => dispatch(setUseAbuse(useAbuse));
-  const logout = () => dispatch(logoutUserAction());
 
   return {
     toggleRemember,
     toggleUseAbuse,
-    logout,
   };
 };
 
