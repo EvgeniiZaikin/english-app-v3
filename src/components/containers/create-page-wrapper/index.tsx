@@ -1,5 +1,5 @@
 import { FC, ReactElement, useState, ChangeEvent } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   RadioGroup,
   FormControlLabel,
@@ -13,13 +13,13 @@ import {
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import uniqid from 'uniqid';
-import { Dispatch } from 'redux';
 import Presentations from '@presentations';
 import { showSnackbar } from '@reducers/snackbar/creators';
 import { TSnackbar } from '@reducers/snackbar/types';
 import axios from 'axios';
 import { IResponse } from '@utils/interfaces';
 
+import { ICreatePageWrapperProps } from './types';
 import {
   layout__container,
   layout__wrap,
@@ -33,17 +33,7 @@ import {
   checkboxs__button,
 } from './styles.scss';
 
-interface ICreatePageWrapperProps {
-  categories: Array<string>;
-  showSuccessSnackbar(message: string): void;
-  showErrorSnackbar(message: string): void;
-}
-
-const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({
-  categories,
-  showSuccessSnackbar,
-  showErrorSnackbar,
-}): ReactElement => {
+const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({ categories }): ReactElement => {
   const [entity, setEntity] = useState<'word' | 'category'>('word');
   const [existsCategory, chooseExistsCategory] = useState<string>('');
   const [category, setCategory] = useState<string>('');
@@ -54,6 +44,10 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({
   const [isSlang, setIsSlang] = useState<boolean>(false);
   const [isAbuse, setIsAbuse] = useState<boolean>(false);
   const [isAbbreviation, setIsAbbreviation] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+  const showSuccessSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.SUCCESS, message));
+  const showErrorSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.ERROR, message));
 
   const handleChangeEntity = (event: ChangeEvent<{ name?: string; value: string }>) => {
     setEntity(event.target.value as 'word' | 'category');
@@ -218,11 +212,4 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  const showSuccessSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.SUCCESS, message));
-  const showErrorSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.ERROR, message));
-
-  return { showSuccessSnackbar, showErrorSnackbar };
-};
-
-export default connect(null, mapDispatchToProps)(CreatePageWrapper);
+export default CreatePageWrapper;
