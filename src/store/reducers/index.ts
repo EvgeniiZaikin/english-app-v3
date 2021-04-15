@@ -6,6 +6,7 @@ import settings from './settings';
 import footer from './footer';
 import snackbar from './snackbar';
 import loading from './loading';
+import create from './create';
 
 export default combineReducers({
   search,
@@ -15,6 +16,7 @@ export default combineReducers({
   footer,
   snackbar,
   loading,
+  create,
 });
 
 export interface IAction<P> {

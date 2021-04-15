@@ -16,6 +16,7 @@ const Input: FC<IInputProps> = ({ value, helper, onChange }): ReactElement => {
       fullWidth={true}
       label={helper}
       helperText={helper}
+      value={value}
     />
   );
 };

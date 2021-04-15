@@ -1,5 +1,5 @@
-import { FC, ReactElement, useState, ChangeEvent } from 'react';
-import { useDispatch } from 'react-redux';
+import { FC, ReactElement, ChangeEvent } from 'react';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import {
   RadioGroup,
   FormControlLabel,
@@ -14,12 +14,22 @@ import {
 import SaveIcon from '@material-ui/icons/Save';
 import uniqid from 'uniqid';
 import Presentations from '@presentations';
-import { showSnackbar } from '@reducers/snackbar/creators';
-import { TSnackbar } from '@reducers/snackbar/types';
-import axios from 'axios';
-import { IResponse } from '@utils/interfaces';
+import {
+  getCategory,
+  getEnValue,
+  getIsAbbreviation,
+  getIsAbuse,
+  getIsExpression,
+  getRuValue,
+  getTranscription,
+  getEntity,
+  getExistsCategory,
+  getIsSlang,
+} from '@reducers/create/selectors';
+import { changeField, saveField } from '@reducers/create/creators';
+import { ICreateState } from '@reducers/create/types';
 
-import { ICreatePageWrapperProps } from './types';
+import { ICreatePageWrapperProps, ChangeInput } from './types';
 import {
   layout__container,
   layout__wrap,
@@ -34,89 +44,56 @@ import {
 } from './styles.scss';
 
 const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({ categories }): ReactElement => {
-  const [entity, setEntity] = useState<'word' | 'category'>('word');
-  const [existsCategory, chooseExistsCategory] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
-  const [ruValue, setRuValue] = useState<string>('');
-  const [enValue, setEnValue] = useState<string>('');
-  const [transcription, setTranscription] = useState<string>('');
-  const [isExpression, setIsExpression] = useState<boolean>(false);
-  const [isSlang, setIsSlang] = useState<boolean>(false);
-  const [isAbuse, setIsAbuse] = useState<boolean>(false);
-  const [isAbbreviation, setIsAbbreviation] = useState<boolean>(false);
+  const entity = useSelector(getEntity);
+  const existsCategory = useSelector(getExistsCategory);
+  const category = useSelector(getCategory);
+  const ruValue = useSelector(getRuValue);
+  const enValue = useSelector(getEnValue);
+  const transcription = useSelector(getTranscription);
+  const isExpression = useSelector(getIsExpression);
+  const isSlang = useSelector(getIsSlang);
+  const isAbuse = useSelector(getIsAbuse);
+  const isAbbreviation = useSelector(getIsAbbreviation);
 
   const dispatch = useDispatch();
-  const showSuccessSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.SUCCESS, message));
-  const showErrorSnackbar = (message: string) => dispatch(showSnackbar(TSnackbar.ERROR, message));
 
   const handleChangeEntity = (event: ChangeEvent<{ name?: string; value: string }>) => {
-    setEntity(event.target.value as 'word' | 'category');
+    dispatch(changeField('entity', event.target.value as 'word' | 'category'));
   };
 
-  type ChangeInput = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-
-  const handleChangeEnValue = (event: ChangeInput) => setEnValue(event.target.value);
-  const handleChangeRuValue = (event: ChangeInput) => setRuValue(event.target.value);
-  const handleChangeTranscription = (event: ChangeInput) => setTranscription(event.target.value);
-  const handleChangeCategory = (event: ChangeInput) => setCategory(event.target.value);
+  const handleChangeEnValue = (event: ChangeInput) => dispatch(changeField('enValue', event.target.value));
+  const handleChangeRuValue = (event: ChangeInput) => dispatch(changeField('ruValue', event.target.value));
+  const handleChangeTranscription = (event: ChangeInput) => dispatch(changeField('transcription', event.target.value));
+  const handleChangeCategory = (event: ChangeInput) => dispatch(changeField('category', event.target.value));
 
   const handleChooseExistsCategory = (event: ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
-    chooseExistsCategory(event.target.value as string);
+    dispatch(changeField('existsCategory', event.target.value as string));
   };
 
-  const handleSetIsExpression = () => setIsExpression(!isExpression);
-  const handleSetIsSlang = () => setIsSlang(!isSlang);
-  const handleSetIsAbuse = () => setIsAbuse(!isAbuse);
-  const handleSetIsAbbreviation = () => setIsAbbreviation(!isAbbreviation);
+  const handleSetIsExpression = () => dispatch(changeField('isExpression', !isExpression));
+  const handleSetIsSlang = () => dispatch(changeField('isSlang', !isSlang));
+  const handleSetIsAbuse = () => dispatch(changeField('isAbuse', !isAbuse));
+  const handleSetIsAbbreviation = () => dispatch(changeField('isAbbreviation', !isAbbreviation));
 
   let disabledSaveButton: boolean = false;
   if (entity === 'word') disabledSaveButton = !existsCategory || !ruValue || !enValue || !transcription;
   if (entity === 'category') disabledSaveButton = !category;
 
   const handleSaveButtonClick = async () => {
-    let url: string = '';
-    entity === 'word' && (url = '/api/words/word');
-    entity === 'category' && (url = '/api/categories/category');
+    const params: ICreateState = {
+      entity,
+      ruValue,
+      enValue,
+      transcription,
+      isExpression,
+      isSlang,
+      isAbuse,
+      isAbbreviation,
+      category,
+      existsCategory,
+    };
 
-    if (!url) {
-      return;
-    }
-
-    let params: object = {};
-    entity === 'word' &&
-      (params = {
-        ruValue,
-        enValue,
-        transcription,
-        isExpression,
-        isSlang,
-        isAbuse,
-        isAbbreviation,
-        category: existsCategory,
-      });
-    entity === 'category' && (params = { category_label: category });
-
-    let successMessage: string = '';
-    entity === 'word' && (successMessage = 'Слово успешно создано');
-    entity === 'category' && (successMessage = 'Категория успешно создана');
-
-    let errorMessage: string = '';
-    entity === 'word' && (errorMessage = 'Не удалось создать слово');
-    entity === 'category' && (errorMessage = 'Не удалось создать категорию');
-
-    let duplicateMessage: string = '';
-    entity === 'word' && (duplicateMessage = 'Данное слово уже существует');
-    entity === 'category' && (duplicateMessage = 'Данная категория уже существует');
-
-    try {
-      const { data }: { data: IResponse } = await axios.post(url, params);
-      if (data.status) showSuccessSnackbar(successMessage);
-      else if ((data.error as Error).toString().includes('Duplicate entry')) showErrorSnackbar(duplicateMessage);
-      else showErrorSnackbar(errorMessage);
-    } catch (error: unknown) {
-      if ((error as Error).toString().includes('Duplicate entry')) showErrorSnackbar(duplicateMessage);
-      else showErrorSnackbar(errorMessage);
-    }
+    dispatch(saveField(params));
   };
 
   return (
@@ -212,4 +189,4 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({ categories }): ReactEl
   );
 };
 
-export default CreatePageWrapper;
+export default connect()(CreatePageWrapper);
