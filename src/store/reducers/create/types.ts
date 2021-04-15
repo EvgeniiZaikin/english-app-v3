@@ -9,4 +9,5 @@ export interface ICreateState {
   isSlang: boolean;
   isAbuse: boolean;
   isAbbreviation: boolean;
+  listExistCategories: string[];
 }

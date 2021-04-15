@@ -25,11 +25,12 @@ import {
   getEntity,
   getExistsCategory,
   getIsSlang,
+  getListExistCategories,
 } from '@reducers/create/selectors';
 import { changeField, saveField } from '@reducers/create/creators';
 import { ICreateState } from '@reducers/create/types';
 
-import { ICreatePageWrapperProps, ChangeInput } from './types';
+import { ChangeInput } from './types';
 import {
   layout__container,
   layout__wrap,
@@ -43,7 +44,7 @@ import {
   checkboxs__button,
 } from './styles.scss';
 
-const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({ categories }): ReactElement => {
+const CreatePageWrapper: FC = (): ReactElement => {
   const entity = useSelector(getEntity);
   const existsCategory = useSelector(getExistsCategory);
   const category = useSelector(getCategory);
@@ -54,6 +55,7 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({ categories }): ReactEl
   const isSlang = useSelector(getIsSlang);
   const isAbuse = useSelector(getIsAbuse);
   const isAbbreviation = useSelector(getIsAbbreviation);
+  const categories = useSelector(getListExistCategories);
 
   const dispatch = useDispatch();
 
@@ -80,7 +82,7 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({ categories }): ReactEl
   if (entity === 'category') disabledSaveButton = !category;
 
   const handleSaveButtonClick = async () => {
-    const params: ICreateState = {
+    const params: Omit<ICreateState, 'listExistCategories'> = {
       entity,
       ruValue,
       enValue,
@@ -100,7 +102,14 @@ const CreatePageWrapper: FC<ICreatePageWrapperProps> = ({ categories }): ReactEl
     <div className={layout__container}>
       <div className={layout__wrap}>
         <div className={layout__top}>
-          <RadioGroup onChange={handleChangeEntity} row aria-label="position" name="position" defaultValue={entity}>
+          <RadioGroup
+            onChange={handleChangeEntity}
+            row
+            aria-label="position"
+            name="position"
+            // defaultValue={entity}
+            value={entity}
+          >
             {['word', 'category'].map((item: string) => {
               return <FormControlLabel key={uniqid()} value={item} control={<Radio color="primary" />} label={item} />;
             })}

@@ -10,3 +10,4 @@ export const getIsExpression = (state: ReducersState) => state.create.isExpressi
 export const getIsSlang = (state: ReducersState) => state.create.isSlang;
 export const getIsAbuse = (state: ReducersState) => state.create.isAbuse;
 export const getIsAbbreviation = (state: ReducersState) => state.create.isAbbreviation;
+export const getListExistCategories = (state: ReducersState) => state.create.listExistCategories;
