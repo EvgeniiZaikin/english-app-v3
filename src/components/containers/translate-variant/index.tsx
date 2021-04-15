@@ -1,5 +1,7 @@
 import { ReactElement, FC, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import clsx from 'clsx';
+
 import { finishRepeatWord, IUpdateWordParams, setRepeatWordStatus, updateWord } from '@reducers/repeat/creators';
 import { getUserId, getIsAuth } from '@reducers/auth/selectors';
 
@@ -28,14 +30,7 @@ const TranslateVariant: FC<ITranslateVariantProps> = ({ value }): ReactElement =
   const updateGuessedWord = (params: IUpdateWordParams) => dispatch(updateWord(params));
 
   const [style, setStyle] = useState(translateVariant__button_neutral);
-
-  const classes: string = `
-        ${translateVariant__button}
-        &nbsp;
-        ${translateVariant__button_light}
-        &nbsp;
-        ${style}
-    `;
+  const classes = clsx(translateVariant__button, translateVariant__button_light, style);
 
   const click = () => {
     const guessed: boolean = value === rightEnValue;
