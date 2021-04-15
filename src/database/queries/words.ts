@@ -17,13 +17,13 @@ const queries = {
             word_is_abbreviation,
             transcription
         ) VALUES (
-            '${ruValue}',
-            '${enValue}',
+            "${ruValue}",
+            "${enValue}",
             ${expression},
             ${slang},
             ${abuse},
             ${abbreviation},
-            '${transcription}'
+            "${transcription}"
         );
     `,
 

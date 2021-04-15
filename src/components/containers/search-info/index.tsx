@@ -39,6 +39,7 @@ const SearchInfo: FC = (): ReactElement => {
         isAbuse={isAbuse}
         isAbbreviation={isAbbreviation}
         transcription={transcription}
+        showTranscription
       />
     </div>
   );

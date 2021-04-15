@@ -11,6 +11,7 @@ interface IProps {
   isAbuse: boolean;
   isAbbreviation: boolean;
   transcription: string | null;
+  showTranscription?: boolean;
 }
 
 const wordCard: FC<IProps> = ({
@@ -21,6 +22,7 @@ const wordCard: FC<IProps> = ({
   isAbuse,
   isAbbreviation,
   transcription,
+  showTranscription = false,
 }): ReactElement => (
   <div className={wordCard__container}>
     <Presentations.WordsTypesChips
@@ -30,7 +32,9 @@ const wordCard: FC<IProps> = ({
       isAbbreviation={isAbbreviation}
     />
     <p className={wordCard__word}>{word}</p>
-    <p className={wordCard__transcription}>{transcription ? `[${transcription}]` : `Транскрипция не указана`}</p>
+    {showTranscription && (
+      <p className={wordCard__transcription}>{transcription ? `[${transcription}]` : `Транскрипция не указана`}</p>
+    )}
     <p className={wordCard__category}>{category}</p>
   </div>
 );
