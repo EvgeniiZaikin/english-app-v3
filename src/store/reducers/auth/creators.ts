@@ -5,6 +5,8 @@ import { AsyncDispatch } from '@utils/types';
 import { IResponse } from '@utils/interfaces';
 import { showSnackbar } from '@reducers/snackbar/creators';
 import { TSnackbar } from '@reducers/snackbar/types';
+import { showGlobalLoading, hideGlobalLoading } from '@reducers/loading/creators';
+import { sleep } from '@utils/functions';
 
 import { SET_LOGIN, SET_PASSWORD, SET_USER_ID, TOGGLE_SHOW_PASSWORD, LOGIN, LOGOUT } from './actions';
 
@@ -36,6 +38,9 @@ const loginAction = (isAuth: boolean, login: string, password: string) => async 
 
   let success = true;
 
+  dispatch(showGlobalLoading());
+  await sleep(800);
+
   try {
     if (!login || !password) {
       success = false;
@@ -64,6 +69,8 @@ const loginAction = (isAuth: boolean, login: string, password: string) => async 
     dispatch(showSnackbar(TSnackbar.ERROR, 'Ошибка при обработке авторизации'));
     success = false;
   }
+
+  dispatch(hideGlobalLoading());
 
   return success;
 };

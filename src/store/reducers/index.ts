@@ -5,6 +5,7 @@ import auth from './auth';
 import settings from './settings';
 import footer from './footer';
 import snackbar from './snackbar';
+import loading from './loading';
 
 export default combineReducers({
   search,
@@ -13,6 +14,7 @@ export default combineReducers({
   settings,
   footer,
   snackbar,
+  loading,
 });
 
 export interface IAction<P> {

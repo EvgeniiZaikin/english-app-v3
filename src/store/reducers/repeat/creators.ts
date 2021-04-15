@@ -6,6 +6,8 @@ import { TSnackbar } from '@reducers/snackbar/types';
 import { getAction } from '@rootReducer';
 import { IResponse } from '@utils/interfaces';
 import { AsyncDispatch } from '@utils/types';
+import { showGlobalLoading, hideGlobalLoading } from '@reducers/loading/creators';
+import { sleep } from '@utils/functions';
 
 import { FINISH_REPEAT_WORD, RESET_REPEAT_WORD_INFO, SET_REPEAT_WORD_INFO, SET_REPEAT_WORD_STATUS } from './actions';
 
@@ -17,6 +19,9 @@ export const resetRepeatWordInfo = () => getAction(RESET_REPEAT_WORD_INFO);
 export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbuse: boolean) => async (
   dispatch: AsyncDispatch
 ) => {
+  dispatch(showGlobalLoading());
+  await sleep(500);
+
   try {
     dispatch(resetRepeatWordInfo());
 
@@ -34,6 +39,8 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbu
   } catch (error: unknown) {
     dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось получить слово для повторения'));
   }
+
+  dispatch(hideGlobalLoading());
 };
 
 export interface IUpdateWordParams {

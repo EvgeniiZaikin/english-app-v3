@@ -5,6 +5,7 @@ import { TSnackbar } from '@reducers/snackbar/types';
 import { getAction } from '@rootReducer';
 import { sleep } from '@utils/functions';
 import { AsyncDispatch } from '@utils/types';
+import { showGlobalLoading, hideGlobalLoading } from '@reducers/loading/creators';
 
 import { RESET_SEARCH_INFO, SET_SEARCH_INFO, SET_SEARCH_VALUE } from './actions';
 import { ISearchState } from './types';
@@ -14,6 +15,7 @@ export const setSearchInfo = (info: ISearchState) => getAction<ISearchState>(SET
 export const resetSearchInfo = () => getAction(RESET_SEARCH_INFO);
 
 export const setSearchData = (ruValue: string, enValue: string) => async (dispatch: AsyncDispatch) => {
+  dispatch(showGlobalLoading());
   await sleep(800);
 
   try {
@@ -31,4 +33,6 @@ export const setSearchData = (ruValue: string, enValue: string) => async (dispat
   } catch (error: unknown) {
     dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось выполнить поиск слова'));
   }
+
+  dispatch(hideGlobalLoading());
 };

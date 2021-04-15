@@ -5,6 +5,8 @@ import { AsyncDispatch } from '@utils/types';
 import { IResponse } from '@utils/interfaces';
 import { showSnackbar } from '@reducers/snackbar/creators';
 import { TSnackbar } from '@reducers/snackbar/types';
+import { showGlobalLoading, hideGlobalLoading } from '@reducers/loading/creators';
+import { sleep } from '@utils/functions';
 
 import { SET_REMEMBER, SET_USE_ABUSE } from './actions';
 
@@ -12,6 +14,9 @@ export const setUseAbuse = (useAbuse: boolean) => getAction<boolean>(SET_USE_ABU
 export const simpleSetRemember = (remember: boolean) => getAction<boolean>(SET_REMEMBER, remember);
 
 export const setRemember = (userId: number, remember: boolean) => async (dispatch: AsyncDispatch): Promise<void> => {
+  dispatch(showGlobalLoading());
+  await sleep(500);
+
   try {
     const { data }: { data: IResponse } = await axios.put(`/api/users/remember`, { userId, remember });
 
@@ -25,4 +30,6 @@ export const setRemember = (userId: number, remember: boolean) => async (dispatc
   } catch (error: unknown) {
     dispatch(showSnackbar(TSnackbar.WARNING, 'Не удалось сохранить пользователя авторизированным!'));
   }
+
+  dispatch(hideGlobalLoading());
 };
