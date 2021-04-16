@@ -90,8 +90,8 @@ const queries = {
             UPDATE 
                 words
             SET
-                word_ru_value = '${ruValue}',
-                word_en_value = '${enValue}',
+                word_ru_value = "${ruValue}",
+                word_en_value = "${enValue}",
                 word_count_views = ${countViews},
                 word_count_success_guesses = ${countSuccessGuesses},
                 last_show_datetime = NOW()

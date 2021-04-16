@@ -23,8 +23,6 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbu
   await sleep(500);
 
   try {
-    dispatch(resetRepeatWordInfo());
-
     const url: string = isAuth && userId ? `/api/users-words/guess-word?userId=${userId}` : `/api/words/guess-word`;
 
     const {
@@ -32,6 +30,7 @@ export const setRepeatWordData = (userId: number | null, isAuth: boolean, useAbu
     }: { data: IResponse } = await axios.get(url, { params: useAbuse });
     if (status && !error) {
       const [words] = result as Array<object>;
+      dispatch(resetRepeatWordInfo());
       dispatch(setRepeatWordInfo(words));
     } else {
       dispatch(showSnackbar(TSnackbar.ERROR, 'Не удалось получить слово для повторения со стороны сервера'));
