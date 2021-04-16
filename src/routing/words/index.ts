@@ -80,7 +80,9 @@ router.get(`/guess-word`, async (req: Request, res: Response) => {
       guessWords.push(...(words[0] as [IGuessWord]));
     }
 
-    const enValues: Array<string> = guessWords.map((item: IGuessWord) => item.enValue).sort(() => 0.5 - Math.random());
+    const enValues: Array<{ value: string; transcription: string | null }> = guessWords
+      .map((item: IGuessWord) => ({ value: item.enValue, transcription: item.transcription }))
+      .sort(() => 0.5 - Math.random());
 
     const result: Array<object> = [
       {

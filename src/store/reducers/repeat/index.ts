@@ -1,12 +1,5 @@
-import { Reducer, AnyAction, Dispatch } from 'redux';
+import { Reducer, AnyAction } from 'redux';
 import { HYDRATE } from 'next-redux-wrapper';
-import { getAction } from '@rootReducer';
-import { ThunkDispatch } from 'redux-thunk';
-import { ReducersState } from '@store';
-import axios from 'axios';
-import { IResponse } from '@utils/interfaces';
-import { showSnackbar } from '@reducers/snackbar/creators';
-import { TSnackbar } from '@reducers/snackbar/types';
 
 import { SET_REPEAT_WORD_INFO, FINISH_REPEAT_WORD, SET_REPEAT_WORD_STATUS, RESET_REPEAT_WORD_INFO } from './actions';
 import { IRepeatState } from './types';

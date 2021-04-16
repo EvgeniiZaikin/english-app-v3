@@ -3,7 +3,7 @@ export interface IRepeatState {
   wordId: number | null;
   category: string;
   rightEnValue: string;
-  enValues: Array<string>;
+  enValues: Array<{ value: string; transcription: string | null }>;
   guessed: boolean;
   finished: boolean;
   isExpression: boolean;

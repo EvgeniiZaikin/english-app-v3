@@ -49,8 +49,14 @@ const RepeatPageWrapper: FC = (): ReactElement => {
             />
           </div>
           <div className={repeatPage__variants}>
-            {enValues.map((variant: string) => {
-              return <Containers.TranslateVariant key={uniqid()} value={variant} />;
+            {enValues.map((variant: { value: string; transcription: string | null }) => {
+              return (
+                <Containers.TranslateVariant
+                  key={uniqid()}
+                  value={variant.value}
+                  transcription={variant.transcription}
+                />
+              );
             })}
           </div>
           <div className={repeatPage__nextButton}>

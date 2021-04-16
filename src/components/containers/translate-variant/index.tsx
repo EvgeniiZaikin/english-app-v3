@@ -16,7 +16,7 @@ import {
   translateVariant__button_light,
 } from './styles.scss';
 
-const TranslateVariant: FC<ITranslateVariantProps> = ({ value }): ReactElement => {
+const TranslateVariant: FC<ITranslateVariantProps> = ({ value, transcription }): ReactElement => {
   const isAuth = useSelector(getIsAuth);
   const userId = useSelector(getUserId);
   const wordId = useSelector(getWordId);
@@ -54,6 +54,8 @@ const TranslateVariant: FC<ITranslateVariantProps> = ({ value }): ReactElement =
   return (
     <button type="button" disabled={finished} className={classes} onClick={click}>
       {value}
+      <br />
+      {transcription ? `[${transcription}]` : `Транскрипция не указана`}
     </button>
   );
 };
